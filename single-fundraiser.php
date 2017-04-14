@@ -16,10 +16,19 @@ if (have_posts()) : while (have_posts()) : the_post(); ?>
 	<p>Not sure what this is going to be?</p>
 
 	<h2>Comments(<?php comments_number('0', '1', '%'); ?>)</h2>
-	<p><?php get_comments(); ?></p>
+	<?php $comments = get_comments(array('post_id' => $post->ID, 'type' => 'comment', 'status' => 'approve')); ?>
+	<ol class="commentlist">
+		<?php wp_list_comments(array('reverse_top_level' => false, 'style' => 'ol' ), $comments); ?>
+	</ol>
+	<div>
+		<?php comment_form(array('title_reply' => __( 'Leave a Comment', 'textdomain' ), 'comment_notes_after' => ''), $post->ID); ?>
+	</div>
 
 	<h2>Contributors</h2>
-	<p>Some method that will do this</p>
+	<?php $comments = get_comments(array('post_id' => $post->ID, 'type' => 'contribution', 'status' => 'approve')); ?>
+	<ol class="commentlist">
+		<?php wp_list_comments(array('reverse_top_level' => false, 'style' => 'ol' ), $comments); ?>
+	</ol>
 
 </div>
 
@@ -29,6 +38,8 @@ if (have_posts()) : while (have_posts()) : the_post(); ?>
 	<?php if (get_post_meta($id, 'fundraiser-tagline', true)) { ?>
 	<h3><?php echo wpautop(get_post_meta($id, 'fundraiser-tagline', true)); ?></h3>
 	<?php } ?>
+
+	<p><?php echo the_author_meta('user_login'); ?></p>
 
 	<?php if (get_post_meta($id, 'fundraiser-amount-raised', true)) { ?>
 	<p><?php echo wpautop(get_post_meta($id, 'fundraiser-amount-raised', true)); ?></p>
@@ -45,6 +56,13 @@ if (have_posts()) : while (have_posts()) : the_post(); ?>
 	<?php if (get_post_meta($id, 'fundraiser-end', true)) { ?>
 	<p><?php echo get_fundraising_days_left(get_post_meta($id, 'fundraiser-end', true)); ?>&nbsp;day(s) left</p>
 	<?php } ?>
+
+	<h3>Feed</h3>
+	<?php $comments = get_comments(array('post_id' => $post->ID)); ?>
+	<ol class="commentlist">
+		<?php wp_list_comments(array('reverse_top_level' => false, 'style' => 'ol' ), $comments); ?>
+	</ol>
+
 
 </div>
 
