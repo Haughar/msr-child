@@ -58,6 +58,69 @@ function new_share($post, $current_user) {
 	wp_new_comment( $commentdata );
 }
 
+function create_new_fundraiser() {
+	if ( empty($_POST) || !wp_verify_nonce($_POST['create_fundraiser_nonce'],'create_fundraiser_action') ){
+		print 'Sorry, your nonce did not verify.';
+		exit;
+	}
+
+	// input validation goes here
+
+	$fundraiser = array(
+		'post_title' => $_POST['fundraiser-name'],
+		'post_content' => $_POST['description'],
+		'meta_input' => array (
+			'fundraiser-tagline' => $_POST['tagline'],
+			'fundraiser-goal' => $_POST['fundraiser-goal'],
+			'fundraiser-amount-raised' => '0',
+			'fundraiser-start' => $_POST['start-date'],
+			'fundraiser-end' => $_POST['end-date']
+		),
+		'post_status' => 'publish',            // Choose: publish, preview, future, etc.
+		'post_type' => $_POST['post-type']  // Use a custom post type if you want to
+	);
+
+	$new_fundraiser = wp_insert_post($fundraiser);
+
+	if (!function_exists('wp_generate_attachment_metadata')){
+        require_once(ABSPATH . "wp-admin" . '/includes/image.php');
+        require_once(ABSPATH . "wp-admin" . '/includes/file.php');
+        require_once(ABSPATH . "wp-admin" . '/includes/media.php');
+    }
+    if ($_FILES) {
+        foreach ($_FILES as $file => $array) {
+            if ($_FILES[$file]['error'] !== UPLOAD_ERR_OK) {
+                return "upload error : " . $_FILES[$file]['error'];
+            }
+            $attach_id = media_handle_upload( $file, $new_fundraiser );
+        }   
+    }
+    if ($attach_id > 0){
+        //and if you want to set that image as Post  then use:
+        update_post_meta($new_fundraiser,'_thumbnail_id',$attach_id);
+    }
+
+
+	wp_redirect( get_permalink($new_fundraiser) );
+}
+
+function edit_fundraiser($id) {
+	if ( empty($_POST) || !wp_verify_nonce($_POST['create_fundraiser_nonce'],'create_fundraiser_action') ){
+		print 'Sorry, your nonce did not verify.';
+		exit;
+	}
+
+	$edited_post = array(
+		'ID' => $id,
+		'post_content' => $_POST['fundraiser-description']
+	);
+
+	wp_update_post($edited_post);
+
+	update_fundraiser($id, 'fundraiser_form', 'fundraiser-tagline');
+	flush_rewrite_rules();
+}
+
 function console_log( $data ){
   echo '<script>';
   echo 'console.log('. json_encode( $data ) .')';
