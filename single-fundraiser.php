@@ -57,6 +57,8 @@ if (have_posts()) : while (have_posts()) : the_post(); ?>
 	<p><?php echo get_fundraising_days_left(get_post_meta($id, 'fundraiser-end', true)); ?>&nbsp;day(s) left</p>
 	<?php } ?>
 
+	<button id='contribute'>Contribute Now</button>
+
 	<h3>Feed</h3>
 	<?php $comments = get_comments(array('post_id' => $post->ID)); ?>
 	<ol class="commentlist">
