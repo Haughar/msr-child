@@ -60,16 +60,16 @@ function new_share($post, $current_user) {
 
 function create_new_fundraiser() {
 	if ( empty($_POST) || !wp_verify_nonce($_POST['create_fundraiser_nonce'],'create_fundraiser_action') ){
-		print 'Sorry, your nonce did not verify.';
+		echo 'Sorry, your nonce did not verify.';
 		exit;
 	}
 
 	// input validation goes here
-
 	$fundraiser = array(
 		'post_title' => $_POST['fundraiser-name'],
 		'post_content' => $_POST['description'],
 		'meta_input' => array (
+			'fundraiser-campaign' => $_POST['fundraiser-campaign'],
 			'fundraiser-tagline' => $_POST['tagline'],
 			'fundraiser-goal' => $_POST['fundraiser-goal'],
 			'fundraiser-amount-raised' => '0',
@@ -81,6 +81,7 @@ function create_new_fundraiser() {
 	);
 
 	$new_fundraiser = wp_insert_post($fundraiser);
+	$attach_id = 0;
 
 	if (!function_exists('wp_generate_attachment_metadata')){
         require_once(ABSPATH . "wp-admin" . '/includes/image.php');
@@ -100,8 +101,7 @@ function create_new_fundraiser() {
         update_post_meta($new_fundraiser,'_thumbnail_id',$attach_id);
     }
 
-
-	wp_redirect( get_permalink($new_fundraiser) );
+    wp_redirect( get_permalink($new_fundraiser) );
 }
 
 function edit_fundraiser($id) {
@@ -121,9 +121,30 @@ function edit_fundraiser($id) {
 	flush_rewrite_rules();
 }
 
+function get_campaign_options($campaign_id) {
+	$args = array(
+        'post_type' => 'campaign'
+    );
+
+    $post_query = new WP_Query($args);
+	if($post_query->have_posts() ) {
+	  while($post_query->have_posts() ) {
+	    $post_query->the_post();
+	    $post = get_post();
+	    $id = $post->ID;
+	    if($id . '' == $campaign_id . '') { ?>
+	    	<option value="<?php echo the_ID(); ?>" selected><?php the_title(); ?></option>
+	    <?php } else { ?>
+	    <option value="<?php echo the_ID(); ?>"><?php the_title(); ?></option>
+	    <?php
+		}
+	  }
+	}
+}
+
 function console_log( $data ){
   echo '<script>';
-  echo 'console.log('. json_encode( $data ) .')';
+  echo 'console.log("'. $data .'")';
   echo '</script>';
 }
 ?>

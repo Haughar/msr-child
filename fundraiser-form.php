@@ -15,13 +15,13 @@ if($_POST){
 
 get_header(); ?>
 
-<form id="fundraiser" name="fundraiser" enctype="multipart/form-data" method="post" action="">
+<form id="fundraiser" name="fundraiser" method="post" action="#">
 
 	<h2>CONTRIBUTING TO</h2>
 
-	<select>
-		<option>Default Option</option>
-		<option>Need function to get all campaigns</option>
+	<select name="fundraiser-campaign" id="fundraiser-campaign">
+		<option></option>
+		<?php get_campaign_options(" "); ?>
 	</select>
 
 	<label for="fundraiser-name">Fundraiser Name</label>
