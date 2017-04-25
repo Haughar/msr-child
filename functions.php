@@ -63,45 +63,104 @@ function create_new_fundraiser() {
 		echo 'Sorry, your nonce did not verify.';
 		exit;
 	}
+	if (!form_valid($_POST)) {
+		get_form_errors($_POST);
+	} else {
 
-	// input validation goes here
-	$fundraiser = array(
-		'post_title' => $_POST['fundraiser-name'],
-		'post_content' => $_POST['description'],
-		'meta_input' => array (
-			'fundraiser-campaign' => $_POST['fundraiser-campaign'],
-			'fundraiser-tagline' => $_POST['tagline'],
-			'fundraiser-goal' => $_POST['fundraiser-goal'],
-			'fundraiser-amount-raised' => '0',
-			'fundraiser-start' => $_POST['start-date'],
-			'fundraiser-end' => $_POST['end-date']
-		),
-		'post_status' => 'publish',            // Choose: publish, preview, future, etc.
-		'post_type' => $_POST['post-type']  // Use a custom post type if you want to
-	);
+		// input validation goes here
+		$fundraiser = array(
+			'post_title' => $_POST['fundraiser-name'],
+			'post_content' => $_POST['description'],
+			'meta_input' => array (
+				'fundraiser-campaign' => $_POST['fundraiser-campaign'],
+				'fundraiser-tagline' => $_POST['tagline'],
+				'fundraiser-goal' => $_POST['fundraiser-goal'],
+				'fundraiser-amount-raised' => '0',
+				'fundraiser-start' => $_POST['start-date'],
+				'fundraiser-end' => $_POST['end-date']
+			),
+			'post_status' => 'pending',            // Choose: publish, preview, future, etc.
+			'post_type' => $_POST['post-type']  // Use a custom post type if you want to
+		);
 
-	$new_fundraiser = wp_insert_post($fundraiser);
-	$attach_id = 0;
+		$new_fundraiser = wp_insert_post($fundraiser);
+		$attach_id = 0;
 
-	if (!function_exists('wp_generate_attachment_metadata')){
-        require_once(ABSPATH . "wp-admin" . '/includes/image.php');
-        require_once(ABSPATH . "wp-admin" . '/includes/file.php');
-        require_once(ABSPATH . "wp-admin" . '/includes/media.php');
-    }
-    if ($_FILES) {
-        foreach ($_FILES as $file => $array) {
-            if ($_FILES[$file]['error'] !== UPLOAD_ERR_OK) {
-                return "upload error : " . $_FILES[$file]['error'];
-            }
-            $attach_id = media_handle_upload( $file, $new_fundraiser );
-        }   
-    }
-    if ($attach_id > 0){
-        //and if you want to set that image as Post  then use:
-        update_post_meta($new_fundraiser,'_thumbnail_id',$attach_id);
-    }
+		if (!function_exists('wp_generate_attachment_metadata')){
+	        require_once(ABSPATH . "wp-admin" . '/includes/image.php');
+	        require_once(ABSPATH . "wp-admin" . '/includes/file.php');
+	        require_once(ABSPATH . "wp-admin" . '/includes/media.php');
+	    }
+	    if ($_FILES) {
+	        foreach ($_FILES as $file => $array) {
+	            if ($_FILES[$file]['error'] !== UPLOAD_ERR_OK) {
+	                return "upload error : " . $_FILES[$file]['error'];
+	            }
+	            $attach_id = media_handle_upload( $file, $new_fundraiser );
+	        }   
+	    }
+	    if ($attach_id > 0){
+	        //and if you want to set that image as Post  then use:
+	        update_post_meta($new_fundraiser,'_thumbnail_id',$attach_id);
+	    }
 
-    wp_redirect( get_permalink($new_fundraiser) );
+	    wp_redirect( home_url() . '/edit-fundraiser/?post_id=' . $new_fundraiser );
+	 }
+}
+
+function form_valid($input) {
+	if (strlen($input['fundraiser-name']) == 0 ) {
+		return false;
+	}
+	if (strlen($input['description']) == 0 ) {
+		return false;
+	}
+	if (strlen(trim($input['tagline'])) == 0 ) {
+		return false;
+	}
+	if (strlen(trim($input['fundraiser-goal'])) == 0 || $input['tagline'] == "0") {
+		return false;
+	}
+	if (strlen(trim($input['tagline'])) == 0) {
+		return false;
+	}
+	if ($input['fundraiser-campaign'] == "") {
+		return false;
+	}
+	if (strtotime($input['start-date']) >= strtotime($input['end-date']) || $input['start-date'] == "") {
+		return false;
+	}
+	return true;
+}
+
+function get_form_errors($input) {
+	if (strlen(trim($input['fundraiser-name'])) == 0 ) {
+		$_POST['fundraiser-name-error'] = true;
+	}
+	if (strlen(trim($input['description'])) == 0 ) {
+		$_POST['description-error'] = true;
+	}
+	if (strlen(trim($input['tagline'])) == 0 ) {
+		$_POST['tagline-error'] = true;
+	}
+	if (strlen(trim($input['fundraiser-goal'])) == 0 || $input['fundraiser-goal'] == "0") {
+		$_POST['fundraiser-goal-error'] = true;
+	}
+	if ($input['fundraiser-campaign'] == "") {
+		$_POST['fundraiser-campaign-error'] = true;
+	}
+	if (strtotime($input['start-date']) >= strtotime($input['end-date']) || $input['start-date'] == "") {
+		if (strtotime($input['start-date']) >= strtotime($input['end-date']) && !$input['start-date'] == "") {
+			$_POST['reverse-date-error'] = true;
+		} else {
+			if ($input['start-date'] == "") {
+				$_POST['start-date-error'] = true;
+			}
+			if ($input['end-date'] == "") {
+				$_POST['end-date-error'] = true;
+			}
+		}
+	}
 }
 
 function edit_fundraiser($id) {
