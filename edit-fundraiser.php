@@ -18,7 +18,14 @@ if($_POST){
 
 get_header();
 
-query_posts('p='.$id.'&post_type=fundraiser');
+global $user_ID;
+console_log($user_ID);
+$query_array = array('p' => $id,
+					  'post_type' => 'fundraiser',
+					  'post_status' => array('pending', 'public'),
+					  'post_author' => $user_ID
+					  );
+query_posts($query_array);
 
 if (have_posts()) : while (have_posts()) : the_post();
 ?>
