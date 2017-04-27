@@ -114,7 +114,9 @@ if($post_query->have_posts() ) {
 	</article><!-- #post-## -->
 
 <?php  }
-}
+} else { ?>
+	<p>There aren't any active fundraisers for this campaign. (Maybe give them a button to go create their own?)</p>
+<?php }
 ?>
 
 <?php get_footer(); ?>
