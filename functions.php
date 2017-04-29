@@ -223,14 +223,7 @@ function get_customer_contributions($user_id) {
 
 	$json_object = [];
 
-	$months = array(
-		'0' => 0,
-		'1' => 0,
-		'2' => 0,
-		'3' => 0,
-		'4' => 0,
-		'5' => 0
-	);
+	$months = array_fill(0, 6, 0);
 
 	$total = 0;
 	if($charges) {
@@ -240,22 +233,22 @@ function get_customer_contributions($user_id) {
 			$dollars = $data['amount'] / 100;
 			switch($diff) {
 				case 0:
-					$months['0'] += $dollars;
+					$months[0] += $dollars;
 					break;
 				case 1:
-					$months['1'] += $dollars;
+					$months[1] += $dollars;
 					break;
 				case 2:
-					$months['2'] += $dollars;
+					$months[2] += $dollars;
 					break;
 				case 3:
-					$months['3'] += $dollars;
+					$months[3] += $dollars;
 					break;
 				case 4:
-					$months['4'] += $dollars;
+					$months[4] += $dollars;
 					break;
 				case 5:
-					$months['5'] += $dollars;
+					$months[5] += $dollars;
 					break;
 			}
 			$total += $data['amount'];
