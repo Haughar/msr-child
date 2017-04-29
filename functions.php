@@ -201,6 +201,74 @@ function get_campaign_options($campaign_id) {
 	}
 }
 
+function get_customer_contributions($user_id) {
+	global $stripe_options;
+
+	// load the stripe libraries
+	require_once(STRIPE_BASE_DIR . '/lib/latest/init.php');	
+
+	// check if we are using test mode
+	if(isset($stripe_options['test_mode']) && $stripe_options['test_mode']) {
+		$secret_key = $stripe_options['test_secret_key'];
+	} else {
+		$secret_key = $stripe_options['live_secret_key'];
+	}
+
+	\Stripe\Stripe::setApiKey($secret_key);
+
+	$customer_id = get_user_meta( $user_id, '_stripe_customer_id', true);
+	$charges = \Stripe\Charge::all(array('customer' => $customer_id, 'limit' => 50));
+
+	$current_month = date("m", time());
+
+	$json_object = [];
+
+	$months = array(
+		'0' => 0,
+		'1' => 0,
+		'2' => 0,
+		'3' => 0,
+		'4' => 0,
+		'5' => 0
+	);
+
+	$total = 0;
+	if($charges) {
+		foreach($charges['data'] as $data) {
+			$month = date('m', intval($data['created']));
+			$diff = (intval($current_month) - intval($month) + 12) % 12;
+			$dollars = $data['amount'] / 100;
+			switch($diff) {
+				case 0:
+					$months['0'] += $dollars;
+					break;
+				case 1:
+					$months['1'] += $dollars;
+					break;
+				case 2:
+					$months['2'] += $dollars;
+					break;
+				case 3:
+					$months['3'] += $dollars;
+					break;
+				case 4:
+					$months['4'] += $dollars;
+					break;
+				case 5:
+					$months['5'] += $dollars;
+					break;
+			}
+			$total += $data['amount'];
+		}
+	}
+	$total = $total / 100;
+
+	$json_object['total'] = $total;
+	$json_object['months'] = $months;
+
+	return $json_object;
+}
+
 function console_log( $data ){
   echo '<script>';
   echo 'console.log("'. $data .'")';
