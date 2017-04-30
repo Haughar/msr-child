@@ -262,6 +262,42 @@ function get_customer_contributions($user_id) {
 	return $json_object;
 }
 
+function get_fundraiser_list($user_id) {
+
+	$args = array(
+	    'post_type' => 'fundraiser',
+	  	'post_status' => array('pending', 'publish'),
+	  	'author' => $user_id
+	);
+
+	$post_query = new WP_Query($args);
+	if($post_query->have_posts() ) {
+		while($post_query->have_posts() ) {
+			$post_query->the_post();
+			$post = get_post();
+			$id = $post->ID;
+			echo '<br>';
+			echo '<br>';
+			echo '<br>';
+			if ( has_post_thumbnail() ) {
+				the_post_thumbnail( array(100,100) );
+			}
+			if (get_the_title($id)) {
+				echo get_the_title($id);
+			} 
+			echo '<br>';
+			if (get_post_meta($id, 'fundraiser-tagline', true)) {
+				echo get_post_meta($id, 'fundraiser-tagline', true);
+			} 
+
+			if (get_post_meta($id, 'fundraiser-goal', true) && get_post_meta($id, 'fundraiser-amount-raised', true)) { ?>
+				<p><?php echo get_percentage_to_goal(floatval(get_post_meta($id, 'fundraiser-amount-raised', true)), floatval(get_post_meta($id, 'fundraiser-goal', true)));?> %</p>
+			<?php
+			}
+		}
+	}
+}
+
 function console_log( $data ){
   echo '<script>';
   echo 'console.log("'. $data .'")';
