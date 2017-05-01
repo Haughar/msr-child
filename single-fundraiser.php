@@ -1,4 +1,9 @@
 <?php
+
+if (isset($_SERVER['HTTP_REFERER'])) {
+	console_log($_SERVER['HTTP_REFERER']);
+}
+
 get_header();
 
 if (have_posts()) : while (have_posts()) : the_post(); ?>
@@ -59,6 +64,22 @@ if (have_posts()) : while (have_posts()) : the_post(); ?>
 
 	<?php echo do_shortcode("[Wow-Modal-Windows id=1]"); ?>
 	<button id='wow-modal-id-1'>Contribute Now</button>
+
+	<div class="sharing">
+		<a href="http://www.facebook.com/sharer.php?u=<?php the_permalink();?>&amp;t=<?php the_title(); ?>" title="Share on Facebook." target="_blank">
+			<img src="<?php bloginfo('template_url'); ?>/icons/facebook-icon.png" width="30px" height="30px" alt="Share on Facebook" />
+		</a>
+		<a href="http://twitter.com/home/?status=<?php the_title(); ?> - <?php the_permalink(); ?>" title="Tweet this!" target="_blank">
+			<img src="<?php bloginfo('template_url'); ?>/icons/twitter-icon.png" width="30px" height="30px" alt="share on Twitter" />
+
+		</a>
+		<a href="http://www.linkedin.com/shareArticle?mini=true&amp;title=<?php the_title(); ?>&amp;url=<?php the_permalink(); ?>" title="Share on LinkedIn" target="_blank">
+			<img src="<?php bloginfo('template_url'); ?>/icons/linkedin-icon.png" width="30px" height="30px" alt="share on Twitter" />
+		</a>
+		<img src="<?php bloginfo('template_url'); ?>/icons/other-icon.png" width="30px" height="30px" alt="Share on something else" />
+
+
+	</div>
 
 	<h3>Feed</h3>
 	<?php $comments = get_comments(array('post_id' => $post->ID)); ?>
