@@ -19,11 +19,10 @@ if($_POST){
 get_header();
 
 global $user_ID;
-console_log($user_ID);
 $query_array = array('p' => $id,
 					  'post_type' => 'fundraiser',
-					  'post_status' => array('pending', 'public'),
-					  'post_author' => $user_ID
+					  'post_status' => array('pending', 'publish'),
+					  'post_author' => get_current_user_id()
 					  );
 query_posts($query_array);
 

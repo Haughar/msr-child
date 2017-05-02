@@ -1,5 +1,7 @@
 <?php
 
+include 'svg-icons.php';
+
 add_action( 'wp_enqueue_scripts', 'msr_child_enqueue_styles' );
 function msr_child_enqueue_styles() {
     $parent_style = 'msr'; 
@@ -224,6 +226,7 @@ function get_customer_contributions($user_id) {
 	$json_object = [];
 
 	$months = array_fill(0, 6, 0);
+	$contributions = [];
 
 	$total = 0;
 	if($charges) {
@@ -257,7 +260,8 @@ function get_customer_contributions($user_id) {
 	$total = $total / 100;
 
 	$json_object['total'] = $total;
-	$json_object['months'] = $months;
+	$json_object['contribution-data'] = $months;
+	$json_object['charge-data'] = $charges['data'];
 
 	return $json_object;
 }

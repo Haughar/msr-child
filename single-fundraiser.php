@@ -6,7 +6,13 @@ if (isset($_SERVER['HTTP_REFERER'])) {
 
 get_header();
 
-if (have_posts()) : while (have_posts()) : the_post(); ?>
+if (have_posts()) : while (have_posts()) : the_post();
+	$post_id = $post->ID; 
+
+	if ($post->post_author == get_current_user_id()) { ?>
+		<button><a href="<?php echo home_url() . '/edit-fundraiser?post_id=' . $post_id ?>">Manage</a></button>
+	<?php } ?>
+	
 
 <div class="left">
 
@@ -66,19 +72,9 @@ if (have_posts()) : while (have_posts()) : the_post(); ?>
 	<button id='wow-modal-id-1'>Contribute Now</button>
 
 	<div class="sharing">
-		<a href="http://www.facebook.com/sharer.php?u=<?php the_permalink();?>&amp;t=<?php the_title(); ?>" title="Share on Facebook." target="_blank">
-			<img src="<?php bloginfo('template_url'); ?>/icons/facebook-icon.png" width="30px" height="30px" alt="Share on Facebook" />
-		</a>
-		<a href="http://twitter.com/home/?status=<?php the_title(); ?> - <?php the_permalink(); ?>" title="Tweet this!" target="_blank">
-			<img src="<?php bloginfo('template_url'); ?>/icons/twitter-icon.png" width="30px" height="30px" alt="share on Twitter" />
-
-		</a>
-		<a href="http://www.linkedin.com/shareArticle?mini=true&amp;title=<?php the_title(); ?>&amp;url=<?php the_permalink(); ?>" title="Share on LinkedIn" target="_blank">
-			<img src="<?php bloginfo('template_url'); ?>/icons/linkedin-icon.png" width="30px" height="30px" alt="share on Twitter" />
-		</a>
-		<img src="<?php bloginfo('template_url'); ?>/icons/other-icon.png" width="30px" height="30px" alt="Share on something else" />
-
-
+		<a href="http://www.facebook.com/sharer.php?u=<?php the_permalink();?>&amp;t=<?php the_title(); ?>" title="Share on Facebook." target="_blank"><?php echo facebook_svg(); ?></a>
+		<a href="http://twitter.com/home/?status=<?php the_title(); ?> - <?php the_permalink(); ?>" title="Tweet this!" target="_blank"><?php echo twitter_svg(); ?></a>
+		<a id="copy-link"><?php echo twitter_svg(); ?></a>
 	</div>
 
 	<h3>Feed</h3>
@@ -89,6 +85,29 @@ if (have_posts()) : while (have_posts()) : the_post(); ?>
 
 
 </div>
+
+<script type="text/javascript">
+
+	document.getElementById("copy-link").addEventListener("click", function(event){
+		function copyToClipboard() {
+		  event.preventDefault();
+		  var aux = document.createElement("input");
+		  aux.setAttribute("value", "<?php echo get_permalink($post_id); ?>");
+		  document.body.appendChild(aux);
+		  aux.select();
+		  try {
+		  	document.execCommand("copy");
+		  	// notify user that copy success
+		  } catch (e){
+		  	// notify that it didnt work
+		  }
+		  
+		  document.body.removeChild(aux);
+		}
+	});
+
+
+</script>
 
 
 <?php
