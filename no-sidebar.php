@@ -2,7 +2,7 @@
 /**
  * Template Name: No Sidebar
  *
- * Login Page Template.
+ * Template with no sidebar.
  *
  * @author Michael Nguyen
  * @since 1.0.0
@@ -31,16 +31,14 @@ get_header(); ?>
 		
 		<div id="primary" class="content-area">
 			<main id="main" class="site-main" role="main">
-<header class="entry-header">
-		<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
-	</header><!-- .entry-header -->
-				<?php get_template_part( 'content', 'page' ); ?>
-
+			<header class="entry-header">
+				<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
+			</header><!-- .entry-header -->
+			<?php get_template_part( 'content', 'page' ); ?>
 			</main><!-- #main -->
 		</div><!-- #primary -->
 				
 	</div>
-	
 		<?php
 			// If comments are open or we have at least one comment, load up the comment template
 			if ( comments_open() || get_comments_number() ) : ?>
