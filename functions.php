@@ -219,6 +219,22 @@ function get_customer_contributions($user_id) {
 	$customer_id = get_user_meta( $user_id, '_stripe_customer_id', true);
 	$charges = \Stripe\Charge::all(array('customer' => $customer_id, 'limit' => 50));
 
+	$subscription = \Stripe\Subscription::all(array('customer' => $customer_id));
+	$subscription_json = $subscription->__toJSON();
+	$sub_array = json_decode($subscription_json, true);
+	$sub_data = $sub_array['data'];
+	?> 
+	<h2>Your Recurring Donations</h2>
+	<?php
+
+	if (empty($sub_data)) {
+		?> <p>You have no recurring donations </p> <?php
+	} else {
+		foreach ($sub_data as $data) {
+			?><p><?php echo $data['id']; ?></p><?php
+		}
+	}
+
 	$current_month = date("m", time());
 
 	$json_object = [];
@@ -276,8 +292,6 @@ function get_fundraiser_list($user_id) {
 			$post_query->the_post();
 			$post = get_post();
 			$id = $post->ID;
-			echo '<br>';
-			echo '<br>';
 			echo '<br>';
 			if ( has_post_thumbnail() ) {
 				the_post_thumbnail( array(100,100) );
