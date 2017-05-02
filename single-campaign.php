@@ -65,7 +65,7 @@ if($post_query->have_posts() ) {
     $id = $post->ID; ?>
 
     <article id="post-<?php the_ID(); ?>" <?php post_class('post-grid'); ?>>
-	
+		
 		<?php if ( has_post_thumbnail() ) { 
 		/** Normal container for posts with thumbnail */ ?>
 		
@@ -86,7 +86,6 @@ if($post_query->have_posts() ) {
 			
 			<header class="entry-header">
 				<?php the_title( sprintf( '<h3 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h3>' ); ?>
-		
 				<?php if ( 'post' == get_post_type() ) : ?>
 				<div class="entry-meta">
 					<?php the_time('M j, Y') ?> 
@@ -110,7 +109,6 @@ if($post_query->have_posts() ) {
 				<a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>"><?php echo __('Read More', 'msr') ?></a>
 			<?php } ?>
 		</div>
-		
 	</article><!-- #post-## -->
 
 <?php  }
@@ -118,5 +116,8 @@ if($post_query->have_posts() ) {
 	<p>There aren't any active fundraisers for this campaign. (Maybe give them a button to go create their own?)</p>
 <?php }
 ?>
+
+<?php echo do_shortcode("[Wow-Modal-Windows id=1]"); ?>
+<button id='wow-modal-id-1'>Contribute Now</button>
 
 <?php get_footer(); ?>

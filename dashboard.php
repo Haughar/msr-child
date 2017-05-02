@@ -40,8 +40,7 @@ $json_object = get_customer_contributions($user_id);
 </div>
 
 <div id="fundraisers">
-	<!-- Make call to stripe for fundraiser info -->
-	<p>HERE IS THE FUNDRAISER STUFF</p>
+	<?php get_fundraiser_list($user_id); ?>
 </div>
 
 <div id="contributions">
@@ -121,9 +120,6 @@ var ctx = document.getElementById('user-contributions').getContext('2d');
 </script>
 
 <link rel="stylesheet" type="text/css" href="style.css">
-
 <?php 
-
 get_footer();
-
 ?>
