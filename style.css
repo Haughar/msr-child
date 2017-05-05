@@ -98,3 +98,18 @@
 .tooltip .tooltiptext.success {
 	visibility: visible;
 }
+
+.fundraising h1 {
+	text-align: center;
+}
+
+.progress-bar {
+	background-color: lightgrey;
+	height: 20px;
+	width: 100%;
+}
+
+.ui-progressbar-value {
+	height: 20px;
+	background-color: maroon;
+}

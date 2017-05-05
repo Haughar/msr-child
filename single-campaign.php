@@ -8,6 +8,10 @@
 
 get_header(); ?>
 
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<main id="main" class="fundraising">
+
 <?php while ( have_posts() ) : the_post();
 	global $post_id; ?>
 	
@@ -26,18 +30,20 @@ get_header(); ?>
 		<?php } ?>	
 	<?php } ?>
 	<div class="article-body clearfix  flex-content">
-			
-		
-		<div id="primary" class="content-area-full">
-			<main id="main" class="site-main" role="main">
-<header class="entry-header">
-		<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
-	</header><!-- .entry-header -->
-				<p><?php echo wpautop(get_post_meta($id, 'campaign-start', true)); ?> to <?php echo wpautop(get_post_meta($id, 'campaign-end', true)); ?></p>
-				<?php get_template_part( 'content', 'page' ); ?>
 
-			</main><!-- #main -->
-		</div><!-- #primary -->
+		<div id="primary" class="content-area-full">
+			<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
+
+			<div class="prgress-section">
+				<p>Make call to stripe to get info</p>
+				<div id="campaign-progress" class="progress-bar"></div>
+				<p><?php echo get_percentage_to_goal("20000", get_post_meta($id, 'campaign-goal', true)); ?>% of $<?php echo get_post_meta($id, 'campaign-goal', true); ?></p>
+				<p><?php echo get_fundraising_days_left(get_post_meta($id, 'campaign-end', true)); ?> days left</p>
+			</div>
+			<p><?php echo get_post_meta($id, 'campaign-start', true); ?> to <?php echo get_post_meta($id, 'campaign-end', true); ?></p>
+			<?php get_template_part( 'content', 'page' ); ?>
+
+		</div>
 				
 	</div>
 	
@@ -48,6 +54,13 @@ get_header(); ?>
 				<?php comments_template(); ?>
 			</div>
 		<?php endif; ?>
+	<script>
+	  $( function() {
+	    $( "#campaign-progress" ).progressbar({
+	      value: <?php echo get_percentage_to_goal("20000", get_post_meta($id, 'campaign-goal', true)); ?>
+	    });
+	  } );
+	</script>
 	
 <?php endwhile; // end of the loop. 
 
@@ -119,5 +132,7 @@ if($post_query->have_posts() ) {
 
 <?php echo do_shortcode("[Wow-Modal-Windows id=1]"); ?>
 <button id='wow-modal-id-1'>Contribute Now</button>
+
+</main>
 
 <?php get_footer(); ?>
