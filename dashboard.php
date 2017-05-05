@@ -33,33 +33,33 @@ $json_object = get_customer_contributions($user_id);
 	            <a href="#contributions">My Contributions</a>
 	        </li>
 	    </ul>
-	</div>
 
 
-	<!-- Make call to stripe for user info -->
-	<div id="overview">
+		<!-- Make call to stripe for user info -->
+		<div id="overview">
 
-	<?php if ($json_object['recurring_donation']) { ?>
-		<h2>Your Recurring Donations</h2>
-		<?php foreach ($json_object['subscription_data'] as $data) { ?>
-			<p><?php echo $data['id']; ?></p>
-		<?php } 
-	} ?>
-		
+		<?php if ($json_object['recurring_donation']) { ?>
+			<h2>Your Recurring Donations</h2>
+			<?php foreach ($json_object['subscription_data'] as $data) { ?>
+				<p><?php echo $data['id']; ?></p>
+			<?php } 
+		} ?>
+			
 
 
-		<canvas id="user-contributions" height="400px" width="500px"></canvas>
-		<p>$<?php echo $json_object['total']; ?> contributed</p>
-	</div>
+			<canvas id="user-contributions" height="400px" width="500px"></canvas>
+			<p>$<?php echo $json_object['total']; ?> contributed</p>
+		</div>
 
-	<div id="fundraisers">
-		<?php get_fundraiser_list($user_id); ?>
-	</div>
+		<div id="fundraisers">
+			<?php get_fundraiser_list($user_id); ?>
+		</div>
 
-	<div id="contributions">
-		<?php foreach ($json_object['charge-data'] as $charge) { ?>
-			<p>Contributed <?php echo $charge['amount'] / 100; ?> to <?php echo $charge['description']; ?></p>
-		<?php } ?>
+		<div id="contributions">
+			<?php foreach ($json_object['charge-data'] as $charge) { ?>
+				<p>Contributed <?php echo $charge['amount'] / 100; ?> to <?php echo $charge['description']; ?></p>
+			<?php } ?>
+		</div>
 	</div>
 </main>
 

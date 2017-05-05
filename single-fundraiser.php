@@ -76,7 +76,10 @@ get_header(); ?>
 	<div class="sharing">
 		<a href="http://www.facebook.com/sharer.php?u=<?php the_permalink();?>&amp;t=<?php the_title(); ?>" title="Share on Facebook." target="_blank"><?php echo facebook_svg(); ?></a>
 		<a href="http://twitter.com/home/?status=<?php the_title(); ?> - <?php the_permalink(); ?>" title="Tweet this!" target="_blank"><?php echo twitter_svg(); ?></a>
-		<a id="copy-link"><?php echo twitter_svg(); ?></a>
+		<a id="copy-link" class="tooltip">
+			<?php echo twitter_svg(); ?>
+			<p id="copy-success" class="tooltiptext">Copied!</p>
+		</a>
 	</div>
 
 	<h3>Feed</h3>
@@ -91,21 +94,25 @@ get_header(); ?>
 <script type="text/javascript">
 
 	document.getElementById("copy-link").addEventListener("click", function(event){
-		function copyToClipboard() {
-		  event.preventDefault();
-		  var aux = document.createElement("input");
-		  aux.setAttribute("value", "<?php echo get_permalink($post_id); ?>");
-		  document.body.appendChild(aux);
-		  aux.select();
-		  try {
-		  	document.execCommand("copy");
-		  	// notify user that copy success
-		  } catch (e){
-		  	// notify that it didnt work
-		  }
-		  
-		  document.body.removeChild(aux);
-		}
+	  event.preventDefault();
+	  var aux = document.createElement("input");
+	  aux.setAttribute("value", "<?php echo get_permalink($post_id); ?>");
+	  document.body.appendChild(aux);
+	  aux.select();
+	  try {
+	  	document.execCommand("copy");
+	  	var tooltip = document.getElementById("copy-success");
+	  	console.log("got here");
+	  	tooltip.classList.add("success");
+	  	setTimeout(function() {
+	  		tooltip.classList.remove("success");
+	  	}, 1000);
+	  } catch (e){
+	  	// notify that it didnt work
+	  	console.log(e);
+	  }
+	  
+	  document.body.removeChild(aux);
 	});
 
 
