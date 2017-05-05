@@ -4,9 +4,11 @@ if (isset($_SERVER['HTTP_REFERER'])) {
 	console_log($_SERVER['HTTP_REFERER']);
 }
 
-get_header();
+get_header(); ?>
 
-if (have_posts()) : while (have_posts()) : the_post();
+<main id="main">
+
+<?php if (have_posts()) : while (have_posts()) : the_post();
 	$post_id = $post->ID; 
 
 	if ($post->post_author == get_current_user_id()) { ?>
@@ -112,7 +114,9 @@ if (have_posts()) : while (have_posts()) : the_post();
 
 <?php
 endwhile;
-endif;
+endif; ?>
+</main>
+<?php
 get_footer();
 
 ?>

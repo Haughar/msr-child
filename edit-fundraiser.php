@@ -16,9 +16,11 @@ if($_POST){
 	$id = $_GET['post_id'];
 }
 
-get_header();
+get_header(); ?>
 
-global $user_ID;
+<main id="main">
+
+<?php global $user_ID;
 $query_array = array('p' => $id,
 					  'post_type' => 'fundraiser',
 					  'post_status' => array('pending', 'publish'),
@@ -73,5 +75,8 @@ if (have_posts()) : while (have_posts()) : the_post();
 
 <?php
 endwhile;
-endif;
-get_footer(); ?>
+endif; ?>
+
+</main>
+
+<?php get_footer(); ?>

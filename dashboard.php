@@ -19,35 +19,39 @@ $json_object = get_customer_contributions($user_id);
 <script src="http://code.jquery.com/jquery-1.8.2.js"></script>
 <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
 
-<div id="tabs">
-    <ul>
-        <li>
-            <a href="#overview">Overview</a>
-        </li>
-        <li>
-            <a href="#fundraisers">My Fundraisers</a>
-        </li>
-        <li>
-            <a href="#contributions">My Contributions</a>
-        </li>
-    </ul>
+<main id="main">
+
+	<div id="tabs">
+	    <ul>
+	        <li>
+	            <a href="#overview">Overview</a>
+	        </li>
+	        <li>
+	            <a href="#fundraisers">My Fundraisers</a>
+	        </li>
+	        <li>
+	            <a href="#contributions">My Contributions</a>
+	        </li>
+	    </ul>
+	</div>
 
 
-<!-- Make call to stripe for user info -->
-<div id="overview">
-	<canvas id="user-contributions" height="400px" width="500px"></canvas>
-	<p>$<?php echo $json_object['total']; ?> contributed</p>
-</div>
+	<!-- Make call to stripe for user info -->
+	<div id="overview">
+		<canvas id="user-contributions" height="400px" width="500px"></canvas>
+		<p>$<?php echo $json_object['total']; ?> contributed</p>
+	</div>
 
-<div id="fundraisers">
-	<?php get_fundraiser_list($user_id); ?>
-</div>
+	<div id="fundraisers">
+		<?php get_fundraiser_list($user_id); ?>
+	</div>
 
-<div id="contributions">
-	<?php foreach ($json_object['charge-data'] as $charge) { ?>
-		<p>Contributed <?php echo $charge['amount'] / 100; ?> to <?php echo $charge['description']; ?></p>
-	<?php } ?>
-</div>
+	<div id="contributions">
+		<?php foreach ($json_object['charge-data'] as $charge) { ?>
+			<p>Contributed <?php echo $charge['amount'] / 100; ?> to <?php echo $charge['description']; ?></p>
+		<?php } ?>
+	</div>
+</main>
 
 
 

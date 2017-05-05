@@ -8,6 +8,8 @@
 
 get_header(); ?>
 
+<main id="main">
+
 <?php while ( have_posts() ) : the_post(); ?>
 	
 	<?php 
@@ -48,5 +50,7 @@ get_header(); ?>
 		<?php endif; ?>
 	
 <?php endwhile; // end of the loop. ?>
+
+</main>
 
 <?php get_footer(); ?>
