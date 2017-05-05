@@ -38,6 +38,16 @@ $json_object = get_customer_contributions($user_id);
 
 	<!-- Make call to stripe for user info -->
 	<div id="overview">
+
+	<?php if ($json_object['recurring_donation']) { ?>
+		<h2>Your Recurring Donations</h2>
+		<?php foreach ($json_object['subscription_data'] as $data) { ?>
+			<p><?php echo $data['id']; ?></p>
+		<?php } 
+	} ?>
+		
+
+
 		<canvas id="user-contributions" height="400px" width="500px"></canvas>
 		<p>$<?php echo $json_object['total']; ?> contributed</p>
 	</div>

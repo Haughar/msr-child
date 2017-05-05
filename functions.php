@@ -160,25 +160,19 @@ function get_customer_contributions($user_id) {
 	$customer_id = get_user_meta( $user_id, '_stripe_customer_id', true);
 	$charges = \Stripe\Charge::all(array('customer' => $customer_id, 'limit' => 50));
 
+	$json_object = [];
+
 	$subscription = \Stripe\Subscription::all(array('customer' => $customer_id));
 	$subscription_json = $subscription->__toJSON();
 	$sub_array = json_decode($subscription_json, true);
 	$sub_data = $sub_array['data'];
-	?> 
-	<h2>Your Recurring Donations</h2>
-	<?php
 
-	if (empty($sub_data)) {
-		?> <p>You have no recurring donations </p> <?php
-	} else {
-		foreach ($sub_data as $data) {
-			?><p><?php echo $data['id']; ?></p><?php
-		}
+	$json_object['recurring_donation'] = !empty($sub_data);
+	if (!empty($sub_data)) {
+		$json_object['subscription_data'] = $sub_data;
 	}
 
 	$current_month = date("m", time());
-
-	$json_object = [];
 
 	$months = array_fill(0, 6, 0);
 	$contributions = [];
