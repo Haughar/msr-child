@@ -18,12 +18,6 @@ get_header(); ?>
 
 <script type="text/javascript">
 	function validate_form() {
-		var campaign_element = document.getElementById("fundraiser-campaign");
-		var campaign_id = campaign_element.options[campaign_element.selectedIndex].value;
-		if (campaign_id == "") {
-			alert("Please choose a campaign");
-			return false;
-		}
 
 		if (document.fundraiser.fundraiserName.value == "") {
 			alert("please provide a name!");
@@ -74,48 +68,55 @@ get_header(); ?>
 			return false;
 		}
 
-		var campaignStart = new Date(campaign_element.options[campaign_element.selectedIndex].dataset.start);
-		var campaignEnd = new Date(campaign_element.options[campaign_element.selectedIndex].dataset.end);
-		if (start < campaignStart || start > campaignEnd || end < campaignStart || start > campaignEnd) {
-			alert("Range needs to be within range of campaign " + campaignStart + " - " + campaignEnd);
-			return false;
-		}
 		return( true );
 	}
 
 </script>
 
-<main id="main">
+<main id="main" class="fundraising">
+
+	<div class="title-wrapper">
+		<h2>Create a New Fundraiser</h2>
+	</div>
 
 	<form id="fundraiser" name="fundraiser" method="post" action="" encrypt="multipart/form-data" onsubmit="return(validate_form());">
 
-		<h2>CONTRIBUTING TO</h2>
+		<div class="form-line">
+			<label for="fundraiser-name">Fundraiser Name</label>
+			<input type="text" id="fundraiser-name" name="fundraiserName" value="<?php echo isset($_POST['fundraiser-name']) ? htmlspecialchars($_POST['fundraiser-name']) : ''; ?>" placeholder="Give your fundraiser a title">
+		</div>
 
-		<select name="fundraiser-campaign" id="fundraiser-campaign">
-			<option value=""></option>
-			<?php get_campaign_options(isset($_POST['fundraiser-campaign']) ? htmlspecialchars($_POST['fundraiser-campaign']) : ''); ?>
-		</select>
+		<div class="form-line image">
+			<label>Cover Image</label>
+			<div class="cover-image"></div>
+			<label for="thumbnail" class="upload-btn btn">UPLOAD<br>your own image</label>
+			<div class="spacer"></div>
+			<label class="btn">CHOOSE<br>one of ours</label>
+			<input type="file" name="thumbnail" id="thumbnail" value="Choose File">
+		</div>
 
-		<label for="fundraiser-name">Fundraiser Name</label>
-		<input type="text" id="fundraiser-name" name="fundraiserName" value="<?php echo isset($_POST['fundraiser-name']) ? htmlspecialchars($_POST['fundraiser-name']) : ''; ?>">
+		<div class="form-line goal">
+			<label for="fundraiser-goal">Goal</label>
+			<?php echo twitter_svg(); ?>
+			<input type="text" id="fundraiser-goal" name="fundraiserGoal" value="<?php echo isset($_POST['fundraiser-goal']) ? htmlspecialchars($_POST['fundraiser-goal']) : ''; ?>" placeholder="Enter Amount">
+		</div>
 
-		<label for="fundraiser-goal">Fundraiser Goal</label>
-		<input type="text" id="fundraiser-goal" name="fundraiserGoal" value="<?php echo isset($_POST['fundraiser-goal']) ? htmlspecialchars($_POST['fundraiser-goal']) : ''; ?>">
+		<div class="form-line">
+			<div class="split-line">
+				<label for="start-date">Start Date</label>
+				<input type="date" id="start-date" name="startDate" value="<?php echo isset($_POST['start-date']) ? htmlspecialchars($_POST['start-date']) : ''; ?>">
+			</div>
 
-		<label for="thumbnail">Upload Cover Image</label>
-		<input type="file" name="thumbnail" id="thumbnail" value="Choose File">
+			<div class="split-line">
+				<label for="end-date">End Date</label>
+				<input type="date" id="end-date" name="endDate" value="<?php echo isset($_POST['end-date']) ? htmlspecialchars($_POST['end-date']) : ''; ?>">
+			</div>
+		</div>
 
-		<lable for="tagline">Quick Description</lable>
-		<textarea id="tageline" name="tagline"><?php echo isset($_POST['tagline']) ? htmlspecialchars($_POST['tagline']) : ''; ?></textarea>
-
-		<label for="start-date">Start Date</label>
-		<input type="date" id="start-date" name="startDate" value="<?php echo isset($_POST['start-date']) ? htmlspecialchars($_POST['start-date']) : ''; ?>">
-
-		<label for="end-date">End Date</label>
-		<input type="date" id="end-date" name="endDate" value="<?php echo isset($_POST['end-date']) ? htmlspecialchars($_POST['end-date']) : ''; ?>">
-
-		<label for="description">Detailed Description</label>
-		<textarea id="description" name="description"><?php echo isset($_POST['description']) ? htmlspecialchars($_POST['description']) : ''; ?></textarea>
+		<div class="form-line">
+			<label for="description">Story</label>
+			<textarea id="description" name="description"><?php echo isset($_POST['description']) ? htmlspecialchars($_POST['description']) : ''; ?></textarea>
+		</div>
 
 		<input type="hidden" name="post-type" id="post-type" value="fundraiser" />
 
@@ -123,8 +124,10 @@ get_header(); ?>
 
 		<?php wp_nonce_field( 'create_fundraiser_action','create_fundraiser_nonce' ); ?>
 
-		<a href="home">Cancel</a>
-		<input type="submit" name="create-button" value="Create">
+		<div class="action-btns">
+			<a href="home" id="cancel">Cancel</a>
+			<input type="submit" name="create-button" value="Submit">
+		</div>
 
 	</form>
 </main>

@@ -104,12 +104,172 @@
 }
 
 .progress-bar {
-	background-color: lightgrey;
+	background-color: #F8F8F8;
 	height: 20px;
-	width: 100%;
+	width: 99%;
 }
 
 .ui-progressbar-value {
 	height: 20px;
-	background-color: maroon;
+	background-color: #694359;
+}
+
+.fundraising h1 {
+	font-size: 48px;
+	margin-bottom: 60px;
+	margin-top: 60px;
+}
+
+.fundraising .amount-summary {
+	font-size: 22px;
+	margin-bottom: 8px;
+}
+
+.fundraising .amount-summary .bold {
+	font-weight: 800;
+}
+
+.fundraising .summary-subtext {
+	display: inline-block;
+	font-size: 14px;
+	margin-top: 8px;
+	width: 49%;
+}
+
+.fundraising .summary-subtext.right {
+	text-align: right;
+}
+
+.single .fundraising .entry-content p {
+	font-size: 20px !important;
+	font-style: normal !important;
+	font-weight: 100 !important;
+}
+
+.fundraising .title-wrapper {
+	text-align: center;
+}
+
+.fundraising h2 {
+	font-size: 24px;
+	font-weight: 400;
+	text-transform: none;
+}
+
+.fundraising form label {
+	color: #828282;
+	font-size: 12px;
+	text-transform: uppercase;
+	display: block;
+	margin-bottom: 12px;
+}
+
+.fundraising .form-line {
+	display: block;
+	margin-top: 28px;
+}
+
+.fundraising input {
+	width: 70%;
+}
+
+.fundraising input[type="file"] {
+	display: none;
+}
+
+.fundraising .form-line .cover-image {
+	border: 1px solid #000;
+	height: 200px;
+	width: 100%;
+}
+
+.fundraising .image .btn {
+	display: inline-block;
+	margin-top: 10px;
+	text-align: center;
+	width: 49%;
+}
+
+.fundraising .image .spacer {
+	display: inline-block;
+	width: 1%;
+}
+
+.fundraising .btn {
+	border: 1px solid #e2383f;
+	background: #e2383f;
+	color: #fff;
+	font-family: "futura-pt-condensed", Arial, Sans-Serif;
+	text-transform: none;
+	font-weight: 400;
+	font-size: 16px;
+	font-size: 1rem;
+	line-height: 21px;
+	padding: 7px 12px;
+}
+
+.fundraising input[type="date"] {
+	padding: 7px 15px;
+}
+
+.fundraising input[type="text"]#fundraiser-goal {
+	width: 157px;
+}
+
+.fundraising .goal {
+	position: relative;
+}
+
+.fundraising .goal svg {
+	position: absolute;
+	padding-left: 7px;
+	padding-top: 7px;
+	height: 25px;
+	width: 25px;
+	z-index: 3;
+}
+
+.fundraising .goal input[type="text"] {
+	padding-left: 35px;
+}
+
+.fundraising input[type="date"] {
+	width: 197px;
+}
+
+.fundraising .form-line .split-line {
+	display: inline-block;
+	width: 49%;
+}
+
+.fundraising textarea {
+	height: 200px;
+}
+
+.fundraising .action-btns {
+	margin-bottom: 40px;
+	margin-top: 28px;
+	display: inline;
+	float: right;
+}
+
+.fundraising .action-btns #cancel {
+	color: #828282;
+	font-size: 16px;
+	text-transform: uppercase;
+}
+
+.fundraising .action-btns #cancel:visited, .fundraising .action-btns #cancel:hover {
+	color: #828282;
+	text-decoration: none;
+}
+
+.fundraising input[type="submit"] {
+	background-color: #000;
+	border-color: #000;
+	font-size: 16px;
+	font-weight: 100px;
+	margin-left: 20px;
+	padding: 10px 20px;
+	width: auto;
 }
