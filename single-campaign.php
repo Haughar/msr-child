@@ -15,32 +15,29 @@ get_header(); ?>
 <?php while ( have_posts() ) : the_post();
 	global $post_id; ?>
 	
-	<?php 
-		if ( has_post_thumbnail() ) { // check if the post has a Post Thumbnail assigned to it. ?>
-		
-		<?php $image_url = wp_get_attachment_image_src( get_post_thumbnail_id(), 'msr-post-hero', true );  
-
-		if( $image_url && isset ( $image_url[0] ) && $image_url[1] >= 1000 ) {
-		?>
-		
-			<div class="article-featured-image" style="background-image: url('<?php echo $image_url[0]; ?>');">
-				<div class="featured-overlay"></div>
-			</div>
-			
-		<?php } ?>	
-	<?php } ?>
 	<div class="article-body clearfix  flex-content">
+		<?php 
+			if ( has_post_thumbnail() ) { // check if the post has a Post Thumbnail assigned to it. ?>
+			
+			<?php $image_url = wp_get_attachment_image_src( get_post_thumbnail_id(), 'msr-post-hero', true );  
+
+			if( $image_url && isset ( $image_url[0] ) && $image_url[1] >= 1000 ) {
+			?>
+				<div class="campaign-image"><img src="<?php echo $image_url[0]; ?>"></div>
+				
+			<?php } ?>	
+		<?php } ?>
 
 		<div id="primary" class="content-area-full">
 			<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
 
 			<div class="prgress-section">
-				<p>Make call to stripe to get info</p>
+				<p class="amount-summary"><span class="bold">Make</span> call to stripe to get info</p>
 				<div id="campaign-progress" class="progress-bar"></div>
-				<p><?php echo get_percentage_to_goal("20000", get_post_meta($id, 'campaign-goal', true)); ?>% of $<?php echo get_post_meta($id, 'campaign-goal', true); ?></p>
-				<p><?php echo get_fundraising_days_left(get_post_meta($id, 'campaign-end', true)); ?> days left</p>
+				<p class="summary-subtext"><?php echo get_percentage_to_goal("20000", get_post_meta($id, 'campaign-goal', true)); ?>% of $<?php echo get_post_meta($id, 'campaign-goal', true); ?></p>
+				<p class="summary-subtext right"><?php echo get_fundraising_days_left(get_post_meta($id, 'campaign-end', true)); ?> days left</p>
 			</div>
-			<p><?php echo get_post_meta($id, 'campaign-start', true); ?> to <?php echo get_post_meta($id, 'campaign-end', true); ?></p>
+			<!-- <p><?php echo get_post_meta($id, 'campaign-start', true); ?> to <?php echo get_post_meta($id, 'campaign-end', true); ?></p> -->
 			<?php get_template_part( 'content', 'page' ); ?>
 
 		</div>
@@ -71,8 +68,9 @@ $args = array(
 );
 
 $post_query = new WP_Query($args);
-if($post_query->have_posts() ) {
-  while($post_query->have_posts() ) {
+if($post_query->have_posts() ) { ?>
+	<h2>Fundraisers supporting this campaign</h2>
+  <?php while($post_query->have_posts() ) {
     $post_query->the_post();
     $post = get_post();
     $id = $post->ID; ?>
@@ -134,5 +132,12 @@ if($post_query->have_posts() ) {
 <button id='wow-modal-id-1'>Contribute Now</button>
 
 </main>
+
+<script type="text/javascript">
+	window.onload = function() {
+		console.log("Got here");
+		document.body.classList.remove("has-featured-image");
+	}
+</script>
 
 <?php get_footer(); ?>

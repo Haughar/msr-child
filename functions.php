@@ -2,16 +2,16 @@
 
 include 'svg-icons.php';
 
-add_action( 'wp_enqueue_scripts', 'msr_child_enqueue_styles' );
 function msr_child_enqueue_styles() {
-    $parent_style = 'msr'; 
+    $parent_style = 'msr-style'; 
  
     wp_enqueue_style( $parent_style, get_template_directory_uri() . '/style.css' );
-    wp_enqueue_style( 'msr-cild',
+    wp_enqueue_style( 'msr-cild-style',
         get_stylesheet_directory_uri() . '/style.css',
         array( $parent_style ),
         wp_get_theme()->get('Version'));
 }
+add_action( 'wp_enqueue_scripts', 'msr_child_enqueue_styles' );
 
 function display_generic_comments($comments_array) {
 	
@@ -70,8 +70,6 @@ function create_new_fundraiser() {
 		'post_title' => $_POST['fundraiserName'],
 		'post_content' => $_POST['description'],
 		'meta_input' => array (
-			'fundraiser-campaign' => $_POST['fundraiserCampaign'],
-			'fundraiser-tagline' => $_POST['tagline'],
 			'fundraiser-goal' => $_POST['fundraiserGoal'],
 			'fundraiser-start' => $_POST['startDate'],
 			'fundraiser-end' => $_POST['endDate']
@@ -116,30 +114,7 @@ function edit_fundraiser($id) {
 	);
 
 	wp_update_post($edited_post);
-
-	update_fundraiser($id, 'fundraiser_form', 'fundraiser-tagline');
 	flush_rewrite_rules();
-}
-
-function get_campaign_options($campaign_id) {
-	$args = array(
-        'post_type' => 'campaign'
-    );
-
-    $post_query = new WP_Query($args);
-	if($post_query->have_posts() ) {
-	  while($post_query->have_posts() ) {
-	    $post_query->the_post();
-	    $post = get_post();
-	    $id = $post->ID;
-	    if($id . '' == $campaign_id . '') { ?>
-	    	<option value="<?php echo the_ID(); ?>" data-start="<?php echo get_post_meta($post->ID, 'campaign-start', true); ?>" data-end="<?php echo get_post_meta($post->ID, 'campaign-end', true); ?>" selected><?php the_title(); ?></option>
-	    <?php } else { ?>
-	    <option value="<?php echo the_ID(); ?>" data-start="<?php echo get_post_meta($post->ID, 'campaign-start', true); ?>" data-end="<?php echo get_post_meta($post->ID, 'campaign-end', true); ?>" ><?php the_title(); ?></option>
-	    <?php
-		}
-	  }
-	}
 }
 
 function get_customer_contributions($user_id) {
@@ -237,9 +212,6 @@ function get_fundraiser_list($user_id) {
 				echo get_the_title($id);
 			} 
 			echo '<br>';
-			if (get_post_meta($id, 'fundraiser-tagline', true)) {
-				echo get_post_meta($id, 'fundraiser-tagline', true);
-			} 
 
 			if (get_post_meta($id, 'fundraiser-goal', true) && get_post_meta($id, 'fundraiser-amount-raised', true)) { ?>
 				<p><?php echo get_percentage_to_goal(floatval(get_post_meta($id, 'fundraiser-amount-raised', true)), floatval(get_post_meta($id, 'fundraiser-goal', true)));?> %</p>

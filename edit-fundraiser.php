@@ -56,11 +56,6 @@ if (have_posts()) : while (have_posts()) : the_post();
 	<p>Fundraiser Goal: <?php echo wpautop(get_post_meta($id, 'fundraiser-goal', true)); ?></p>
 	<?php } ?>
 
-	<label for="fundraiser-tagline">Quick Description</label>
-	<textarea id="fundraiser-tagline" name="fundraiser-tagline"><?php if (get_post_meta($id, 'fundraiser-tagline', true)) {
-			echo get_post_meta($id, 'fundraiser-tagline', true);
-		} ?></textarea>
-
 	<label for="fundraiser-description">Detailed Description</label>
 	<textarea id="fundraiser-description" name="fundraiser-description"><?php the_content(); ?></textarea>
 

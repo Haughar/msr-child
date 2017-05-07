@@ -12,7 +12,7 @@ get_header(); ?>
 	$post_id = $post->ID; 
 
 	if ($post->post_author == get_current_user_id()) { ?>
-		<button><a href="<?php echo home_url() . '/edit-fundraiser?post_id=' . $post_id ?>">Manage</a></button>
+		<button onclick="window.location.href='<?php echo home_url() . '/edit-fundraiser?post_id=' . $post_id ?>'">Manage</button>
 	<?php } ?>
 	
 
@@ -102,14 +102,12 @@ get_header(); ?>
 	  try {
 	  	document.execCommand("copy");
 	  	var tooltip = document.getElementById("copy-success");
-	  	console.log("got here");
 	  	tooltip.classList.add("success");
 	  	setTimeout(function() {
 	  		tooltip.classList.remove("success");
 	  	}, 1000);
 	  } catch (e){
 	  	// notify that it didnt work
-	  	console.log(e);
 	  }
 	  
 	  document.body.removeChild(aux);
