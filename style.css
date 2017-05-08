@@ -317,3 +317,27 @@
 	padding: 10px 20px;
 	width: auto;
 }
+
+
+
+/** USER PROFILE **/
+.user-profile-header {
+	width: 100%;
+	background-color: #E0E0E0;
+}
+
+
+
+/** DASHBOARD **/
+#title {
+	display: inline-block;
+}
+
+#title h1 {
+	margin-top: 0px;
+}
+
+#fundraise-btn {
+	display: inline-block;
+}
+

@@ -21,44 +21,55 @@ $json_object = get_customer_contributions($user_id);
 
 <main id="main">
 
+
 	<div id="tabs">
+    	<li> Profile Picture </li>
+    	<li> <?php echo get_user_meta( $user_id, 'nickname', true); ?> </li>
 	    <ul>
-	        <li>
-	            <a href="#overview">Overview</a>
-	        </li>
 	        <li>
 	            <a href="#fundraisers">My Fundraisers</a>
 	        </li>
 	        <li>
 	            <a href="#contributions">My Contributions</a>
 	        </li>
+	        <li>
+	            <a href="#settings">Settings</a>
+	        </li>
 	    </ul>
 
 
 		<!-- Make call to stripe for user info -->
-		<div id="overview">
-
-		<?php if ($json_object['recurring_donation']) { ?>
-			<h2>Your Recurring Donations</h2>
-			<?php foreach ($json_object['subscription_data'] as $data) { ?>
-				<p><?php echo $data['id']; ?></p>
-			<?php } 
-		} ?>
-			
-
-
-			<canvas id="user-contributions" height="400px" width="500px"></canvas>
-			<p>$<?php echo $json_object['total']; ?> contributed</p>
-		</div>
-
 		<div id="fundraisers">
-			<?php get_fundraiser_list($user_id); ?>
-		</div>
+			<div id="title"> 
+				<h1>My Campaigns</h1>
+				<p> Total Raised: $<?php echo $json_object['total']; ?></p>
+			</div>
+			<div id="fundraise-btn">
+				<input type="button" onclick="location.href='/create-fundraiser/';" value="New Fundraiser"/>
+			</div>
+			
+			<?php get_fundraiser_list($user_id); ?> 			
+ 		</div>
 
 		<div id="contributions">
-			<?php foreach ($json_object['charge-data'] as $charge) { ?>
-				<p>Contributed <?php echo $charge['amount'] / 100; ?> to <?php echo $charge['description']; ?></p>
+			<h1>My Contributions</h1>
+			<input type="button" onclick="location.href='/create-fundraiser/';" value="New Fundraiser" />
+			<h3>Your Recurring Donations</h3>
+			<?php if ($json_object['recurring_donation']) { ?>
+				<?php foreach ($json_object['subscription_data'] as $data) { ?>
+					<p><?php echo $data['id']; ?></p>
+				<?php } 
+			} else { ?>
+				<p>You have no recurring payments.</p> 
+			<?php }
+			foreach ($json_object['charge-data'] as $charge) { ?>
+				<p>Contributed <?php echo '$' . $charge['amount'] / 100 . '.00'; ?> to <?php echo get_the_title($charge['description']); ?></p>
 			<?php } ?>
+		</div>
+
+		<div id="settings">
+			<h1>Account Settings</h1>
+
 		</div>
 	</div>
 </main>
@@ -68,63 +79,63 @@ $json_object = get_customer_contributions($user_id);
 
 
 <script type="text/javascript">
-var ctx = document.getElementById('user-contributions').getContext('2d');
+	//var ctx = document.getElementById('user-contributions').getContext('2d');
 
-	var data = {
-		labels: ['', '', '', '', '', ''],
-		datasets: [
-			{
-				label: 'past-contributions',
-				backgroundColor: [
-					'rgb(234, 193, 16, 1)',
-					'rgb(234, 193, 16, 1)',
-					'rgb(234, 193, 16, 1)',
-					'rgb(234, 193, 16, 1)',
-					'rgb(234, 193, 16, 1)',
-					'rgb(234, 193, 16, 1)'
-				],
-				borderColor: [
-					'rgb(234, 193, 16, 1)',
-					'rgb(234, 193, 16, 1)',
-					'rgb(234, 193, 16, 1)',
-					'rgb(234, 193, 16, 1)',
-					'rgb(234, 193, 16, 1)',
-					'rgb(234, 193, 16, 1)'
-				],
-				borderWidth: 1,
-				data: <?php echo json_encode( $json_object['contribution-data'] ); ?>,
-			}
-		]
-	};
+	// var data = {
+	// 	labels: ['', '', '', '', '', ''],
+	// 	datasets: [
+	// 		{
+	// 			label: 'past-contributions',
+	// 			backgroundColor: [
+	// 				'rgb(234, 193, 16, 1)',
+	// 				'rgb(234, 193, 16, 1)',
+	// 				'rgb(234, 193, 16, 1)',
+	// 				'rgb(234, 193, 16, 1)',
+	// 				'rgb(234, 193, 16, 1)',
+	// 				'rgb(234, 193, 16, 1)'
+	// 			],
+	// 			borderColor: [
+	// 				'rgb(234, 193, 16, 1)',
+	// 				'rgb(234, 193, 16, 1)',
+	// 				'rgb(234, 193, 16, 1)',
+	// 				'rgb(234, 193, 16, 1)',
+	// 				'rgb(234, 193, 16, 1)',
+	// 				'rgb(234, 193, 16, 1)'
+	// 			],
+	// 			borderWidth: 1,
+	// 			data: <?php echo json_encode( $json_object['contribution-data'] ); ?>,
+	// 		}
+	// 	]
+	// };
 
-	var options = {
-        scales: {
-            xAxes: [{
-                gridLines: {
-                	display: false
-                },
-                ticks: {
-                	display: false
-                }
-            }],
-            yAxes: [{
-                gridLines: {
-                	display: false
-                },
-                ticks: {
-                	display: false
-                }
-            }]
-        },
-        responsive: false,
-        scaleShowLabels : false
-    };
+	// var options = {
+ //        scales: {
+ //            xAxes: [{
+ //                gridLines: {
+ //                	display: false
+ //                },
+ //                ticks: {
+ //                	display: false
+ //                }
+ //            }],
+ //            yAxes: [{
+ //                gridLines: {
+ //                	display: false
+ //                },
+ //                ticks: {
+ //                	display: false
+ //                }
+ //            }]
+ //        },
+ //        responsive: false,
+ //        scaleShowLabels : false
+ //    };
 
-	var myBarChart = new Chart(ctx, {
-	    type: 'bar',
-	    data: data,
-	    options: options
-	});
+	// var myBarChart = new Chart(ctx, {
+	//     type: 'bar',
+	//     data: data,
+	//     options: options
+	// });
 
 
 	$('#tabs')
@@ -133,7 +144,7 @@ var ctx = document.getElementById('user-contributions').getContext('2d');
 
 </script>
 
-<link rel="stylesheet" type="text/css" href="style.css">
-<?php 
+<!-- <link rel="stylesheet" type="text/css" href="style.css">
+ --><?php 
 get_footer();
 ?>

@@ -192,13 +192,25 @@ function get_customer_contributions($user_id) {
 
 function get_fundraiser_list($user_id) {
 
-	$args = array(
-	    'post_type' => 'fundraiser',
-	  	'post_status' => array('pending', 'publish'),
-	  	'author' => $user_id
-	);
+	//if($fundraiser == 'all') {
+		$args = array(
+		    'post_type' => 'fundraiser',
+		  	'post_status' => array('pending', 'publish'),
+		  	'author' => $user_id
+		); 
+	// } else {
+	// 	$args = array(
+	// 	    'post_type' => 'fundraiser',
+	// 	  	'post_status' => 'publish',
+	// 	  	'author' => $user_id
+	// 	); 
+	// }
 
-	$post_query = new WP_Query($args);
+	$post_query = new WP_Query($args); ?>
+	<div class="user-profile-header">
+		<h3>Active Fundraisers <?php echo '(' . $post_query->post_count . ')'; ?> </h3>
+	</div>
+	<?php
 	if($post_query->have_posts() ) {
 		while($post_query->have_posts() ) {
 			$post_query->the_post();
