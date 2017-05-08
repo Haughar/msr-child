@@ -6,7 +6,7 @@ if (isset($_SERVER['HTTP_REFERER'])) {
 
 get_header(); ?>
 
-<main id="main">
+<main id="main" class="fundraising">
 
 <?php if (have_posts()) : while (have_posts()) : the_post();
 	$post_id = $post->ID; 
@@ -77,7 +77,7 @@ get_header(); ?>
 		<a href="http://www.facebook.com/sharer.php?u=<?php the_permalink();?>&amp;t=<?php the_title(); ?>" title="Share on Facebook." target="_blank"><?php echo facebook_svg(); ?></a>
 		<a href="http://twitter.com/home/?status=<?php the_title(); ?> - <?php the_permalink(); ?>" title="Tweet this!" target="_blank"><?php echo twitter_svg(); ?></a>
 		<a id="copy-link" class="tooltip">
-			<?php echo twitter_svg(); ?>
+			<?php echo copy_svg(); ?>
 			<p id="copy-success" class="tooltiptext">Copied!</p>
 		</a>
 	</div>

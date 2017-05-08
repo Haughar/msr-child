@@ -89,27 +89,33 @@ get_header(); ?>
 		<div class="form-line image">
 			<label>Cover Image</label>
 			<div class="cover-image"></div>
-			<label for="thumbnail" class="upload-btn btn">UPLOAD<br>your own image</label>
+			<label for="thumbnail" class="upload-btn btn"><span>Upload</span><br>your own image</label>
 			<div class="spacer"></div>
-			<label class="btn">CHOOSE<br>one of ours</label>
+			<label class="btn"><span>Choose</span><br>one of ours</label>
 			<input type="file" name="thumbnail" id="thumbnail" value="Choose File">
 		</div>
 
 		<div class="form-line goal">
 			<label for="fundraiser-goal">Goal</label>
-			<?php echo twitter_svg(); ?>
+			<?php echo dollar_svg(); ?>
 			<input type="text" id="fundraiser-goal" name="fundraiserGoal" value="<?php echo isset($_POST['fundraiser-goal']) ? htmlspecialchars($_POST['fundraiser-goal']) : ''; ?>" placeholder="Enter Amount">
 		</div>
 
 		<div class="form-line">
 			<div class="split-line">
 				<label for="start-date">Start Date</label>
-				<input type="date" id="start-date" name="startDate" value="<?php echo isset($_POST['start-date']) ? htmlspecialchars($_POST['start-date']) : ''; ?>">
+				<div class="date-wrapper">
+					<input type="date" id="start-date" name="startDate" value="<?php echo isset($_POST['start-date']) ? htmlspecialchars($_POST['start-date']) : ''; ?>">
+					<?php echo calendar_svg(); ?>
+				</div>
 			</div>
 
 			<div class="split-line">
 				<label for="end-date">End Date</label>
-				<input type="date" id="end-date" name="endDate" value="<?php echo isset($_POST['end-date']) ? htmlspecialchars($_POST['end-date']) : ''; ?>">
+				<div class="date-wrapper">
+					<input type="date" id="end-date" name="endDate" value="<?php echo isset($_POST['end-date']) ? htmlspecialchars($_POST['end-date']) : ''; ?>">
+					<?php echo calendar_svg(); ?>
+				</div>
 			</div>
 		</div>
 
