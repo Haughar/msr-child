@@ -73,7 +73,7 @@ get_header(); ?>
 
 </script>
 
-<main id="main" class="fundraising">
+<main id="main" class="fundraising funraiser-form">
 
 	<div class="title-wrapper">
 		<h2>Create a New Fundraiser</h2>

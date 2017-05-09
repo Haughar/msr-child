@@ -112,7 +112,7 @@
 
 .ui-progressbar-value {
 	height: 20px;
-	background-color: #694359;
+	background-color: #E2383F;
 }
 
 .fundraising h1 {
@@ -309,7 +309,7 @@
 	text-decoration: none;
 }
 
-.fundraising input[type="submit"] {
+.fundraising input[type="submit"], .fundraising .manage-btn {
 	background-color: #000;
 	border-color: #000;
 	font-size: 16px;
@@ -317,6 +317,100 @@
 	margin-left: 20px;
 	padding: 10px 20px;
 	width: auto;
+}
+
+/** SINGLE FUNDRAISER PAGE **/
+
+.single-fundraiser .fundraising h1 {
+	display: inline;
+	text-align: left;
+}
+
+.single-fundraiser .fundraising .manage-btn {
+	float: right;
+	margin-top: 10px;
+}
+
+.single-fundraiser .main-content {
+	display: inline-block;
+	float: left;
+	margin-top: 50px;
+	padding-right: 20px;
+	width: 60%;
+}
+
+.single-fundraiser .contribution-content {
+	display: inline-block;
+	float: right;
+	width: 39%;
+}
+
+.single-fundraiser .author div {
+	display: inline-block;
+	width: 49%;
+}
+
+.single-fundraiser .author div p {
+	font-size: 16px;
+	margin-top: 0;
+}
+
+.single-fundraiser .author .sharing {
+	text-align: right;
+}
+
+.single-fundraiser .description {
+	font-size: 20px;
+}
+
+.single-fundraiser .card {
+	box-shadow: 0 1px 4px 0 rgba(0,0,0,0.16), 0 2px 2px 0 rgba(0,0,0,0.16);
+	margin-top: 50px;
+	padding: 20px;
+}
+
+.single-fundraiser .card .progress-summary {
+	font-size: 14px;
+	margin-bottom: 10px;
+}
+
+.single-fundraiser .card .progress-summary strong {
+	font-size: 22px;
+}
+
+.single-fundraiser .card .progress-percent, .single-fundraiser .card .time-left {
+	display: inline-block;
+	font-size: 14px;
+	margin-bottom: 30px;
+	margin-top: 20px;
+	width: 49%;
+}
+
+.single-fundraiser .card .time-left {
+	text-align: right;
+}
+
+.single-fundraiser .card button {
+	display: block;
+	height: 60px;
+	font-size: 24px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 200px;
+}
+
+.single-fundraiser .contributors {
+	margin-top: 50px;
+	width: 100%;
+}
+
+.single-fundraiser h2 {
+	font-size: 18px;
+}
+
+.single-fundraiser .contributors h2 {
+	border-bottom: 1px solid #CCC;
+	padding-bottom: 5px;
 }
 
 
@@ -333,6 +427,9 @@
 .user-profile-header p {
 	margin-bottom: 0.75em;
 }
+
+
+
 
 
 /** DASHBOARD **/
@@ -430,4 +527,3 @@
 	display: inline-block;
 	vertical-align: top;
 }
-

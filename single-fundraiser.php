@@ -6,90 +6,88 @@ if (isset($_SERVER['HTTP_REFERER'])) {
 
 get_header(); ?>
 
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <main id="main" class="fundraising">
 
 <?php if (have_posts()) : while (have_posts()) : the_post();
-	$post_id = $post->ID; 
+	$post_id = $post->ID;
 
-	if ($post->post_author == get_current_user_id()) { ?>
-		<button onclick="window.location.href='<?php echo home_url() . '/edit-fundraiser?post_id=' . $post_id ?>'">Manage</button>
-	<?php } ?>
-	
-
-<div class="left">
-
-	<?php if ( has_post_thumbnail() ) {
+	if ( has_post_thumbnail() ) {
 		the_post_thumbnail( array(500,500) );
 	}?>
 
-	<h2>Story</h2>
-	<p><?php the_content(); ?></p>
-
-	<h2>Updates</h2>
-	<p>Not sure what this is going to be?</p>
-
-	<h2>Comments(<?php comments_number('0', '1', '%'); ?>)</h2>
-	<?php $comments = get_comments(array('post_id' => $post->ID, 'type' => 'comment', 'status' => 'approve')); ?>
-	<ol class="commentlist">
-		<?php wp_list_comments(array('reverse_top_level' => false, 'style' => 'ol' ), $comments); ?>
-	</ol>
-	<div>
-		<?php comment_form(array('title_reply' => __( 'Leave a Comment', 'textdomain' ), 'comment_notes_after' => ''), $post->ID); ?>
-	</div>
-
-	<h2>Contributors</h2>
-	<?php $comments = get_comments(array('post_id' => $post->ID, 'type' => 'contribution', 'status' => 'approve')); ?>
-	<ol class="commentlist">
-		<?php wp_list_comments(array('reverse_top_level' => false, 'style' => 'ol' ), $comments); ?>
-	</ol>
-
-</div>
-
-<div class="right">
-
+	
 	<h1><?php the_title(); ?></h1>
-	<?php if (get_post_meta($id, 'fundraiser-tagline', true)) { ?>
-	<h3><?php echo wpautop(get_post_meta($id, 'fundraiser-tagline', true)); ?></h3>
+	<?php if ($post->post_author == get_current_user_id()) { ?>
+		<button onclick="window.location.href='<?php echo home_url() . '/edit-fundraiser?post_id=' . $post_id ?>'" class="manage-btn">Manage</button>
 	<?php } ?>
 
-	<p><?php echo the_author_meta('user_login'); ?></p>
+	<div class="main-content">
 
-	<?php if (get_post_meta($id, 'fundraiser-amount-raised', true)) { ?>
-	<p><?php echo wpautop(get_post_meta($id, 'fundraiser-amount-raised', true)); ?></p>
-	<?php } ?>
+		<div class="author">
+			<div>
+				<p><?php echo the_author_meta('user_login'); ?></p>
+			</div>
 
-	<?php if (get_post_meta($id, 'fundraiser-goal', true)) { ?>
-	<p><?php echo wpautop(get_post_meta($id, 'fundraiser-goal', true)); ?></p>
-	<?php } ?>
+			<div class="sharing">
+				<a href="http://www.facebook.com/sharer.php?u=<?php the_permalink();?>&amp;t=<?php the_title(); ?>" title="Share on Facebook." target="_blank"><?php echo facebook_svg(); ?></a>
+				<a href="http://twitter.com/home/?status=<?php the_title(); ?> - <?php the_permalink(); ?>" title="Tweet this!" target="_blank"><?php echo twitter_svg(); ?></a>
+				<a id="copy-link" class="tooltip">
+					<?php echo copy_svg(); ?>
+					<p id="copy-success" class="tooltiptext">Copied!</p>
+				</a>
+			</div>
+		</div>
 
-	<?php if (get_post_meta($id, 'fundraiser-goal', true) && get_post_meta($id, 'fundraiser-amount-raised', true)) { ?>
-	<p><?php echo get_percentage_to_goal(floatval(get_post_meta($id, 'fundraiser-amount-raised', true)), floatval(get_post_meta($id, 'fundraiser-goal', true))); ?>%</p>
-	<?php } ?>
+		<div class="description"><?php echo the_content(); ?></div>	
 
-	<?php if (get_post_meta($id, 'fundraiser-end', true)) { ?>
-	<p><?php echo get_fundraising_days_left(get_post_meta($id, 'fundraiser-end', true)); ?>&nbsp;day(s) left</p>
-	<?php } ?>
+		<h2>Updates and Comments</h2>
+		<?php $comments = get_comments(array('post_id' => $post->ID, 'type' => 'comment', 'status' => 'approve')); ?>
+		<ol class="commentlist">
+			<?php wp_list_comments(array('reverse_top_level' => false, 'style' => 'ol' ), $comments); ?>
+		</ol>
+		<div>
+			<?php comment_form(array('title_reply' => __( 'Leave a Comment', 'textdomain' ), 'comment_notes_after' => ''), $post->ID); ?>
+		</div>
 
-	<?php echo do_shortcode("[Wow-Modal-Windows id=1]"); ?>
-	<button id='wow-modal-id-1'>Contribute Now</button>
-
-	<div class="sharing">
-		<a href="http://www.facebook.com/sharer.php?u=<?php the_permalink();?>&amp;t=<?php the_title(); ?>" title="Share on Facebook." target="_blank"><?php echo facebook_svg(); ?></a>
-		<a href="http://twitter.com/home/?status=<?php the_title(); ?> - <?php the_permalink(); ?>" title="Tweet this!" target="_blank"><?php echo twitter_svg(); ?></a>
-		<a id="copy-link" class="tooltip">
-			<?php echo copy_svg(); ?>
-			<p id="copy-success" class="tooltiptext">Copied!</p>
-		</a>
 	</div>
 
-	<h3>Feed</h3>
-	<?php $comments = get_comments(array('post_id' => $post->ID)); ?>
-	<ol class="commentlist">
-		<?php wp_list_comments(array('reverse_top_level' => false, 'style' => 'ol' ), $comments); ?>
-	</ol>
+	<div class="contribution-content">
 
+		<div class="card">
 
-</div>
+			<p class="progress-summary"><strong>$63,000</strong> USD raised by 322 contributors</p>
+
+			<div id="campaign-progress" class="progress-bar"></div>
+
+			<?php if (get_post_meta($id, 'fundraiser-goal', true)) { ?>
+				<p class="progress-percent"><?php echo get_percentage_to_goal("20000", get_post_meta($id, 'fundraiser-goal', true)); ?>% of $<?php echo get_post_meta($id, 'fundraiser-goal', true); ?></p>
+			<?php } ?>
+
+			<?php if (get_post_meta($id, 'fundraiser-end', true)) { ?>
+				<p class="time-left"><?php echo get_fundraising_days_left(get_post_meta($id, 'fundraiser-end', true)); ?>&nbsp;day(s) left</p>
+			<?php } ?>
+
+			<?php echo do_shortcode("[Wow-Modal-Windows id=1]"); ?>
+			<div class="btn-wrapper">
+				<button id='wow-modal-id-1'>Contribute</button>
+			</div>
+		</div>
+
+		<div class="contributors">
+			<h2>Contributors</h2>
+			<?php $comments = get_comments(array('post_id' => $post->ID, 'type' => 'contribution', 'status' => 'approve')); ?>
+			<ol class="commentlist">
+				<?php wp_list_comments(array('reverse_top_level' => false, 'style' => 'ol' ), $comments); ?>
+			</ol>
+		</div>
+	</div>
+
+<?php
+endwhile;
+endif; ?>
+</main>
 
 <script type="text/javascript">
 
@@ -113,14 +111,14 @@ get_header(); ?>
 	  document.body.removeChild(aux);
 	});
 
+	$( function() {
+		$( "#campaign-progress" ).progressbar({
+		  value: <?php echo get_percentage_to_goal("1000", get_post_meta($id, 'fundraiser-goal', true)); ?>
+		});
+	});
+
 
 </script>
-
-
-<?php
-endwhile;
-endif; ?>
-</main>
 <?php
 get_footer();
 
