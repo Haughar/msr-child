@@ -31,7 +31,7 @@ get_header(); ?>
 		<div id="primary" class="content-area-full">
 			<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
 
-			<div class="prgress-section">
+			<div class="progress-section">
 				<p class="amount-summary"><span class="bold">Make</span> call to stripe to get info</p>
 				<div id="campaign-progress" class="progress-bar"></div>
 				<p class="summary-subtext"><?php echo get_percentage_to_goal("20000", get_post_meta($id, 'campaign-goal', true)); ?>% of $<?php echo get_post_meta($id, 'campaign-goal', true); ?></p>
