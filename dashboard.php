@@ -21,11 +21,10 @@ $json_object = get_customer_contributions($user_id);
 
 <main id="main">
 
-
 	<div id="tabs">
-    	<li> Profile Picture </li>
-    	<li> <?php echo get_user_meta( $user_id, 'nickname', true); ?> </li>
 	    <ul>
+			<li> Profile Picture </li>
+    		<li class="dashb-username"> <?php echo get_user_meta( $user_id, 'nickname', true); ?> </li>
 	        <li>
 	            <a href="#fundraisers">My Fundraisers</a>
 	        </li>

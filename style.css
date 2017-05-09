@@ -10,6 +10,7 @@
  Text Domain:  msr-child
 */
 
+/** DASHBOARD'S LEFT NAVIGATION BAR **/
 .ui-tabs.ui-tabs-vertical {
     padding: 0;
     width: 100%;
@@ -19,18 +20,12 @@
 }
 .ui-tabs.ui-tabs-vertical .ui-tabs-nav {
     float: left;
-    width: 10em;
-    background: #CCC;
-    border-radius: 4px 0 0 4px;
-    border-right: 1px solid gray;
+    width: 13em;
 }
 .ui-tabs.ui-tabs-vertical .ui-tabs-nav li {
     clear: left;
     width: 100%;
     margin: 0.2em 0;
-    border: 1px solid gray;
-    border-width: 1px 0 1px 1px;
-    border-radius: 4px 0 0 4px;
     overflow: hidden;
     position: relative;
     right: -2px;
@@ -40,23 +35,26 @@
     display: block;
     width: 100%;
     padding: 0.6em 1em;
+    color: #000000;
+    text-decoration: none;
 }
 .ui-tabs.ui-tabs-vertical .ui-tabs-nav li a:hover {
     cursor: pointer;
+    color: #E2383F;
 }
 .ui-tabs.ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active {
     margin-bottom: 0.2em;
     padding-bottom: 0;
-    border-right: 1px solid white;
+    border-bottom: 3px solid;
+    border-bottom-color: #E2383F;
+	font-weight: bold;
 }
 .ui-tabs.ui-tabs-vertical .ui-tabs-nav li:last-child {
     margin-bottom: 10px;
 }
 .ui-tabs.ui-tabs-vertical .ui-tabs-panel {
     float: left;
-    width: 80%;
-    border-left: 1px solid gray;
-    border-radius: 0;
+    width: 75%;
     position: relative;
     left: -1px;
     padding-left: 3em;
@@ -500,7 +498,7 @@
 }
 
 .dashb-amt {
-	margin-left: 12em;
+	margin-left: 9em;
 	padding-top: 1.6em;
 	margin-right: 1.5em;
 	text-align: right;
@@ -521,6 +519,12 @@
 .single-fundraiser button {
 	background-color: #000000;
 	border-color: #000000;
+}
+
+.dashb-username {
+	text-align: center;
+	padding-bottom: 6em;
+	font-weight: bold;
 }
 
 .inline-top {
