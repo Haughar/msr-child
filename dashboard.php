@@ -21,11 +21,10 @@ $json_object = get_customer_contributions($user_id);
 
 <main id="main">
 
-
 	<div id="tabs">
-    	<li> Profile Picture </li>
-    	<li> <?php echo get_user_meta( $user_id, 'nickname', true); ?> </li>
 	    <ul>
+			<li> Profile Picture </li>
+    		<li class="dashb-username"> <?php echo get_user_meta( $user_id, 'nickname', true); ?> </li>
 	        <li>
 	            <a href="#fundraisers">My Fundraisers</a>
 	        </li>
@@ -44,8 +43,8 @@ $json_object = get_customer_contributions($user_id);
 				<h1>My Campaigns</h1>
 				<p> Total Raised: $<?php echo $json_object['total']; ?></p>
 			</div>
-			<div id="fundraise-btn">
-				<input type="button" onclick="location.href='/create-fundraiser/';" value="New Fundraiser"/>
+			<div id="fundraise-btn" class="inline-top">
+				<button onclick="window.location.href='/create-fundraiser/'">New Fundraiser</button>
 			</div>
 			
 			<?php get_fundraiser_list($user_id); ?> 			

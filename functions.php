@@ -208,27 +208,52 @@ function get_fundraiser_list($user_id) {
 
 	$post_query = new WP_Query($args); ?>
 	<div class="user-profile-header">
-		<h3>Active Fundraisers <?php echo '(' . $post_query->post_count . ')'; ?> </h3>
+		<p>Active Fundraisers <?php echo '(' . $post_query->post_count . ')'; ?> </p>
 	</div>
 	<?php
 	if($post_query->have_posts() ) {
 		while($post_query->have_posts() ) {
-			$post_query->the_post();
-			$post = get_post();
-			$id = $post->ID;
-			echo '<br>';
-			if ( has_post_thumbnail() ) {
-				the_post_thumbnail( array(100,100) );
-			}
-			if (get_the_title($id)) {
-				echo get_the_title($id);
-			} 
-			echo '<br>';
-
-			if (get_post_meta($id, 'fundraiser-goal', true) && get_post_meta($id, 'fundraiser-amount-raised', true)) { ?>
-				<p><?php echo get_percentage_to_goal(floatval(get_post_meta($id, 'fundraiser-amount-raised', true)), floatval(get_post_meta($id, 'fundraiser-goal', true)));?> %</p>
+			?>
+			<div class="single-fundraiser">
+				<?php
+				$post_query->the_post();
+				$post = get_post();
+				$id = $post->ID;
+				if ( has_post_thumbnail() ) {
+					the_post_thumbnail( array(100,100) );
+				} ?>
+				<div class="fundraise-info inline-top">
+					<?php
+					if (get_the_title($id)) {
+						?> <span class="normal-text"> <?php echo get_the_title($id); ?> </span> <?php
+					} 
+					if (get_post_meta($id, 'fundraiser-goal', true) && get_post_meta($id, 'fundraiser-amount-raised', true)) { ?>
+						<?php echo get_percentage_to_goal(floatval(get_post_meta($id, 'fundraiser-amount-raised', true)), floatval(get_post_meta($id, 'fundraiser-goal', true)));?> %
+					<?php
+					} ?>
+					<!-- Progress bar -->
+					<div class="myProgress">
+				  		<div class="myBar"></div>
+					</div>
+					<!-- Amount of days remaining -->
+					<span class="day-text">8 days left</span>
+				</div>
+				<div class="pct inline-top"> 
+					<!-- Percentage of amount made -->
+					<span>50%</span>
+				</div>
+				<div class="inline-top dashb-amt">
+					<!-- Amount Raised -->
+					<span class="amt-text">$63900<br></span>
+					<span class="raise-text"> raised</span>
+				</div>
+				<div class="inline-top manage-div">
+					<!-- Manage Button -->
+					<button onclick="window.location.href='<?php echo home_url() . '/edit-fundraiser?post_id=' . $id ?>'">Manage</button>
+				</div>
+			</div>
+			<br>
 			<?php
-			}
 		}
 	}
 }
