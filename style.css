@@ -412,6 +412,64 @@
 	padding-bottom: 5px;
 }
 
+.single-fundraiser .comment {
+	border-top: 1px solid #CCC;
+	padding-top: 20px;
+}
+
+.single-fundraiser .comment img.avatar {
+	border-radius: 16px;
+	float: left;
+	margin-right: 10px;
+	margin-top: 10px;
+}
+
+.single-fundraiser .commentlist {
+	font-size: 16px;
+	padding-left: 0;
+}
+
+.single-fundraiser .comment .comment-meta {
+	position: relative;
+}
+
+.single-fundraiser .comment .comment-meta a {
+	color: #000;
+	font-weight: 800;
+}
+
+.single-fundraiser .comment .says {
+	display: none;
+}
+
+.single-fundraiser .comment .comment-metadata {
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
+.single-fundraiser .comment .comment-metadata a {
+	color: #828282;
+	font-size: 12px;
+	font-weight: 100;
+}
+
+.single-fundraiser .comment .comment-metadata a:hover, .single-fundraiser .comment .comment-meta a:hover {
+	text-decoration: none;
+}
+
+.single-fundraiser .comment .comment-content {
+	display: inline-block;
+}
+
+.single-fundraiser .comment .comment-content p {
+	margin-top: 0px;
+}
+
+.single-fundraiser .comment .reply {
+	display: none;
+}
+
 /** USER PROFILE **/
 .user-profile-header {
 	width: 100%;
