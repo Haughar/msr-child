@@ -411,7 +411,6 @@
 	padding-bottom: 5px;
 }
 
-<<<<<<< HEAD
 .single-fundraiser .comment {
 	border-top: 1px solid #CCC;
 	padding-top: 20px;
@@ -469,9 +468,6 @@
 .single-fundraiser .comment .reply {
 	display: none;
 }
-=======
-
->>>>>>> 112bfa4abdebcf2b557add39ba248ec01795144d
 
 /** USER PROFILE **/
 .user-profile-header {
@@ -509,7 +505,7 @@
 	right: 0px;
 }
 
-.single-fundraiser {
+.dashb-fundraisers {
 	padding-left: 0.5em;
 	display: inline-block;
 	padding-top: 1em;
@@ -519,7 +515,7 @@
 	border-bottom-color: #E0E0E0;
 }
 
-.single-fundraiser img {
+.dashb-fundraisers img {
 	margin-right: 2em;
 }
 
@@ -576,7 +572,7 @@
 	padding-top: 2em;
 }
 
-.single-fundraiser button {
+.dashb-fundraisers button {
 	background-color: #000000;
 	border-color: #000000;
 }
