@@ -134,10 +134,7 @@ if($post_query->have_posts() ) { ?>
 </main>
 
 <script type="text/javascript">
-	window.onload = function() {
-		console.log("Got here");
-		document.body.classList.remove("has-featured-image");
-	}
+	document.body.classList.remove("has-featured-image");
 </script>
 
 <?php get_footer(); ?>
