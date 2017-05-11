@@ -411,7 +411,6 @@
 	padding-bottom: 5px;
 }
 
-<<<<<<< HEAD
 .single-fundraiser .comment {
 	border-top: 1px solid #CCC;
 	padding-top: 20px;
@@ -469,9 +468,82 @@
 .single-fundraiser .comment .reply {
 	display: none;
 }
-=======
 
->>>>>>> 112bfa4abdebcf2b557add39ba248ec01795144d
+.single-fundraiser .contributors p span {
+	float: right;
+}
+
+/** CONTRIBUTION MODAL **/
+#wow-modal-window-1 {
+	border-radius: 0 !important;
+	padding: 0 !important;
+	top: 10% !important;
+	width: 455px !important;
+}
+
+#wow-modal-window-1 #payment-form {
+	height: 350px !important;
+	overflow-y: scroll;
+	padding: 20px;
+}
+
+#wow-modal-window-1 h1 {
+	background-color: #E2383F;
+	color: #fff;
+	display: block;
+	font-size: 27px;
+	margin: 0;
+	padding: 5px 15px;
+	text-transform: none;
+}
+
+#wow-modal-window-1 #wow-modal-close-1 {
+	top: 10px !important;
+	right: 10px !important;
+}
+
+#payment-form h2 {
+	display: inline-block;
+	font-size: 20px;
+	text-transform: uppercase;
+	width: 300px;
+}
+
+#payment-form .amount {
+	display: inline-block;
+	width: 100px;
+}
+
+.fundraising #payment-form form label {
+	font-size: 10px;
+	margin-bottom: 0;
+	margin-top: 20px;
+}
+
+#payment-form input {
+	border-top: none;
+	border-right: none;
+	border-left: none;
+	width: 100%;
+}
+
+#payment-form .expiration.group {
+	width: 250px;
+}
+
+#payment-form .group {
+	display: inline-block;
+	margin-bottom: 20px;
+}
+
+#payment-form .group input {
+	display: inline-block;
+	width: 120px;
+}
+
+#payment-form .ccv.group {
+	width: 120px;
+}
 
 /** USER PROFILE **/
 .user-profile-header {

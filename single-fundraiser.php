@@ -13,6 +13,8 @@ get_header(); ?>
 <?php if (have_posts()) : while (have_posts()) : the_post();
 	$post_id = $post->ID;
 
+	$object = get_fundraiser_stripe_info($post_id);
+
 	if ( has_post_thumbnail() ) {
 		the_post_thumbnail( array(500,500) );
 	}?>
@@ -57,12 +59,12 @@ get_header(); ?>
 
 		<div class="card">
 
-			<p class="progress-summary"><strong>$63,000</strong> USD raised by 322 contributors</p>
+			<p class="progress-summary"><strong>$<?php echo $object['total']; ?></strong> USD raised by 322 contributors</p>
 
 			<div id="campaign-progress" class="progress-bar"></div>
 
 			<?php if (get_post_meta($id, 'fundraiser-goal', true)) { ?>
-				<p class="progress-percent"><?php echo get_percentage_to_goal("20000", get_post_meta($id, 'fundraiser-goal', true)); ?>% of $<?php echo get_post_meta($id, 'fundraiser-goal', true); ?></p>
+				<p class="progress-percent"><?php echo get_percentage_to_goal($object['total'], get_post_meta($id, 'fundraiser-goal', true)); ?>% of $<?php echo get_post_meta($id, 'fundraiser-goal', true); ?></p>
 			<?php } ?>
 
 			<?php if (get_post_meta($id, 'fundraiser-end', true)) { ?>
@@ -76,11 +78,14 @@ get_header(); ?>
 		</div>
 
 		<div class="contributors">
-			<h2>Contributors</h2>
-			<?php $comments = get_comments(array('post_id' => $post->ID, 'type' => 'contribution', 'status' => 'approve')); ?>
-			<ol class="commentlist">
-				<?php wp_list_comments(array('reverse_top_level' => false, 'style' => 'ol' ), $comments); ?>
-			</ol>
+			<?php if(count($object['contribution-data']) > 0) { ?>
+				<h2>Contributors(<?php echo count($object['contribution-data']); ?>)</h2>
+				<?php foreach($object['contribution-data'] as $contribution) { ?>
+					<p>haughar<span>$<?php echo $contribution['amount']/100; ?></span></p>
+				<?php } ?>
+			<?php } else { ?>
+				<p>There have not been any contributions yet. Be the first!</p>
+			<?php } ?>
 		</div>
 	</div>
 
@@ -113,7 +118,7 @@ endif; ?>
 
 	$( function() {
 		$( "#campaign-progress" ).progressbar({
-		  value: <?php echo get_percentage_to_goal("1000", get_post_meta($id, 'fundraiser-goal', true)); ?>
+		  value: <?php echo get_percentage_to_goal($object['total'], get_post_meta($id, 'fundraiser-goal', true)); ?>
 		});
 	});
 
