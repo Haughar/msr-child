@@ -581,7 +581,7 @@
 	right: 0px;
 }
 
-.single-fundraiser {
+.dashb-fundraisers {
 	padding-left: 0.5em;
 	display: inline-block;
 	padding-top: 1em;
@@ -591,7 +591,7 @@
 	border-bottom-color: #E0E0E0;
 }
 
-.single-fundraiser img {
+.dashb-fundraisers img {
 	margin-right: 2em;
 }
 
@@ -648,7 +648,7 @@
 	padding-top: 2em;
 }
 
-.single-fundraiser button {
+.dashb-fundraisers button {
 	background-color: #000000;
 	border-color: #000000;
 }

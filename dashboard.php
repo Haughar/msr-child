@@ -47,7 +47,9 @@ $json_object = get_customer_contributions($user_id);
 				<button onclick="window.location.href='/create-fundraiser/'">New Fundraiser</button>
 			</div>
 			
-			<?php get_fundraiser_list($user_id); ?> 			
+			<?php get_fundraiser_list($user_id); ?> 
+			<!-- Get Pending Fundraisers -->
+			<!-- Get Past Fundraisers -->
  		</div>
 
 		<div id="contributions">
