@@ -531,17 +531,18 @@
     vertical-align: top;
 }
 .myBar {
-    width: 50%;
+    width: 0%;
     height: 6px;
     background-color: #E2383F;
 }
 
 .normal-text {
-	font-size: 14px;
+	font-size: 16px;
 }
 
 .pct {
 	padding-top: 3.3em;
+	width: 26px;
 }
 
 .pct span {
@@ -551,6 +552,7 @@
 
 .day-text {
 	font-size: 14px;
+	margin-top: 4px;
 }
 
 .dashb-amt {
@@ -567,7 +569,16 @@
 
 .raise-text {
 	font-size: 12px;
+	padding: 0px;
+	margin: 0px;
 }
+
+.date-text {
+	font-size: 14px;
+	padding: 0px;
+	margin-top: 1em;
+}
+
 .manage-div {
 	padding-top: 2em;
 }
@@ -581,6 +592,10 @@
 	text-align: center;
 	padding-bottom: 6em;
 	font-weight: bold;
+}
+
+.dashboard-space {
+	height: 30px;
 }
 
 .inline-top {

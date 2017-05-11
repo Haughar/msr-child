@@ -41,21 +41,38 @@ $json_object = get_customer_contributions($user_id);
 		<div id="fundraisers">
 			<div id="title"> 
 				<h1>My Campaigns</h1>
-				<p> Total Raised: $<?php echo $json_object['total']; ?></p>
+				<p> Total Raised: $<?php $totalRaised = 0; echo $totalRaised; ?></p>
 			</div>
 			<div id="fundraise-btn" class="inline-top">
 				<button onclick="window.location.href='/create-fundraiser/'">New Fundraiser</button>
 			</div>
 			
-			<?php get_fundraiser_list($user_id); ?> 
-			<!-- Get Pending Fundraisers -->
-			<!-- Get Past Fundraisers -->
+			<?php $totalRaised += get_fundraiser_list($user_id, "active"); ?>
+			<div class="dashboard-space"></div> 
+				<!-- Get Pending Fundraisers -->	
+			<?php 
+				$totalRaised += get_fundraiser_list($user_id, "pending"); 
+			?>
+			<div class="dashboard-space"></div>
+				<!-- Get Past Fundraisers -->
+			<?php 
+				$totalRaised += get_fundraiser_list($user_id, "expired"); 
+			?>
+			<div class="dashboard-space"></div>
+
+
  		</div>
 
 		<div id="contributions">
-			<h1>My Contributions</h1>
-			<input type="button" onclick="location.href='/create-fundraiser/';" value="New Fundraiser" />
-			<h3>Your Recurring Donations</h3>
+			<div id="title"> 
+				<h1>My Contributions</h1>
+				<p> Total Contribution: $<?php echo $json_object['total']; ?></p>
+			</div>
+			<div id="fundraise-btn" class="inline-top">
+				<button onclick="window.location.href='/create-fundraiser/'">New Fundraiser</button>
+			</div>
+
+			<h3>Recurring Donations</h3>
 			<?php if ($json_object['recurring_donation']) { ?>
 				<?php foreach ($json_object['subscription_data'] as $data) { ?>
 					<p><?php echo $data['id']; ?></p>

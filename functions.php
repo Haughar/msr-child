@@ -228,69 +228,148 @@ function get_fundraiser_stripe_info($post_id) {
 	return $json_object;
 }
 
-function get_fundraiser_list($user_id) {
+function get_fundraiser_list($user_id, $type) {
 
-	//if($fundraiser == 'all') {
+	if($type == 'active') {
 		$args = array(
 		    'post_type' => 'fundraiser',
-		  	'post_status' => array('pending', 'publish'),
+		  	'post_status' => 'publish',
 		  	'author' => $user_id
 		); 
-	// } else {
-	// 	$args = array(
-	// 	    'post_type' => 'fundraiser',
-	// 	  	'post_status' => 'publish',
-	// 	  	'author' => $user_id
-	// 	); 
-	// }
+	} else if ($type == 'pending') {
+		$args = array(
+		    'post_type' => 'fundraiser',
+		  	'post_status' => 'pending',
+		  	'author' => $user_id
+		); 
+	} else if($type == 'expired') {
+		$args = array(
+		    'post_type' => 'fundraiser',
+		  	'post_status' => 'publish',
+		  	'author' => $user_id
+		);
+	}
 
-	$post_query = new WP_Query($args); ?>
-	<div class="user-profile-header">
-		<p>Active Fundraisers <?php echo '(' . $post_query->post_count . ')'; ?> </p>
-	</div>
-	<?php
+	$post_query = new WP_Query($args); 
+	$count = 0;
 	if($post_query->have_posts() ) {
 		while($post_query->have_posts() ) {
-			?>
-			<div class="dashb-fundraisers">
-				<?php
-				$post_query->the_post();
-				$post = get_post();
-				$id = $post->ID;
-				$fundraiser_details = get_fundraiser_stripe_info($id);
-				if ( has_post_thumbnail() ) {
-					the_post_thumbnail( array(100,100) );
-				} ?>
-				<div class="fundraise-info inline-top">
-					<?php
-					if (get_the_title($id)) {
-						?> <span class="normal-text"> <?php echo get_the_title($id); ?> </span> <?php
-					} ?>
-					<!-- Progress bar -->
-					<div class="myProgress">
-				  		<div class="myBar"></div>
-					</div>
-					<!-- Amount of days remaining -->
-					<span class="day-text"><?php echo get_fundraising_days_left(get_post_meta($id, 'fundraiser-end', true)); ?> days left</span>
-				</div>
-				<div class="pct inline-top"> 
-					<!-- Percentage of amount made -->
-					<span><?php echo get_percentage_to_goal($fundraiser_details['total'],  get_post_meta($id, 'fundraiser-goal', true)); ?>%</span>
-				</div>
-				<div class="inline-top dashb-amt">
-					<!-- Amount Raised -->
-					<span class="amt-text">$ <?php echo $fundraiser_details['total']?> <br></span>
-					<span class="raise-text"> raised</span>
-				</div>
-				<div class="inline-top manage-div">
-					<!-- Manage Button -->
-					<button onclick="window.location.href='<?php echo home_url() . '/edit-fundraiser?post_id=' . $id ?>'">Manage</button>
-				</div>
-			</div>
-			<br>
-			<?php
+			$post_query->the_post();
+			$post = get_post();
+			$id = $post->ID;
+			$endDate = strtotime(get_post_meta($id, 'fundraiser-end', true));
+			$difference = $endDate - time();
+			$totalDiff = floor($difference/60/60/24);
+			if($totalDiff >= 0 && $type == 'active') {
+				$count++;
+			} else if($totalDiff < 0 && $type == 'expired') {
+				$count++;
+			}
 		}
 	}
+	if($type == 'active') { ?>
+		<div class="user-profile-header">
+			<p>Active Fundraisers <?php 
+				echo '(' . $count . ')'; ?> 
+			</p> 
+		</div>
+	<?php } else if ($type == 'pending') { ?>
+		 <div class="user-profile-header">
+			<p>Pending Fundraisers <?php echo '(' . $post_query->post_count . ')'; ?> </p>
+		</div>
+	<?php } else if($type == 'expired') { ?>
+		<div class="user-profile-header">
+			<p>Past Fundraisers <?php 
+				echo '(' . $count . ')'; ?> 
+			</p>
+		</div>
+	<?php } ?>
+	<?php
+	$totalRaised = 0;
+	if($post_query->have_posts() ) {
+		while($post_query->have_posts() ) {
+			$post_query->the_post();
+			$post = get_post();
+			$id = $post->ID;
+			$endDate = strtotime(get_post_meta($id, 'fundraiser-end', true));
+			$difference = $endDate - time();
+			$totalDiff = floor($difference/60/60/24);
+			$fundraiser_details = get_fundraiser_stripe_info($id);
+			if (($totalDiff < 0) && ($type == 'expired')) { ?>
+				<div class="dashb-fundraisers">
+					<?php if ( has_post_thumbnail() ) {
+						the_post_thumbnail( array(100,100) );
+					} ?>
+					<div class="fundraise-info inline-top">
+					<?php
+						if (get_the_title($id)) {
+							?> <span class="normal-text"> <?php echo get_the_title($id); ?> </span> <?php
+						}  ?>
+						<p class="date-text">Ended <?php 
+							$sqldate = get_post_meta($id, 'fundraiser-end', true);
+							echo $sqldate ?> 
+						</p>
+					</div>
+					<div class="pct inline-top"></div>
+					<div class="inline-top dashb-amt">
+						<!-- Amount Raised -->
+						<span class="amt-text">$<?php 
+							$fundraised = $fundraiser_details['total'];
+							$totalRaised += $fundraised;
+							echo $fundraised; ?>			
+						</span>
+						<p class="raise-text"> raised</p>
+					</div>
+					<div class="inline-top manage-div"> 
+						<button onclick="window.location.href='<?php echo home_url()?>'">Insights</button>
+					</div>
+				</div>
+			<?php
+			} else if ($totalDiff >= 0 && ($type == 'active' || $type == 'pending')) { ?>
+				<div class="dashb-fundraisers">
+					<?php if ( has_post_thumbnail() ) {
+						the_post_thumbnail( array(100,100) );
+					} ?>
+					<div class="fundraise-info inline-top">
+						<?php
+						if (get_the_title($id)) {
+							?> <span class="normal-text"> <?php echo get_the_title($id); ?> </span> <?php
+						}  ?>
+						<!-- Progress bar -->
+						<div class="myProgress">
+					  		<div class="myBar" style="width: <?php 
+					  			$pct = get_percentage_to_goal($fundraiser_details['total'],  get_post_meta($id, 'fundraiser-goal', true)); 
+					  			if ($pct > 100) {
+					  				$pct = 100;
+					  			}
+					  			echo $pct ?>%"></div>
+						</div>
+						<!-- Amount of days remaining -->
+						<!-- Change text to red if less than 10 days left -->
+						<span class="day-text"><?php echo get_fundraising_days_left(get_post_meta($id, 'fundraiser-end', true)); ?> days left</span>
+					</div>
+					<div class="pct inline-top"> 
+						<!-- Percentage of amount made -->
+						<span><?php echo get_percentage_to_goal($fundraiser_details['total'],  get_post_meta($id, 'fundraiser-goal', true)); ?>%</span>
+					</div>
+					<div class="inline-top dashb-amt">
+						<!-- Amount Raised -->
+						<span class="amt-text">$<?php 
+							$fundraised = $fundraiser_details['total'];
+							$totalRaised += $fundraised;
+							echo $fundraised; ?>
+						</span>
+						<p class="raise-text"> raised</p>
+					</div>
+					<div class="inline-top manage-div"> 
+						<button onclick="window.location.href='<?php echo home_url() . '/edit-fundraiser?post_id=' . $id ?>'">Manage</button>
+					</div>
+				</div>
+
+			<?php }
+		}
+	}
+	return $totalRaised;
 }
 
 function console_log( $data ){
