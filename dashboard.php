@@ -86,7 +86,7 @@ $json_object = get_customer_contributions($user_id);
 				<?php foreach ($json_object['subscription_data'] as $data) { ?>
 					<input id="subID" type="hidden" value="<?php echo $data['id']; ?>">
 					<span class="amt-text"><?php echo '$' . $data['quantity']; ?></span>
-					<span class="cancel-txt">Monthly</span>
+					<span class="cancel-txt pad-left-ten">Monthly</span>
 					<span class="cancel-txt">Last Contribution: <?php echo date("M j, Y", $data['current_period_start']); ?></span>
 					<span class="cancel-txt next-recurr">Next Contribution: <?php echo date("M j, Y", $data['current_period_end']); ?></span>
 					<span class="recurr-box"><input type="checkbox" name="cancel"></span>

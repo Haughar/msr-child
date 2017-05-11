@@ -386,7 +386,7 @@ function create_contributions_list($user_id, $json_object) {
 			$fundraiser_details = get_fundraiser_stripe_info($post_id); ?>
 			<div class="dashb-fundraisers"> 
 				<?php if($post_id == "general") { ?>
-					<img src="http://ec2-52-89-248-121.us-west-2.compute.amazonaws.com/wp-content/uploads/2015/12/MSR_WEB-1.gif" height="100" width="100">
+					<img src="<?php echo home_url() . '/wp-content/uploads/2015/12/MSR_WEB-1.gif'; ?>" height="100" width="100">
 					<div class="gen-contrib-info inline-top">
 						<span class="normal-text">General Contribution</span>
 					</div>
