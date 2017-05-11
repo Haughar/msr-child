@@ -72,19 +72,44 @@ $json_object = get_customer_contributions($user_id);
 				<button onclick="window.location.href='/create-fundraiser/'">New Fundraiser</button>
 			</div>
 
-			<h3>Recurring Donations</h3>
+			<div class="user-profile-header recurring-header">
+				<div class="with-cancel inline-top">
+					<span class="with-cancel">Recurring Contributions</span>
+				</div>
+				<div class="inline-top cancel-txt">
+					Cancel
+				</div>
+			</div>
 			<?php if ($json_object['recurring_donation']) { ?>
+				<div class="recurr_div">
 				<?php foreach ($json_object['subscription_data'] as $data) { ?>
-					<p><?php echo $data['id']; ?></p>
-				<?php } 
-			} else { ?>
-				<p>You have no recurring payments.</p> 
-			<?php }
-			foreach ($json_object['charge-data'] as $charge) { ?>
-				<p>Contributed <?php echo '$' . $charge['amount'] / 100 . '.00'; ?> to <?php echo get_the_title($charge['description']); ?></p>
+					<span class="amt-text"><?php echo '$' . $data['quantity']; ?></span>
+					<span class="cancel-txt">Monthly</span>
+					<span class="cancel-txt">Last Contribution: <?php echo date("M j, Y", $data['current_period_start']); ?></span>
+					<span class="cancel-txt next-recurr">Next Contribution: <?php echo date("M j, Y", $data['current_period_end']); ?></span>
+					<span class="recurr-box"><input type="checkbox" name="cancel" onclick=""></span>
+				<?php } ?>
+				<div class="save-btn">
+					<!-- Save button is disabled at first, but once the thing has been checked, then we can cancel the subscription -->
+					<button id="save-btn" class="disabled-btn" disabled>Save</button>
+				</div>
+				</div>
+			<?php } else { ?>
+				<div class="recurr-div">
+					<p>You have no recurring payments.</p> 
+				</div>
 			<?php } ?>
+			<div class="dashboard-space"></div> 
+			<div class="dashboard-space"></div>
+			<div class="dashboard-space"></div>
+			<div class="user-profile-header">
+				<p>Your Contributions</p> 
+			</div>
+			<div>
+				<span class="day-text"><?php create_contributions_list($user_id, $json_object); ?></span>
+			</div>
+			<div class="dashboard-space"></div>
 		</div>
-
 		<div id="settings">
 			<h1>Account Settings</h1>
 
@@ -160,6 +185,15 @@ $json_object = get_customer_contributions($user_id);
 	    .tabs()
 	    .addClass('ui-tabs-vertical ui-helper-clearfix');
 
+	$("input").on("click", function () {
+		$("#save-btn").attr("disabled", false);
+		$("#save-btn").removeClass("disabled-btn");
+		$("#save-btn").addClass("blck-btn");
+	});
+
+	$("#save-btn").on("click", function() {
+		// Remove subscription
+	});
 </script>
 
 <!-- <link rel="stylesheet" type="text/css" href="style.css">

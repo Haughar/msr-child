@@ -581,6 +581,7 @@
 
 .manage-div {
 	padding-top: 2em;
+	text-align: right;
 }
 
 .dashb-fundraisers button {
@@ -601,4 +602,63 @@
 .inline-top {
 	display: inline-block;
 	vertical-align: top;
+}
+
+/** Dashboard - Contributions Tab **/
+.recurr_div {
+	padding-left: 37px;
+	display:table;
+	width: 100%;
+	position: relative;
+}
+
+.with-cancel {
+	width: 90%;
+}
+
+.contrib-amt {
+	margin-left: 12em;
+	padding-top: 1.6em;
+	margin-right: 1.5em;
+	text-align: right;
+}
+
+.cancel-txt {
+	font-family: "Source Sans Pro", Arial, Sans-Serif;
+	font-size: 14px;
+	margin-top: 0.5em;
+}
+
+.recurring-header {
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
+
+.recurr_div span {
+	display:table-cell;
+	text-align:center;
+}
+
+.blck-btn {
+	background-color: #000000;
+	border-color: #000000;
+}
+
+.disabled-btn {
+	border-color: #000000;
+	background-color: #c4c4c4;
+}
+
+.next-recurr {
+	padding-right: 50px;
+}
+
+.recurr-box {
+	padding-right: 30px;
+}
+
+.save-btn {
+	position: absolute;
+	right: 14px;
+	top: 3.4em;
 }

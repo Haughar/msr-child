@@ -133,60 +133,65 @@ function get_customer_contributions($user_id) {
 	\Stripe\Stripe::setApiKey($secret_key);
 
 	$customer_id = get_user_meta( $user_id, '_stripe_customer_id', true);
-	$charges = \Stripe\Charge::all(array('customer' => $customer_id, 'limit' => 50));
 
 	$json_object = [];
+	if($customer_id) {
+		$charges = \Stripe\Charge::all(array('customer' => $customer_id, 'limit' => 50));
 
-	$subscription = \Stripe\Subscription::all(array('customer' => $customer_id));
-	$subscription_json = $subscription->__toJSON();
-	$sub_array = json_decode($subscription_json, true);
-	$sub_data = $sub_array['data'];
+		$subscription = \Stripe\Subscription::all(array('customer' => $customer_id));
+		$subscription_json = $subscription->__toJSON();
+		$sub_array = json_decode($subscription_json, true);
+		$sub_data = $sub_array['data'];
 
-	$json_object['recurring_donation'] = !empty($sub_data);
-	if (!empty($sub_data)) {
-		$json_object['subscription_data'] = $sub_data;
-	}
-
-	$current_month = date("m", time());
-
-	$months = array_fill(0, 6, 0);
-	$contributions = [];
-
-	$total = 0;
-	if($charges) {
-		foreach($charges['data'] as $data) {
-			$month = date('m', intval($data['created']));
-			$diff = (intval($current_month) - intval($month) + 12) % 12;
-			$dollars = $data['amount'] / 100;
-			switch($diff) {
-				case 0:
-					$months[0] += $dollars;
-					break;
-				case 1:
-					$months[1] += $dollars;
-					break;
-				case 2:
-					$months[2] += $dollars;
-					break;
-				case 3:
-					$months[3] += $dollars;
-					break;
-				case 4:
-					$months[4] += $dollars;
-					break;
-				case 5:
-					$months[5] += $dollars;
-					break;
-			}
-			$total += $data['amount'];
+		$json_object['recurring_donation'] = !empty($sub_data);
+		if (!empty($sub_data)) {
+			$json_object['subscription_data'] = $sub_data;
 		}
+
+		$current_month = date("m", time());
+
+		$months = array_fill(0, 6, 0);
+		$contributions = [];
+
+		$total = 0;
+		if($charges) {
+			foreach($charges['data'] as $data) {
+				$month = date('m', intval($data['created']));
+				$diff = (intval($current_month) - intval($month) + 12) % 12;
+				$dollars = $data['amount'] / 100;
+				switch($diff) {
+					case 0:
+						$months[0] += $dollars;
+						break;
+					case 1:
+						$months[1] += $dollars;
+						break;
+					case 2:
+						$months[2] += $dollars;
+						break;
+					case 3:
+						$months[3] += $dollars;
+						break;
+					case 4:
+						$months[4] += $dollars;
+						break;
+					case 5:
+						$months[5] += $dollars;
+						break;
+				}
+				$total += $data['amount'];
+			}
+		}
+		$total = $total / 100; 
+
+		$json_object['total'] = $total;
+		$json_object['contribution-data'] = $months;
+		$json_object['charge-data'] = $charges['data'];
+	} else {
+		$json_object['total'] = 0;
+		$json_object['contribution-data'] = 0;
+		$json_object['charge-data'] = 0;
 	}
-	$total = $total / 100;
-
-	$json_object['total'] = $total;
-	$json_object['contribution-data'] = $months;
-	$json_object['charge-data'] = $charges['data'];
-
 	return $json_object;
 }
 
@@ -229,7 +234,6 @@ function get_fundraiser_stripe_info($post_id) {
 }
 
 function get_fundraiser_list($user_id, $type) {
-
 	if($type == 'active') {
 		$args = array(
 		    'post_type' => 'fundraiser',
@@ -307,7 +311,8 @@ function get_fundraiser_list($user_id, $type) {
 						}  ?>
 						<p class="date-text">Ended <?php 
 							$sqldate = get_post_meta($id, 'fundraiser-end', true);
-							echo $sqldate ?> 
+							$end = strtotime($sqldate);
+							echo date('n/j/y', $end) ?> 
 						</p>
 					</div>
 					<div class="pct inline-top"></div>
@@ -345,7 +350,6 @@ function get_fundraiser_list($user_id, $type) {
 					  			echo $pct ?>%"></div>
 						</div>
 						<!-- Amount of days remaining -->
-						<!-- Change text to red if less than 10 days left -->
 						<span class="day-text"><?php echo get_fundraising_days_left(get_post_meta($id, 'fundraiser-end', true)); ?> days left</span>
 					</div>
 					<div class="pct inline-top"> 
@@ -370,6 +374,54 @@ function get_fundraiser_list($user_id, $type) {
 		}
 	}
 	return $totalRaised;
+}
+
+function create_contributions_list($user_id, $json_object) {
+	foreach ($json_object['charge-data'] as $charge) { 
+		$post_id = $charge['description'];
+		$post = get_post($post_id); 
+		$fundraiser_details = get_fundraiser_stripe_info($post_id); ?>
+		<div class="dashb-fundraisers"> 
+			<?php if ( has_post_thumbnail() ) {
+				the_post_thumbnail( array(100,100) );
+			} ?>
+			<div class="fundraise-info inline-top">
+				<?php
+				if (get_the_title($post_id)) {
+					?> <span class="normal-text"> <?php echo get_the_title($post_id); ?> </span> <?php
+				}  ?>
+				<!-- Progress bar -->
+				<div class="myProgress">
+			  		<div class="myBar" style="width: <?php 
+			  			$pct = get_percentage_to_goal($fundraiser_details['total'],  get_post_meta($post_id, 'fundraiser-goal', true)); 
+			  			if ($pct > 100) {
+			  				$pct = 100;
+			  			}
+			  			echo $pct ?>%"></div>
+				</div>
+				<!-- Amount of days remaining -->
+				<span class="day-text"><?php echo get_fundraising_days_left(get_post_meta($post_id, 'fundraiser-end', true)); ?> days left</span>
+			</div>
+			<div class="pct inline-top"> 
+				<!-- Percentage of amount made -->
+				<span><?php echo get_percentage_to_goal($fundraiser_details['total'],  get_post_meta($post_id, 'fundraiser-goal', true)); ?>%</span>
+			</div>
+			<div class="inline-top contrib-amt">
+				<!-- Amount Raised -->
+				<span class="amt-text">
+					<?php echo '$' . $charge['amount'] / 100; ?>
+				</span>
+			</div>
+			<div class="inline-top manage-div"> 
+				<p class="raise-text">Contributed on</p>
+				<?php 
+					$con_date = $charge['created'];
+					echo date("M j, Y", $con_date);
+				?>
+			</div>
+		</div>
+		<?php
+	} 
 }
 
 function console_log( $data ){
