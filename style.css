@@ -623,7 +623,7 @@
 
 .contrib-amt {
 	margin-left: 10em;
-	padding-top: 1.6em;
+	padding-top: 2em;
 	margin-right: 1.5em;
 	text-align: right;
 	width: 70px;
@@ -667,4 +667,9 @@
 	position: absolute;
 	right: 14px;
 	top: 3.4em;
+}
+
+.gen-contrib-info {
+	padding-top: 2.5em;
+	width: 226px;
 }

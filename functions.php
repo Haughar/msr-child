@@ -385,30 +385,37 @@ function create_contributions_list($user_id, $json_object) {
 			$post = get_post($post_id); 
 			$fundraiser_details = get_fundraiser_stripe_info($post_id); ?>
 			<div class="dashb-fundraisers"> 
-				<?php if ( has_post_thumbnail() ) {
-					the_post_thumbnail( array(100,100) );
-				} ?>
-				<div class="fundraise-info inline-top">
-					<?php
-					if (get_the_title($post_id)) {
-						?> <span class="normal-text"> <?php echo get_the_title($post_id); ?> </span> <?php
-					}  ?>
-					<!-- Progress bar -->
-					<div class="myProgress">
-				  		<div class="myBar" style="width: <?php 
-				  			$pct = get_percentage_to_goal($fundraiser_details['total'],  get_post_meta($post_id, 'fundraiser-goal', true)); 
-				  			if ($pct > 100) {
-				  				$pct = 100;
-				  			}
-				  			echo $pct ?>%"></div>
+				<?php if($post_id == "general") { ?>
+					<img src="http://ec2-52-89-248-121.us-west-2.compute.amazonaws.com/wp-content/uploads/2015/12/MSR_WEB-1.gif" height="100" width="100">
+					<div class="gen-contrib-info inline-top">
+						<span class="normal-text">General Contribution</span>
 					</div>
-					<!-- Amount of days remaining -->
-					<span class="day-text"><?php echo get_fundraising_days_left(get_post_meta($post_id, 'fundraiser-end', true)); ?> days left</span>
-				</div>
-				<div class="pct inline-top"> 
-					<!-- Percentage of amount made -->
-					<span><?php echo get_percentage_to_goal($fundraiser_details['total'],  get_post_meta($post_id, 'fundraiser-goal', true)); ?>%</span>
-				</div>
+				<?php } else {
+					if ( has_post_thumbnail() ) {
+					the_post_thumbnail( array(100,100) );
+					} ?>
+					<div class="fundraise-info inline-top">
+						<?php
+						if (get_the_title($post_id)) {
+							?> <span class="normal-text"> <?php echo get_the_title($post_id); ?> </span> <?php
+						}  ?>
+						<!-- Progress bar -->
+						<div class="myProgress">
+					  		<div class="myBar" style="width: <?php 
+					  			$pct = get_percentage_to_goal($fundraiser_details['total'],  get_post_meta($post_id, 'fundraiser-goal', true)); 
+					  			if ($pct > 100) {
+					  				$pct = 100;
+					  			}
+					  			echo $pct ?>%"></div>
+						</div>
+						<!-- Amount of days remaining -->
+						<span class="day-text"><?php echo get_fundraising_days_left(get_post_meta($post_id, 'fundraiser-end', true)); ?> days left</span>
+					</div>
+					<div class="pct inline-top"> 
+						<!-- Percentage of amount made -->
+						<span><?php echo get_percentage_to_goal($fundraiser_details['total'],  get_post_meta($post_id, 'fundraiser-goal', true)); ?>%</span>
+					</div>
+				<?php } ?>
 				<div class="inline-top contrib-amt">
 					<!-- Amount Raised -->
 					<span class="amt-text">
