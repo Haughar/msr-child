@@ -156,30 +156,32 @@ function get_customer_contributions($user_id) {
 		$total = 0;
 		if($charges) {
 			foreach($charges['data'] as $data) {
-				$month = date('m', intval($data['created']));
-				$diff = (intval($current_month) - intval($month) + 12) % 12;
-				$dollars = $data['amount'] / 100;
-				switch($diff) {
-					case 0:
-						$months[0] += $dollars;
-						break;
-					case 1:
-						$months[1] += $dollars;
-						break;
-					case 2:
-						$months[2] += $dollars;
-						break;
-					case 3:
-						$months[3] += $dollars;
-						break;
-					case 4:
-						$months[4] += $dollars;
-						break;
-					case 5:
-						$months[5] += $dollars;
-						break;
-				}
-				$total += $data['amount'];
+				if($data['refunded'] == false) {
+					$month = date('m', intval($data['created']));
+					$diff = (intval($current_month) - intval($month) + 12) % 12;
+					$dollars = $data['amount'] / 100;
+					switch($diff) {
+						case 0:
+							$months[0] += $dollars;
+							break;
+						case 1:
+							$months[1] += $dollars;
+							break;
+						case 2:
+							$months[2] += $dollars;
+							break;
+						case 3:
+							$months[3] += $dollars;
+							break;
+						case 4:
+							$months[4] += $dollars;
+							break;
+						case 5:
+							$months[5] += $dollars;
+							break;
+					}
+					$total += $data['amount'];
+				}				
 			}
 		}
 		$total = $total / 100; 
@@ -190,7 +192,7 @@ function get_customer_contributions($user_id) {
 	} else {
 		$json_object['total'] = 0;
 		$json_object['contribution-data'] = 0;
-		$json_object['charge-data'] = 0;
+		$json_object['charge-data'] = null;
 	}
 	return $json_object;
 }
@@ -378,55 +380,56 @@ function get_fundraiser_list($user_id, $type) {
 
 function create_contributions_list($user_id, $json_object) {
 	foreach ($json_object['charge-data'] as $charge) { 
-		$post_id = $charge['description'];
-		$post = get_post($post_id); 
-		$fundraiser_details = get_fundraiser_stripe_info($post_id); ?>
-		<div class="dashb-fundraisers"> 
-			<?php if ( has_post_thumbnail() ) {
-				the_post_thumbnail( array(100,100) );
-			} ?>
-			<div class="fundraise-info inline-top">
-				<?php
-				if (get_the_title($post_id)) {
-					?> <span class="normal-text"> <?php echo get_the_title($post_id); ?> </span> <?php
-				}  ?>
-				<!-- Progress bar -->
-				<div class="myProgress">
-			  		<div class="myBar" style="width: <?php 
-			  			$pct = get_percentage_to_goal($fundraiser_details['total'],  get_post_meta($post_id, 'fundraiser-goal', true)); 
-			  			if ($pct > 100) {
-			  				$pct = 100;
-			  			}
-			  			echo $pct ?>%"></div>
+		if($charge['refunded'] == false) {
+			$post_id = $charge['description'];
+			$post = get_post($post_id); 
+			$fundraiser_details = get_fundraiser_stripe_info($post_id); ?>
+			<div class="dashb-fundraisers"> 
+				<?php if ( has_post_thumbnail() ) {
+					the_post_thumbnail( array(100,100) );
+				} ?>
+				<div class="fundraise-info inline-top">
+					<?php
+					if (get_the_title($post_id)) {
+						?> <span class="normal-text"> <?php echo get_the_title($post_id); ?> </span> <?php
+					}  ?>
+					<!-- Progress bar -->
+					<div class="myProgress">
+				  		<div class="myBar" style="width: <?php 
+				  			$pct = get_percentage_to_goal($fundraiser_details['total'],  get_post_meta($post_id, 'fundraiser-goal', true)); 
+				  			if ($pct > 100) {
+				  				$pct = 100;
+				  			}
+				  			echo $pct ?>%"></div>
+					</div>
+					<!-- Amount of days remaining -->
+					<span class="day-text"><?php echo get_fundraising_days_left(get_post_meta($post_id, 'fundraiser-end', true)); ?> days left</span>
 				</div>
-				<!-- Amount of days remaining -->
-				<span class="day-text"><?php echo get_fundraising_days_left(get_post_meta($post_id, 'fundraiser-end', true)); ?> days left</span>
-			</div>
-			<div class="pct inline-top"> 
-				<!-- Percentage of amount made -->
-				<span><?php echo get_percentage_to_goal($fundraiser_details['total'],  get_post_meta($post_id, 'fundraiser-goal', true)); ?>%</span>
-			</div>
-			<div class="inline-top contrib-amt">
-				<!-- Amount Raised -->
-				<span class="amt-text">
-					<?php echo '$' . $charge['amount'] / 100; ?>
-				</span>
-			</div>
-			<div class="inline-top manage-div"> 
-				<p class="raise-text">Contributed on</p>
-				<?php 
-					$con_date = $charge['created'];
-					echo date("M j, Y", $con_date);
-				?>
-			</div>
-		</div>
-		<?php
-	} 
+				<div class="pct inline-top"> 
+					<!-- Percentage of amount made -->
+					<span><?php echo get_percentage_to_goal($fundraiser_details['total'],  get_post_meta($post_id, 'fundraiser-goal', true)); ?>%</span>
+				</div>
+				<div class="inline-top contrib-amt">
+					<!-- Amount Raised -->
+					<span class="amt-text">
+						<?php echo '$' . $charge['amount'] / 100; ?>
+					</span>
+				</div>
+				<div class="inline-top manage-div"> 
+					<p class="raise-text">Contributed on</p>
+					<?php 
+						$con_date = $charge['created'];
+						echo date("M j, Y", $con_date);
+					?>
+				</div>
+			</div> <?php 
+		}
+	}
 }
 
 function console_log( $data ){
-  echo '<script>';
-  echo 'console.log("'. $data .'")';
-  echo '</script>';
+	echo '<script>';
+	echo 'console.log("'. $data .'")';
+	echo '</script>';
 }
 ?>

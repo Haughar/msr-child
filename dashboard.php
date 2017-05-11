@@ -23,7 +23,7 @@ $json_object = get_customer_contributions($user_id);
 
 	<div id="tabs">
 	    <ul>
-			<li> Profile Picture </li>
+			<li class="prof-pic"><?php echo get_avatar($user_id, 145); ?></li>
     		<li class="dashb-username"> <?php echo get_user_meta( $user_id, 'nickname', true); ?> </li>
 	        <li>
 	            <a href="#fundraisers">My Fundraisers</a>
@@ -41,23 +41,24 @@ $json_object = get_customer_contributions($user_id);
 		<div id="fundraisers">
 			<div id="title"> 
 				<h1>My Campaigns</h1>
-				<p> Total Raised: $<?php $totalRaised = 0; echo $totalRaised; ?></p>
+				<p id="totalText"></p>
 			</div>
 			<div id="fundraise-btn" class="inline-top">
 				<button onclick="window.location.href='/create-fundraiser/'">New Fundraiser</button>
 			</div>
 			
-			<?php $totalRaised += get_fundraiser_list($user_id, "active"); ?>
+			<?php $totalRaisedActive += get_fundraiser_list($user_id, "active"); ?>
 			<div class="dashboard-space"></div> 
 				<!-- Get Pending Fundraisers -->	
 			<?php 
-				$totalRaised += get_fundraiser_list($user_id, "pending"); 
+				$totalRaisedPending += get_fundraiser_list($user_id, "pending"); 
 			?>
 			<div class="dashboard-space"></div>
 				<!-- Get Past Fundraisers -->
 			<?php 
-				$totalRaised += get_fundraiser_list($user_id, "expired"); 
+				$totalRaisedExpired += get_fundraiser_list($user_id, "expired"); 
 			?>
+			<input id="totalRaised" type="hidden" value="<?php echo $totalRaisedActive + $totalRaisedPending + $totalRaisedExpired ?>">
 			<div class="dashboard-space"></div>
 
 
@@ -83,11 +84,12 @@ $json_object = get_customer_contributions($user_id);
 			<?php if ($json_object['recurring_donation']) { ?>
 				<div class="recurr_div">
 				<?php foreach ($json_object['subscription_data'] as $data) { ?>
+					<input id="subID" type="hidden" value="<?php echo $data['id']; ?>">
 					<span class="amt-text"><?php echo '$' . $data['quantity']; ?></span>
 					<span class="cancel-txt">Monthly</span>
 					<span class="cancel-txt">Last Contribution: <?php echo date("M j, Y", $data['current_period_start']); ?></span>
 					<span class="cancel-txt next-recurr">Next Contribution: <?php echo date("M j, Y", $data['current_period_end']); ?></span>
-					<span class="recurr-box"><input type="checkbox" name="cancel" onclick=""></span>
+					<span class="recurr-box"><input type="checkbox" name="cancel"></span>
 				<?php } ?>
 				<div class="save-btn">
 					<!-- Save button is disabled at first, but once the thing has been checked, then we can cancel the subscription -->
@@ -112,7 +114,7 @@ $json_object = get_customer_contributions($user_id);
 		</div>
 		<div id="settings">
 			<h1>Account Settings</h1>
-
+			<?php // do_shortcode("[wpuf_edit]"); ?>
 		</div>
 	</div>
 </main>
@@ -185,15 +187,37 @@ $json_object = get_customer_contributions($user_id);
 	    .tabs()
 	    .addClass('ui-tabs-vertical ui-helper-clearfix');
 
+	var isChecked = false;
+
 	$("input").on("click", function () {
-		$("#save-btn").attr("disabled", false);
-		$("#save-btn").removeClass("disabled-btn");
-		$("#save-btn").addClass("blck-btn");
+		if($("input").is(':checked')) {
+			$("#save-btn").attr("disabled", false);
+			$("#save-btn").removeClass("disabled-btn");
+			$("#save-btn").addClass("blck-btn");
+		} else {
+			$("#save-btn").attr("disabled", true);
+			$("#save-btn").addClass("disabled-btn");
+			$("#save-btn").removeClass("blck-btn");
+		}
 	});
 
-	$("#save-btn").on("click", function() {
-		// Remove subscription
+	$("#save-btn").click(function() {
+		$dataString = "subID=" + $('#subID').val();
+		alert("Subscription deleted");
+		// $.ajax({
+		// 	data: $dataString,
+		// 	type: "GET",
+		// 	url:'/recurring.php',
+		// 	success: function (response) {
+		// 	  	alert("Recurring payment deleted");
+		// 	},
+		// 	error: function(xhr) {
+		// 		alert(xhr.status + " " + xhr.statusText);
+		// 	}
+		// });
 	});
+
+	document.getElementById("totalText").textContent = "Total Raised: $" + $("#totalRaised").val();
 </script>
 
 <!-- <link rel="stylesheet" type="text/css" href="style.css">

@@ -487,6 +487,10 @@
 
 
 /** DASHBOARD **/
+.prof-pic {
+	width: 100%;
+	text-align: center;
+}
 #title {
 	display: inline-block;
 	padding-left: 0.5em;
@@ -556,10 +560,11 @@
 }
 
 .dashb-amt {
-	margin-left: 9em;
+	margin-left: 8em;
 	padding-top: 1.6em;
 	margin-right: 1.5em;
 	text-align: right;
+	width: 70px;
 }
 
 .amt-text {
@@ -617,10 +622,11 @@
 }
 
 .contrib-amt {
-	margin-left: 12em;
+	margin-left: 10em;
 	padding-top: 1.6em;
 	margin-right: 1.5em;
 	text-align: right;
+	width: 70px;
 }
 
 .cancel-txt {
