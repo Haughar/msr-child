@@ -36,8 +36,6 @@ $json_object = get_customer_contributions($user_id);
 	        </li>
 	    </ul>
 
-
-		<!-- Make call to stripe for user info -->
 		<div id="fundraisers">
 			<div id="title"> 
 				<h1>My Campaigns</h1>
@@ -187,8 +185,10 @@ $json_object = get_customer_contributions($user_id);
 	    .tabs()
 	    .addClass('ui-tabs-vertical ui-helper-clearfix');
 
-	var isChecked = false;
+  	var hash = $.trim( window.location.hash);
+    if (hash) $('#tabs a[href$="'+hash+'"]').trigger('click');
 
+	var isChecked = false;
 	$("input").on("click", function () {
 		if($("input").is(':checked')) {
 			$("#save-btn").attr("disabled", false);
