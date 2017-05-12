@@ -76,7 +76,7 @@
  
     /* Position the tooltip text - see examples below! */
     width: 120px;
-    top: 40%;
+    top: 140%;
     left: 50%; 
     margin-left: -60px;
     position: absolute;
@@ -231,7 +231,7 @@
 	position: relative;
 }
 
-.fundraising .goal svg {
+.fundraising .goal svg, .fundraising .amount svg {
 	position: absolute;
 	padding: 5px 3px;
 	height: 37px;
@@ -473,6 +473,21 @@
 	float: right;
 }
 
+.single-fundraiser #expand-contributions {
+	background-color: transparent;
+	border-color: #000;
+	color: #000;
+	display: block;
+	font-size: 12px;
+	margin-right: auto;
+	margin-left: auto;
+	text-transform: none;
+}
+
+.hide {
+	display: none;
+}
+
 /** CONTRIBUTION MODAL **/
 #wow-modal-window-1 {
 	border-radius: 0 !important;
@@ -506,12 +521,12 @@
 	display: inline-block;
 	font-size: 20px;
 	text-transform: uppercase;
-	width: 300px;
+	width: 275px;
 }
 
 #payment-form .amount {
 	display: inline-block;
-	width: 100px;
+	width: 125px;
 }
 
 .fundraising #payment-form form label {
@@ -524,11 +539,30 @@
 	border-top: none;
 	border-right: none;
 	border-left: none;
+	padding: 7px;
 	width: 100%;
 }
 
+#payment-form input.user-amount {
+	font-size: 40px;
+	line-height: 1;
+	padding-left: 30px;
+}
+
+#payment-form .amount {
+	position: relative;
+}
+
+#payment-form .amount svg {
+	top: 30%;
+}
+
 #payment-form .expiration.group {
-	width: 250px;
+	width: 290px;
+}
+
+#payment-form .expiration input {
+	margin-right: 20px;
 }
 
 #payment-form .group {
@@ -543,6 +577,97 @@
 
 #payment-form .ccv.group {
 	width: 120px;
+}
+
+#payment-form .appearance {
+	margin-bottom: 20px;
+}
+
+#payment-form .appearance h2 {
+	font-size: 20px;
+	text-transform: none;
+	width: auto;
+}
+
+#payment-form .appearance svg {
+	height: 13px;
+	margin-bottom: 7px;
+	width: 13px;
+}
+
+#payment-form .appearance .name-input, #payment-form .appearance .anonymous {
+	position: relative;
+}
+
+#payment-form .appearance input {
+	display: inline-block;
+}
+
+#payment-form .appearance input[type="radio"] {
+	margin-right: 20px;
+	width: auto;
+}
+
+#payment-form .appearance input[type="text"] {
+	width: 200px;
+}
+
+.single-fundraiser #payment-form .appearance .anonymous label {
+	color: #BDBDBD;
+	display: inline-block;
+	font-size: 16px;
+	text-transform: none;
+}
+
+#payment-form .appearance .anonymous label {
+	height: 50px;
+}
+
+#payment-form input[type='radio'] {
+  display: none;
+}
+
+.name-input label:before, .anonymous label:before {
+  content: " ";
+  display: inline-block;
+  position: relative;
+  top: 5px;
+  margin: 0 10px 0 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 11px;
+  border: 2px solid #CCC;
+  background-color: transparent;
+}
+
+.name-input input[type=radio]:checked + label:before, .anonymous input[type=radio]:checked + label:before {
+  background-color: #4F4F4F;
+  border-width: 4px;
+}
+
+#payment-form .buttons {
+	text-align: right;
+}
+
+#payment-form .buttons a {
+	color: #828282;
+	font-size: 12px;
+	text-decoration: none;
+	text-transform: uppercase;
+}
+
+#payment-form button {
+	background-color: #000;
+	border: none;
+	display: inline-block;
+	margin-left: 25px;
+	padding-left: 20px;
+	padding-right: 20px;
+	width: auto;
+}
+
+#payment-form span.help-block.form-error {
+	display: none;
 }
 
 /** USER PROFILE **/

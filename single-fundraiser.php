@@ -59,7 +59,7 @@ get_header(); ?>
 
 		<div class="card">
 
-			<p class="progress-summary"><strong>$<?php echo $object['total']; ?></strong> USD raised by 322 contributors</p>
+			<p class="progress-summary"><strong>$<?php echo $object['total']; ?></strong> USD raised by <?php echo count($object['contribution-data']); ?> contributions</p>
 
 			<div id="campaign-progress" class="progress-bar"></div>
 
@@ -78,11 +78,16 @@ get_header(); ?>
 		</div>
 
 		<div class="contributors">
-			<?php if(count($object['contribution-data']) > 0) { ?>
-				<h2>Contributors(<?php echo count($object['contribution-data']); ?>)</h2>
-				<?php foreach($object['contribution-data'] as $contribution) { ?>
-					<p>haughar<span>$<?php echo $contribution['amount']/100; ?></span></p>
-				<?php } ?>
+			<?php if(count($object['contribution-data']) > 0) { 
+				$index = 0; ?>
+				<h2>Contributions(<?php echo count($object['contribution-data']); ?>)</h2>
+				<div class="contribution-wrapper">
+					<?php foreach($object['contribution-data'] as $contribution) { ?>
+						<p class="<?php if ($index > 3) { echo 'hide'; } ?>">haughar<span>$<?php echo $contribution['amount']/100; ?></span></p>
+					<?php $index++;
+					} ?>
+				</div>
+				<button id="expand-contributions">See More Contributions</button>
 			<?php } else { ?>
 				<p>There have not been any contributions yet. Be the first!</p>
 			<?php } ?>
@@ -120,6 +125,19 @@ endif; ?>
 		$( "#campaign-progress" ).progressbar({
 		  value: <?php echo get_percentage_to_goal($object['total'], get_post_meta($id, 'fundraiser-goal', true)); ?>
 		});
+	});
+
+	$('#expand-contributions').click(function() {
+		var beginningHeight = $('.contribution-wrapper').outerHeight();
+		$('.contribution-wrapper').css('overflow-y', 'hidden')
+		$('.contribution-wrapper').css('height', beginningHeight + "px");
+		$('.contribution-wrapper p').removeClass('hide');
+		$('.contribution-wrapper').slideToggle(function (){
+	        $(this).animate({height: "auto"}, 0);
+	    }, function () { 
+	    	$(this).animate({height: beginningHeight + "px"}, 0);
+
+    	});
 	});
 
 
