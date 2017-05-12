@@ -570,8 +570,33 @@
 	margin-bottom: 0.75em;
 }
 
+.profile-head {
+	width: 100%;
+	margin-top: 2em;
+	margin-bottom: 5em;
+}
 
+.profile-head img {
+	border-radius: 72.5px;
+	margin-left: 16em;
+}
 
+.user-info {
+	margin-left: 2em;
+	margin-top: 2em;
+}
+
+.name-on-profile {
+	font-family: "futura-pt-condensed", Arial, Sans-Serif;
+	font-weight: bold;
+    font-size: 40px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+
+.user-on-profile {
+	font-weight: bold;
+}
 
 
 /** DASHBOARD **/
@@ -579,6 +604,11 @@
 	width: 100%;
 	text-align: center;
 }
+
+.prof-pic img {
+	border-radius: 72.5px;
+}
+
 #title {
 	display: inline-block;
 	padding-left: 0.5em;
@@ -630,6 +660,11 @@
 
 .normal-text {
 	font-size: 16px;
+}
+
+.normal-text a {
+	text-decoration: none;
+	color: #000000;
 }
 
 .pct {
@@ -764,4 +799,9 @@
 
 .pad-left-ten {
 	padding-left: 10px;
+}
+
+.all-recurr {
+	width: 100%;
+	position: relative;
 }

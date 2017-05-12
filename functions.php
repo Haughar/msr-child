@@ -309,7 +309,7 @@ function get_fundraiser_list($user_id, $type) {
 					<div class="fundraise-info inline-top">
 					<?php
 						if (get_the_title($id)) {
-							?> <span class="normal-text"> <?php echo get_the_title($id); ?> </span> <?php
+							?> <span class="normal-text"><a href="<?php echo get_permalink($id); ?>"><?php echo get_the_title($id); ?> </span></a><?php
 						}  ?>
 						<p class="date-text">Ended <?php 
 							$sqldate = get_post_meta($id, 'fundraiser-end', true);
@@ -340,7 +340,7 @@ function get_fundraiser_list($user_id, $type) {
 					<div class="fundraise-info inline-top">
 						<?php
 						if (get_the_title($id)) {
-							?> <span class="normal-text"> <?php echo get_the_title($id); ?> </span> <?php
+							?> <span class="normal-text"><a href="<?php echo get_permalink($id); ?>"><?php echo get_the_title($id); ?></a> </span> <?php
 						}  ?>
 						<!-- Progress bar -->
 						<div class="myProgress">
@@ -381,55 +381,80 @@ function get_fundraiser_list($user_id, $type) {
 function create_contributions_list($user_id, $json_object) {
 	foreach ($json_object['charge-data'] as $charge) { 
 		if($charge['refunded'] == false) {
-			$post_id = $charge['description'];
-			$post = get_post($post_id); 
-			$fundraiser_details = get_fundraiser_stripe_info($post_id); ?>
-			<div class="dashb-fundraisers"> 
-				<?php if($post_id == "general") { ?>
+			if($charge['invoice']) { 
+				// recurring payments ?>
+				<div class="dashb-fundraisers">
 					<img src="<?php echo home_url() . '/wp-content/uploads/2015/12/MSR_WEB-1.gif'; ?>" height="100" width="100">
 					<div class="gen-contrib-info inline-top">
-						<span class="normal-text">General Contribution</span>
+						<span class="normal-text">Recurring General Contribution</span>
 					</div>
-				<?php } else {
-					if ( has_post_thumbnail() ) {
-					the_post_thumbnail( array(100,100) );
-					} ?>
-					<div class="fundraise-info inline-top">
-						<?php
-						if (get_the_title($post_id)) {
-							?> <span class="normal-text"> <?php echo get_the_title($post_id); ?> </span> <?php
-						}  ?>
-						<!-- Progress bar -->
-						<div class="myProgress">
-					  		<div class="myBar" style="width: <?php 
-					  			$pct = get_percentage_to_goal($fundraiser_details['total'],  get_post_meta($post_id, 'fundraiser-goal', true)); 
-					  			if ($pct > 100) {
-					  				$pct = 100;
-					  			}
-					  			echo $pct ?>%"></div>
+					<div class="inline-top contrib-amt">
+						<!-- Amount Raised -->
+						<span class="amt-text">
+							<?php echo '$' . $charge['amount'] / 100; ?>
+						</span>
+					</div>
+					<div class="inline-top manage-div"> 
+						<p class="raise-text">Contributed on</p>
+						<?php 
+							$con_date = $charge['created'];
+							echo date("M j, Y", $con_date);
+						?>
+					</div>
+				</div>
+
+			<?php } else { 
+				// single time payments
+				$post_id = $charge['description'];
+				$post = get_post($post_id); 
+				$fundraiser_details = get_fundraiser_stripe_info($post_id); ?>
+				<div class="dashb-fundraisers"> 
+					<?php if($post_id == "general") { ?>
+						<img src="<?php echo home_url() . '/wp-content/uploads/2015/12/MSR_WEB-1.gif'; ?>" height="100" width="100">
+						<div class="gen-contrib-info inline-top">
+							<span class="normal-text">General Contribution</span>
 						</div>
-						<!-- Amount of days remaining -->
-						<span class="day-text"><?php echo get_fundraising_days_left(get_post_meta($post_id, 'fundraiser-end', true)); ?> days left</span>
+					<?php } else {
+						if ( has_post_thumbnail() ) {
+						the_post_thumbnail( array(100,100) );
+						} ?>
+						<div class="fundraise-info inline-top">
+							<?php
+							if (get_the_title($post_id)) {
+								?> <span class="normal-text"><a href="<?php echo get_permalink($post_id); ?>"><?php echo get_the_title($post_id); ?> </span></a><?php
+							}  ?>
+							<!-- Progress bar -->
+							<div class="myProgress">
+						  		<div class="myBar" style="width: <?php 
+						  			$pct = get_percentage_to_goal($fundraiser_details['total'],  get_post_meta($post_id, 'fundraiser-goal', true)); 
+						  			if ($pct > 100) {
+						  				$pct = 100;
+						  			}
+						  			echo $pct ?>%"></div>
+							</div>
+							<!-- Amount of days remaining -->
+							<span class="day-text"><?php echo get_fundraising_days_left(get_post_meta($post_id, 'fundraiser-end', true)); ?> days left</span>
+						</div>
+						<div class="pct inline-top"> 
+							<!-- Percentage of amount made -->
+							<span><?php echo get_percentage_to_goal($fundraiser_details['total'],  get_post_meta($post_id, 'fundraiser-goal', true)); ?>%</span>
+						</div>
+					<?php } ?>
+					<div class="inline-top contrib-amt">
+						<!-- Amount Raised -->
+						<span class="amt-text">
+							<?php echo '$' . $charge['amount'] / 100; ?>
+						</span>
 					</div>
-					<div class="pct inline-top"> 
-						<!-- Percentage of amount made -->
-						<span><?php echo get_percentage_to_goal($fundraiser_details['total'],  get_post_meta($post_id, 'fundraiser-goal', true)); ?>%</span>
+					<div class="inline-top manage-div"> 
+						<p class="raise-text">Contributed on</p>
+						<?php 
+							$con_date = $charge['created'];
+							echo date("M j, Y", $con_date);
+						?>
 					</div>
-				<?php } ?>
-				<div class="inline-top contrib-amt">
-					<!-- Amount Raised -->
-					<span class="amt-text">
-						<?php echo '$' . $charge['amount'] / 100; ?>
-					</span>
-				</div>
-				<div class="inline-top manage-div"> 
-					<p class="raise-text">Contributed on</p>
-					<?php 
-						$con_date = $charge['created'];
-						echo date("M j, Y", $con_date);
-					?>
-				</div>
-			</div> <?php 
+				</div>  <?php
+			}
 		}
 	}
 }

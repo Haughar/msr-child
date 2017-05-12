@@ -80,19 +80,20 @@ $json_object = get_customer_contributions($user_id);
 				</div>
 			</div>
 			<?php if ($json_object['recurring_donation']) { ?>
-				<div class="recurr_div">
-				<?php foreach ($json_object['subscription_data'] as $data) { ?>
-					<input id="subID" type="hidden" value="<?php echo $data['id']; ?>">
-					<span class="amt-text"><?php echo '$' . $data['quantity']; ?></span>
-					<span class="cancel-txt pad-left-ten">Monthly</span>
-					<span class="cancel-txt">Last Contribution: <?php echo date("M j, Y", $data['current_period_start']); ?></span>
-					<span class="cancel-txt next-recurr">Next Contribution: <?php echo date("M j, Y", $data['current_period_end']); ?></span>
-					<span class="recurr-box"><input type="checkbox" name="cancel"></span>
-				<?php } ?>
-				<div class="save-btn">
-					<!-- Save button is disabled at first, but once the thing has been checked, then we can cancel the subscription -->
-					<button id="save-btn" class="disabled-btn" disabled>Save</button>
-				</div>
+				<div class="all-recurr">
+					<?php foreach ($json_object['subscription_data'] as $data) { ?>
+						<div class="recurr_div">
+							<input id="subID" type="hidden" value="<?php echo $data['id']; ?>">
+							<span class="amt-text"><?php echo '$' . $data['quantity']; ?></span>
+							<span class="cancel-txt pad-left-ten">Monthly</span>
+							<span class="cancel-txt">Last Contribution: <?php echo date("M j, Y", $data['current_period_start']); ?></span>
+							<span class="cancel-txt next-recurr">Next Contribution: <?php echo date("M j, Y", $data['current_period_end']); ?></span>
+							<span class="recurr-box"><input type="checkbox" name="cancel"></span>
+						</div>
+					<?php } ?>
+					<div class="save-btn">
+						<button id="save-btn" class="disabled-btn" disabled>Save</button>
+					</div>
 				</div>
 			<?php } else { ?>
 				<div class="recurr-div">
@@ -112,7 +113,7 @@ $json_object = get_customer_contributions($user_id);
 		</div>
 		<div id="settings">
 			<h1>Account Settings</h1>
-			<?php // do_shortcode("[wpuf_edit]"); ?>
+			<?php echo do_shortcode("[ultimatemember_account]"); ?>
 		</div>
 	</div>
 </main>
@@ -187,8 +188,7 @@ $json_object = get_customer_contributions($user_id);
 
   	var hash = $.trim( window.location.hash);
     if (hash) $('#tabs a[href$="'+hash+'"]').trigger('click');
-
-	var isChecked = false;
+	
 	$("input").on("click", function () {
 		if($("input").is(':checked')) {
 			$("#save-btn").attr("disabled", false);
