@@ -47,18 +47,20 @@ get_header(); ?>
 		<h2>Updates and Comments</h2>
 		<?php $comments = get_comments(array('post_id' => $post->ID, 'type' => 'comment', 'status' => 'approve')); ?>
 		<ol class="commentlist">
-			<?php wp_list_comments(array('reverse_top_level' => false, 'style' => 'ol' ), $comments); ?>
+			<div class="comment-wrapper">
+				<?php wp_list_comments(array('reverse_top_level' => false, 'style' => 'ol' ), $comments); ?>
+			</div>
 		</ol>
-		<div>
+		<button id="expand-comments" class="hide">Show more comments</button>
+		<button id="leave-comment">Leave a comment</button>
+		<div class="comment-form">
 			<?php comment_form(array('title_reply' => __( 'Leave a Comment', 'textdomain' ), 'comment_notes_after' => ''), $post->ID); ?>
 		</div>
 
 	</div>
 
 	<div class="contribution-content">
-
 		<div class="card">
-
 			<p class="progress-summary"><strong>$<?php echo $object['total']; ?></strong> USD raised by <?php echo count($object['contribution-data']); ?> contributions</p>
 
 			<div id="campaign-progress" class="progress-bar"></div>
@@ -81,13 +83,17 @@ get_header(); ?>
 			<?php if(count($object['contribution-data']) > 0) { 
 				$index = 0; ?>
 				<h2>Contributions(<?php echo count($object['contribution-data']); ?>)</h2>
-				<div class="contribution-wrapper">
-					<?php foreach($object['contribution-data'] as $contribution) { ?>
-						<p class="<?php if ($index > 3) { echo 'hide'; } ?>">haughar<span>$<?php echo $contribution['amount']/100; ?></span></p>
-					<?php $index++;
-					} ?>
+				<div class="contribution-constraint">
+					<div class="contribution-wrapper">
+						<?php foreach($object['contribution-data'] as $contribution) { ?>
+							<p class="<?php if ($index > 3) { echo 'hide'; } ?>">haughar<span>$<?php echo $contribution['amount']/100; ?></span></p>
+						<?php $index++;
+						} ?>
+					</div>
 				</div>
-				<button id="expand-contributions">See More Contributions</button>
+				<?php if($index > 3) { ?>
+					<button id="expand-contributions">See More Contributions</button>
+				<?php } ?>
 			<?php } else { ?>
 				<p>There have not been any contributions yet. Be the first!</p>
 			<?php } ?>
@@ -125,19 +131,37 @@ endif; ?>
 		$( "#campaign-progress" ).progressbar({
 		  value: <?php echo get_percentage_to_goal($object['total'], get_post_meta($id, 'fundraiser-goal', true)); ?>
 		});
+
+		var $sumCommentHeight = 0;
+		$('ol.commentlist li:lt(3)').each(function() {
+			$sumCommentHeight += $(this).outerHeight();
+		});
+		$('.commentlist').css('height', $sumCommentHeight + "px");
+		if($('.commentlist').outerHeight() < $('.comment-wrapper').outerHeight()) {
+			$("#expand-comments").removeClass("hide");
+		}
 	});
 
 	$('#expand-contributions').click(function() {
 		var beginningHeight = $('.contribution-wrapper').outerHeight();
-		$('.contribution-wrapper').css('overflow-y', 'hidden')
-		$('.contribution-wrapper').css('height', beginningHeight + "px");
-		$('.contribution-wrapper p').removeClass('hide');
-		$('.contribution-wrapper').slideToggle(function (){
-	        $(this).animate({height: "auto"}, 0);
-	    }, function () { 
-	    	$(this).animate({height: beginningHeight + "px"}, 0);
+		$('.contribution-constraint').css('overflow-y', 'hidden')
+		$('.contribution-constraint').css('height', beginningHeight + 24 + "px");
+		$('.contribution-constraint p').removeClass('hide');
+		var height = $('.contribution-wrapper').outerHeight();
+	    $('.contribution-constraint').animate({height: height + 20 + "px"}, 500, function() {
+	    	$('#expand-contributions').hide("fade", {}, 300);
+	    });
+	});
 
-    	});
+	$('#expand-comments').click(function() {
+		var height = $('.comment-wrapper').outerHeight();
+	    $('.commentlist').animate({height: height + "px"}, 500, function() {
+	    	$('#expand-comments').hide("fade", {}, 300);
+	    });
+	});
+
+	$('#leave-comment').click(function() {
+		$('.comment-form').slideToggle("fast");
 	});
 
 

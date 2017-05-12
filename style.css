@@ -391,13 +391,17 @@
 .single-fundraiser .card .progress-percent, .single-fundraiser .card .time-left {
 	display: inline-block;
 	font-size: 14px;
-	margin-bottom: 30px;
+	margin-bottom: 50px;
 	margin-top: 20px;
 	width: 49%;
 }
 
 .single-fundraiser .card .time-left {
 	text-align: right;
+}
+
+.single-fundraiser .card .btn-wrapper {
+	margin-bottom: 50px;
 }
 
 .single-fundraiser .card button {
@@ -485,7 +489,11 @@
 	float: right;
 }
 
-.single-fundraiser #expand-contributions {
+.single-fundraiser .commentlist {
+	overflow: hidden;
+}
+
+.single-fundraiser #expand-contributions, .single-fundraiser #expand-comments, .single-fundraiser #leave-comment {
 	background-color: transparent;
 	border-color: #000;
 	color: #000;
@@ -494,6 +502,10 @@
 	margin-right: auto;
 	margin-left: auto;
 	text-transform: none;
+}
+
+.single-fundraiser .comment-form {
+	display: none;
 }
 
 .hide {
