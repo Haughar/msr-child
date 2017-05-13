@@ -19,12 +19,16 @@ get_header(); ?>
 		<p class="no-margin gen-descr">MSR Global Health a leading innovator and manufacturer of low cost, field-proven products that improve access to basic human needs for people living in low-resource communities of the developing world. Please support MSR Global Heatlh by contributing directly to MSR campaigns or our supporters’ fundraisers.</p>
 	</div>
 	<div class="inline-top btn-spot">
+		<?php echo cups(); ?>
+		<br>
 		<button class="banner-btn blck-btn">GENERAL CONTRIBUTION</button>
 	</div>
 </div>
 <!-- Start Browsing banner -->
 <div class="browse">
 	<div class="inline-top middle-btn-spot">
+		<?php echo water_drop(); ?>
+		<br>
 		<button class="banner-btn">START BROWSING</button>
 	</div>
 	<div class="browse-text inline-top">
@@ -39,6 +43,8 @@ get_header(); ?>
 		<p class="no-margin white-text gen-descr">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
 	</div>	
 	<div class="inline-top btn-spot">
+		<?php echo hand_money(); ?>
+		<br>
 		<button class="banner-btn">NEW FUNDRAISER</button>
 	</div>
 </div>

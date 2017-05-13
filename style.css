@@ -980,8 +980,8 @@
 }
 
 .banner-title {
-	font-size: 45px;
-	font-family: "futura-pt-condensed", Arial, Sans-Serif;
+	font-size: 30px;
+	font-family: "futura-pt", Arial, Sans-Serif;
 }
 
 .gen-text {
@@ -1021,11 +1021,11 @@
 }
 
 .btn-spot {
-	margin-top: 350px;
-	margin-left: 300px;
+	margin-top: 40px;
+	margin-left: 245px;
 }
 
 .middle-btn-spot {
-	margin-top: 350px;
-	margin-left: 300px;
+	/*margin-top: 350px;
+	margin-left: 300px;*/
 }
