@@ -701,6 +701,7 @@
 	padding-left: 0.5em;
 	font-family: "futura-pt-condensed", Arial, Sans-Serif;
 	font-size: 1.5em;
+	margin-top: 1em;
 }
 
 .user-profile-header p {
@@ -870,6 +871,13 @@
 }
 
 /** Dashboard - Contributions Tab **/
+.marg-bot-sevenfive {
+	margin-bottom: 0.75em;
+}
+.none-p {
+	text-align: center;
+}
+
 .recurr_div {
 	padding-left: 37px;
 	display:table;
@@ -893,6 +901,12 @@
 	font-family: "Source Sans Pro", Arial, Sans-Serif;
 	font-size: 14px;
 	margin-top: 0.5em;
+}
+
+.recurr-display {
+	padding-right: 18em;
+	vertical-align: top;
+	display: inline;
 }
 
 .recurring-header {
