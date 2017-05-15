@@ -805,6 +805,17 @@
 	color: #000000;
 }
 
+ .c-pct {
+	padding-top: 3.6em;
+	width: 26px;
+}
+
+
+.c-pct span {
+	font-size: 10px;
+	color: #828282;
+}
+
 .pct {
 	padding-top: 3.3em;
 	width: 26px;
@@ -1060,12 +1071,12 @@
     font-size: 25px;
 }
 
-.blck-btn {
+.blck-btn-landing {
 	border-color: #000000;
 	color: #000000;
 }
 
-.blck-btn:hover { 
+.blck-btn-landing:hover { 
 	color: grey;
 	border-color: grey;
 }

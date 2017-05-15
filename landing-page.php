@@ -10,13 +10,8 @@
 get_header(); ?>
 
 <!-- Current Campaign Banner -->
-<!-- Use PHP to grab current campaign by MSR -->
 <div class="top-landing-banner">
-	<img class="campaign-banner" src="<?php echo home_url() . '/wp-content/uploads/2016/02/RwanadaImagesForMSRBlog-9.jpg'; ?>">
-	<div class="to-center">
-		<h1>One Device, Endless Impact</h1>
-		<button class="campaign-btn landing-campaign">Find Out More</button>
-	</div>
+	<?php echo get_msr_campaign(); ?>
 </div>
 <!-- General Contribution Banner -->
 <div class="general">
@@ -29,7 +24,7 @@ get_header(); ?>
 		<br>
 		<?php echo do_shortcode("[Wow-Modal-Windows id=1]"); ?>
 		<div class="btn-wrapper">
-			<button class="banner-btn blck-btn" id='wow-modal-id-1'>General Contribution</button>
+			<button class="banner-btn blck-btn-landing" id='wow-modal-id-1'>General Contribution</button>
 		</div>
 	</div>
 </div>
