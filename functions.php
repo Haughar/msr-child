@@ -433,8 +433,8 @@ function create_contributions_list($user_id, $json_object) {
 							<span class="normal-text">General Contribution</span>
 						</div>
 					<?php } else {
-						if ( has_post_thumbnail($post_id) ) {
-							get_the_post_thumbnail($post_id, array(100,100) );
+						if ( has_post_thumbnail() ) {
+							the_post_thumbnail(array(100,100) );
 						} ?>
 						<div class="fundraise-info inline-top">
 							<?php
