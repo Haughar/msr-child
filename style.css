@@ -736,6 +736,9 @@
 	font-weight: bold;
 }
 
+.r-input-check {
+	width: 10% !important;
+}
 
 /** DASHBOARD **/
 .prof-pic {
@@ -970,6 +973,14 @@
 
 
 /** LANDING PAGE **/
+.general .btn-spot #wow-modal-overlay-1 svg {
+	position: absolute;
+	padding: 5px 3px;
+	height: 37px;
+	width: 26px;
+	margin-left: 0px;
+}
+
 .top-landing-banner {
 	position: relative;
 	width: 100%;
@@ -1003,7 +1014,7 @@
 .campaign-banner {
 	width: 100%;
 	margin: -350px 0 0 0;
-	max-height: 1000px;
+	max-height: 900px;
 }
 
 .general {

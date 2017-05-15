@@ -490,7 +490,9 @@ function get_msr_campaign() {
 				<?php } ?>
 				<button class="campaign-btn landing-campaign" onclick="window.location.href='<?php echo get_permalink($post_id); ?>'">Find Out More</button>
 			</div>
-			<?php break;
+			<?php 
+			$post = NULL;
+			break;
 		}
 	}
 }
