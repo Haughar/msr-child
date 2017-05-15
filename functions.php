@@ -136,7 +136,7 @@ function get_customer_contributions($user_id) {
 
 	$json_object = [];
 	if($customer_id) {
-		$charges = \Stripe\Charge::all(array('customer' => $customer_id, 'limit' => 50));
+		$charges = \Stripe\Charge::all(array('customer' => $customer_id, 'limit' => 100));
 
 		$subscription = \Stripe\Subscription::all(array('customer' => $customer_id));
 		$subscription_json = $subscription->__toJSON();
@@ -418,7 +418,7 @@ function create_contributions_list($user_id, $json_object) {
 			<?php } else { 
 				// single time payments
 				$post_id = $charge['description'];
-				$post = get_post($post_id); 
+				// $post = get_post($post_id); 
 				$fundraiser_details = get_fundraiser_stripe_info($post_id); ?>
 				<div class="dashb-fundraisers"> 
 					<?php if($post_id == "general") { ?>
@@ -427,8 +427,8 @@ function create_contributions_list($user_id, $json_object) {
 							<span class="normal-text">General Contribution</span>
 						</div>
 					<?php } else {
-						if ( has_post_thumbnail() ) {
-						the_post_thumbnail( array(100,100) );
+						if ( has_post_thumbnail($post_id) ) {
+							get_the_post_thumbnail($post_id, array(100,100) );
 						} ?>
 						<div class="fundraise-info inline-top">
 							<?php
