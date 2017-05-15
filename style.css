@@ -169,6 +169,13 @@
 	text-transform: none;
 }
 
+.fundraising form {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 700px;
+}
+
 .fundraising .btn {
 	border: 1px solid #e2383f;
 	background: #e2383f;
@@ -203,10 +210,10 @@
 	display: none;
 }
 
-.fundraising .form-line .cover-image {
-	border: 1px solid #000;
-	height: 200px;
-	width: 100%;
+.fundraising .form-line .cover-image img {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .fundraising .image .btn {
@@ -218,7 +225,7 @@
 	margin-top: 10px;
 	padding: 15px;
 	text-align: center;
-	width: 49%;
+	width: 340px;
 }
 
 .fundraising .image .btn span {
@@ -228,7 +235,7 @@
 
 .fundraising .image .spacer {
 	display: inline-block;
-	width: 1%;
+	width: 10px;
 }
 
 .fundraising input[type="date"] {
@@ -739,6 +746,13 @@
 .r-input-check {
 	width: 10% !important;
 }
+
+/** EDIT FUNDRAISER **/
+.fundraising .action-btns #delete-fundraiser {
+	border: 1px solid #E2383F;
+	padding: 12px 20px;
+}
+
 
 /** DASHBOARD **/
 .prof-pic {

@@ -18,7 +18,7 @@ if($_POST){
 
 get_header(); ?>
 
-<main id="main">
+<main id="main" class="fundraising">
 
 <?php global $user_ID;
 $query_array = array('p' => $id,
@@ -33,38 +33,58 @@ if (have_posts()) : while (have_posts()) : the_post();
 
 <form id="fundraiser" name="fundraiser" enctype="multipart/form-data" method="post" action="">
 
-	<h2>CONTRIBUTING TO</h2>
-	<p>Use post meta's campaign id to get campagin title</p>
+	<div class="form-line">
+		<label for="fundraiser-name">Fundraiser Name</label>
+		<input type="text" id="fundraiser-name" name="fundraiserName" value="<?php echo isset($_POST['fundraiser-name']) ? htmlspecialchars($_POST['fundraiser-name']) : the_title(); ?>" placeholder="Give your fundraiser a title">
+	</div>
 
-	<?php if ( has_post_thumbnail() ) {
-		the_post_thumbnail( array(500,500) );
-	}?>
+	<div class="form-line image">
+		<label>Cover Image</label>
+		<div class="cover-image">
+			<?php if ( has_post_thumbnail() ) {
+				the_post_thumbnail( array(400,400) );
+			}?>
+		</div>
+		<label for="thumbnail" class="upload-btn btn"><span>Upload</span><br>your own image</label>
+		<div class="spacer"></div>
+		<label class="btn"><span>Choose</span><br>one of ours</label>
+		<input type="file" name="thumbnail" id="thumbnail" value="Choose File">
+	</div>
 
-	<?php if (get_post_meta($id, 'fundraiser-end', true)) { ?>
-	<p><?php echo get_fundraising_days_left(get_post_meta($id, 'fundraiser-end', true)); ?>&nbsp;day(s) left</p>
-	<?php } ?>
+	<div class="form-line goal">
+		<label for="fundraiser-goal">Goal</label>
+		<?php echo dollar_svg(); ?>
+		<input type="text" id="fundraiser-goal" name="fundraiserGoal" value="<?php echo isset($_POST['fundraiser-goal']) ? htmlspecialchars($_POST['fundraiser-goal']) : get_post_meta($id, 'fundraiser-goal', true); ?>" placeholder="Enter Amount">
+	</div>
 
-	<?php if (get_post_meta($id, 'fundraiser-goal', true) && get_post_meta($id, 'fundraiser-amount-raised', true)) { ?>
-	<p><?php echo get_percentage_to_goal(floatval(get_post_meta($id, 'fundraiser-amount-raised', true)), floatval(get_post_meta($id, 'fundraiser-goal', true))); ?>%</p>
-	<?php } ?>
+	<div class="form-line">
+		<div class="split-line">
+			<label for="end-date">End Date</label>
+			<div class="date-wrapper">
+				<input type="date" id="end-date" name="endDate" value="<?php echo isset($_POST['end-date']) ? htmlspecialchars($_POST['end-date']) : get_post_meta($id, 'fundraiser-end', true); ?>" required>
+				<?php echo calendar_svg(); ?>
+			</div>
+		</div>
+		<div class="split-line">
+			<?php if (get_post_meta($id, 'fundraiser-end', true)) { ?>
+				<p><?php echo get_fundraising_days_left(get_post_meta($id, 'fundraiser-end', true)); ?>&nbsp;day(s) left</p>
+			<?php } ?>
+		</div>
+	</div>
 
-	<?php if (get_post_meta($id, 'fundraiser-amount-raised', true)) { ?>
-	<p><?php echo wpautop(get_post_meta($id, 'fundraiser-amount-raised', true)); ?></p>
-	<?php } ?>
-
-	<?php if (get_post_meta($id, 'fundraiser-goal', true)) { ?>
-	<p>Fundraiser Goal: <?php echo wpautop(get_post_meta($id, 'fundraiser-goal', true)); ?></p>
-	<?php } ?>
-
-	<label for="fundraiser-description">Detailed Description</label>
-	<textarea id="fundraiser-description" name="fundraiser-description"><?php the_content(); ?></textarea>
+	<div class="form-line">
+		<label for="description">Story</label>
+		<textarea id="description" name="description"><?php echo isset($_POST['description']) ? htmlspecialchars($_POST['description']) : htmlspecialchars(the_content()); ?></textarea>
+	</div>
 
 	<input type="hidden" name="post_id" value="<?php echo $id ?>" />
 
 	<?php wp_nonce_field( 'create_fundraiser_action','create_fundraiser_nonce' ); ?>
 
-	<a href="home">Cancel</a>
-	<input type="submit" name="create-button" value="Save">
+	<div class="action-btns">
+		<a href="home" id="delete-fundraiser">Delete this fundraiser</a>
+		<input type="submit" name="create-button" value="Save" class="btn">
+	</div>
 
 </form>
 
