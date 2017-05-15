@@ -197,8 +197,6 @@ function get_customer_contributions($user_id) {
 		$json_object['charge-data'] = $charges['data'];
 	} else {
 		$json_object['total'] = 0;
-		$json_object['contribution-data'] = 0;
-		$json_object['charge-data'] = null;
 	}
 	return $json_object;
 }
@@ -276,6 +274,8 @@ function get_fundraiser_list($user_id, $type) {
 				$count++;
 			} else if($totalDiff < 0 && $type == 'expired') {
 				$count++;
+			} else if($post->post_status == "pending" && $type == "pending") {
+				$count++;
 			}
 		}
 	}
@@ -285,20 +285,31 @@ function get_fundraiser_list($user_id, $type) {
 				echo '(' . $count . ')'; ?> 
 			</p> 
 		</div>
-	<?php } else if ($type == 'pending') { ?>
+	<?php } else if ($type == 'pending' && $count > 0) { ?>
 		 <div class="user-profile-header">
 			<p>Pending Fundraisers <?php echo '(' . $post_query->post_count . ')'; ?> </p>
 		</div>
 	<?php } else if($type == 'expired') { ?>
 		<div class="user-profile-header">
-			<p>Past Fundraisers <?php 
+			<p>Past Fundraisers <?php
 				echo '(' . $count . ')'; ?> 
 			</p>
 		</div>
 	<?php } ?>
 	<?php
 	$totalRaised = 0;
-	if($post_query->have_posts() ) {
+	if ($count == 0 && $type != "pending") { 
+		if($type == "active") { ?>
+			<div class="recurr-div">
+				<p class="none-p">You have no active fundraisers. Create a new one now.</p> 
+			</div>
+			<div class="dashboard-space"></div>
+		<?php } else if($type == "expired") { ?>
+			<div class="recurr-div">
+				<p class="none-p">You have no past fundraisers.</p> 
+			</div>
+		<?php } 
+	} else if($post_query->have_posts() ) {
 		while($post_query->have_posts() ) {
 			$post_query->the_post();
 			$post = get_post();
@@ -337,6 +348,7 @@ function get_fundraiser_list($user_id, $type) {
 						<button onclick="window.location.href='<?php echo home_url()?>'">Insights</button>
 					</div>
 				</div>
+				<div class="dashboard-space"></div>
 			<?php
 			} else if ($totalDiff >= 0 && ($type == 'active' || $type == 'pending')) { ?>
 				<div class="dashb-fundraisers">
@@ -377,7 +389,7 @@ function get_fundraiser_list($user_id, $type) {
 						<button onclick="window.location.href='<?php echo home_url() . '/edit-fundraiser?post_id=' . $id ?>'">Manage</button>
 					</div>
 				</div>
-
+				<div class="dashboard-space"></div>
 			<?php }
 		}
 	}
@@ -462,7 +474,7 @@ function create_contributions_list($user_id, $json_object) {
 				</div>  <?php
 			}
 		}
-	}
+	} 
 }
 
 function console_log( $data ){

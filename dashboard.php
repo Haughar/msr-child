@@ -36,6 +36,7 @@ $json_object = get_customer_contributions($user_id);
 	        </li>
 	    </ul>
 
+	    <!-- ** MY FUNDRAISERS TAB ** -->
 		<div id="fundraisers">
 			<div id="title"> 
 				<h1>My Campaigns</h1>
@@ -44,24 +45,20 @@ $json_object = get_customer_contributions($user_id);
 			<div id="fundraise-btn" class="inline-top">
 				<button onclick="window.location.href='/create-fundraiser/'">New Fundraiser</button>
 			</div>
-			
-			<?php $totalRaisedActive += get_fundraiser_list($user_id, "active"); ?>
-			<div class="dashboard-space"></div> 
-				<!-- Get Pending Fundraisers -->	
+				<!-- User's Active Fundraisers -->
+			<?php $totalRaisedActive = get_fundraiser_list($user_id, "active"); ?>
+				<!-- User's Pending Fundraisers -->	
 			<?php 
-				$totalRaisedPending += get_fundraiser_list($user_id, "pending"); 
+				$totalRaisedPending = get_fundraiser_list($user_id, "pending"); 
 			?>
-			<div class="dashboard-space"></div>
-				<!-- Get Past Fundraisers -->
+				<!-- User's Past Fundraisers -->
 			<?php 
-				$totalRaisedExpired += get_fundraiser_list($user_id, "expired"); 
+				$totalRaisedExpired = get_fundraiser_list($user_id, "expired"); 
 			?>
 			<input id="totalRaised" type="hidden" value="<?php echo $totalRaisedActive + $totalRaisedPending + $totalRaisedExpired ?>">
-			<div class="dashboard-space"></div>
-
-
  		</div>
 
+	    <!-- ** MY CONTRIBUTIONS TAB ** -->
 		<div id="contributions">
 			<div id="title"> 
 				<h1>My Contributions</h1>
@@ -71,15 +68,13 @@ $json_object = get_customer_contributions($user_id);
 				<button onclick="window.location.href='/create-fundraiser/'">New Fundraiser</button>
 			</div>
 
-			<div class="user-profile-header recurring-header">
-				<div class="with-cancel inline-top">
-					<span class="with-cancel">Recurring Contributions</span>
+			<?php if($json_object['recurring_donation']) { ?>
+				<div class="user-profile-header marg-bot-sevenfive">
+					<p class="recurr-display">Recurring Contributions</p>
+					<div class="inline-top cancel-txt">
+						Cancel
+					</div>
 				</div>
-				<div class="inline-top cancel-txt">
-					Cancel
-				</div>
-			</div>
-			<?php if ($json_object['recurring_donation']) { ?>
 				<div class="all-recurr">
 					<?php foreach ($json_object['subscription_data'] as $data) { ?>
 						<div class="recurr_div">
@@ -95,22 +90,27 @@ $json_object = get_customer_contributions($user_id);
 						<button id="save-btn" class="disabled-btn" disabled>Save</button>
 					</div>
 				</div>
-			<?php } else { ?>
-				<div class="recurr-div">
-					<p>You have no recurring payments.</p> 
-				</div>
+				<div class="dashboard-space"></div>
+				<div class="dashboard-space"></div>
+				<div class="dashboard-space"></div> 
 			<?php } ?>
-			<div class="dashboard-space"></div> 
-			<div class="dashboard-space"></div>
-			<div class="dashboard-space"></div>
 			<div class="user-profile-header">
 				<p>Your Contributions</p> 
 			</div>
 			<div>
-				<span class="day-text"><?php create_contributions_list($user_id, $json_object); ?></span>
+				<span class="day-text"><?php 
+					if($json_object['charge-data']) {
+						create_contributions_list($user_id, $json_object); ?>
+						</span>
+					<?php } else {  ?>
+						</span>
+						<p class="none-p">You have not made any contributions.</p>
+					<?php } ?>
 			</div>
 			<div class="dashboard-space"></div>
 		</div>
+
+	 	<!-- ** SETTINGS TAB ** -->
 		<div id="settings">
 			<h1>Account Settings</h1>
 			<?php echo do_shortcode("[ultimatemember_account]"); ?>
