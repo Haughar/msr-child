@@ -110,7 +110,13 @@ function edit_fundraiser($id) {
 
 	$edited_post = array(
 		'ID' => $id,
-		'post_content' => $_POST['fundraiser-description']
+		'post_title' => $_POST['fundraiserName'],
+		'post_content' => $_POST['description'],
+		'meta_input' => array (
+			'fundraiser-goal' => $_POST['fundraiserGoal'],
+			'fundraiser-end' => $_POST['endDate']
+		),
+		'post_content' => $_POST['description']
 	);
 
 	wp_update_post($edited_post);

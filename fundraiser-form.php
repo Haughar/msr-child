@@ -105,7 +105,7 @@ get_header(); ?>
 			<div class="split-line">
 				<label for="start-date">Start Date</label>
 				<div class="date-wrapper">
-					<input type="date" id="start-date" name="startDate" value="<?php echo isset($_POST['start-date']) ? htmlspecialchars($_POST['start-date']) : ''; ?>">
+					<input type="date" id="start-date" name="startDate" value="<?php echo isset($_POST['start-date']) ? htmlspecialchars($_POST['start-date']) : ''; ?>" required>
 					<?php echo calendar_svg(); ?>
 				</div>
 			</div>
@@ -113,7 +113,7 @@ get_header(); ?>
 			<div class="split-line">
 				<label for="end-date">End Date</label>
 				<div class="date-wrapper">
-					<input type="date" id="end-date" name="endDate" value="<?php echo isset($_POST['end-date']) ? htmlspecialchars($_POST['end-date']) : ''; ?>">
+					<input type="date" id="end-date" name="endDate" value="<?php echo isset($_POST['end-date']) ? htmlspecialchars($_POST['end-date']) : ''; ?>" required>
 					<?php echo calendar_svg(); ?>
 				</div>
 			</div>
