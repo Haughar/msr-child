@@ -99,7 +99,7 @@ function create_new_fundraiser() {
         update_post_meta($new_fundraiser,'_thumbnail_id',$attach_id);
     }
 
-    wp_redirect( home_url() . '/edit-fundraiser/?post_id=' . $new_fundraiser );
+    wp_redirect( home_url() . '/edit-fundraiser/?post_id=' . $new_fundraiser . '&new=true' );
 }
 
 function edit_fundraiser($id) {
@@ -237,6 +237,38 @@ function get_fundraiser_stripe_info($post_id) {
 	$json_object['contribution-data'] = $contributions;
 
 	return $json_object;
+}
+
+function get_fundraiser_amount_raised($post_id) {
+	global $stripe_options;
+
+	// load the stripe libraries
+	require_once(STRIPE_BASE_DIR . '/lib/latest/init.php');	
+
+	// check if we are using test mode
+	if(isset($stripe_options['test_mode']) && $stripe_options['test_mode']) {
+		$secret_key = $stripe_options['test_secret_key'];
+	} else {
+		$secret_key = $stripe_options['live_secret_key'];
+	}
+
+	\Stripe\Stripe::setApiKey($secret_key);
+
+	$charges = \Stripe\Charge::all(array('limit' => 100)); // need to be able to do pagination stuff
+
+	$contributions = [];
+
+	$total = 0;
+	if($charges) {
+		foreach($charges['data'] as $data) {
+			if ($data['description'] == $post_id) {
+				$total += $data['amount'];
+			}
+		}
+	}
+	$total = $total / 100;
+
+	return $total;
 }
 
 function get_fundraiser_list($user_id, $type) {

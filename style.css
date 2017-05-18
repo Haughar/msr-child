@@ -169,7 +169,7 @@
 	text-transform: none;
 }
 
-.fundraising form {
+.fundraising form#fundraiser {
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
@@ -337,6 +337,13 @@
 }
 
 /** SINGLE FUNDRAISER PAGE **/
+
+.single-fundraiser .fundraising .main-image img {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
 
 .single-fundraiser .fundraising h1 {
 	display: inline;
@@ -748,6 +755,16 @@
 .fundraising .action-btns #delete-fundraiser {
 	border: 1px solid #E2383F;
 	padding: 12px 20px;
+}
+
+.fundraising .new-fundraiser-prompt {
+	background-color: rgb(223, 240, 216);
+	border: 3px solid rgb(60, 118, 61);
+}
+
+.fundraising .new-fundraiser-prompt p {
+	margin: 0;
+	padding: 15px;
 }
 
 

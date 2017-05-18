@@ -15,15 +15,17 @@ get_header(); ?>
 
 	$object = get_fundraiser_stripe_info($post_id);
 
-	if ( has_post_thumbnail() ) {
-		the_post_thumbnail( array(500,500) );
-	}?>
+	if ( has_post_thumbnail() ) { ?>
+		<div class="main-image"><?php the_post_thumbnail( array(500,500) ); ?></div>
+	<?php }?>
 
 	
-	<h1><?php the_title(); ?></h1>
-	<?php if ($post->post_author == get_current_user_id()) { ?>
-		<button onclick="window.location.href='<?php echo home_url() . '/edit-fundraiser?post_id=' . $post_id ?>'" class="manage-btn">Manage</button>
-	<?php } ?>
+	<div>
+		<h1><?php the_title(); ?></h1>
+		<?php if ($post->post_author == get_current_user_id()) { ?>
+			<button onclick="window.location.href='<?php echo home_url() . '/edit-fundraiser?post_id=' . $post_id ?>'" class="manage-btn">Manage</button>
+		<?php } ?>
+	</div>
 
 	<div class="main-content">
 
@@ -61,12 +63,12 @@ get_header(); ?>
 
 	<div class="contribution-content">
 		<div class="card">
-			<p class="progress-summary"><strong>$<?php echo $object['total']; ?></strong> USD raised by <?php echo count($object['contribution-data']); ?> contributions</p>
+			<p class="progress-summary"><strong>$<?php echo number_format($object['total'], 0, '.', ','); ?></strong> USD raised by <?php echo number_format(count($object['contribution-data']), 0, '.', ','); ?> contributions</p>
 
 			<div id="campaign-progress" class="progress-bar"></div>
 
 			<?php if (get_post_meta($id, 'fundraiser-goal', true)) { ?>
-				<p class="progress-percent"><?php echo get_percentage_to_goal($object['total'], get_post_meta($id, 'fundraiser-goal', true)); ?>% of $<?php echo get_post_meta($id, 'fundraiser-goal', true); ?></p>
+				<p class="progress-percent"><?php echo get_percentage_to_goal($object['total'], get_post_meta($id, 'fundraiser-goal', true)); ?>% of $<?php echo number_format(get_post_meta($id, 'fundraiser-goal', true), 0, '.', ','); ?></p>
 			<?php } ?>
 
 			<?php if (get_post_meta($id, 'fundraiser-end', true)) { ?>
@@ -86,7 +88,7 @@ get_header(); ?>
 				<div class="contribution-constraint">
 					<div class="contribution-wrapper">
 						<?php foreach($object['contribution-data'] as $contribution) { ?>
-							<p class="<?php if ($index > 3) { echo 'hide'; } ?>">haughar<span>$<?php echo $contribution['amount']/100; ?></span></p>
+							<p class="<?php if ($index > 3) { echo 'hide'; } ?>"><?php echo $contribution["metadata"]["customer_name"]; ?><span>$<?php echo number_format($contribution['amount']/100, 0, '.', ','); ?></span></p>
 						<?php $index++;
 						} ?>
 					</div>

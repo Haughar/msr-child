@@ -82,12 +82,12 @@ get_header(); ?>
 	<form id="fundraiser" name="fundraiser" method="post" action="" encrypt="multipart/form-data" onsubmit="return(validate_form());">
 
 		<div class="form-line">
-			<label for="fundraiser-name">Fundraiser Name</label>
+			<label for="fundraiser-name">Fundraiser Name <?php echo info_svg(); ?></label>
 			<input type="text" id="fundraiser-name" name="fundraiserName" value="<?php echo isset($_POST['fundraiser-name']) ? htmlspecialchars($_POST['fundraiser-name']) : ''; ?>" placeholder="Give your fundraiser a title">
 		</div>
 
 		<div class="form-line image">
-			<label>Cover Image</label>
+			<label>Cover Image <?php echo info_svg(); ?></label>
 			<div class="cover-image"></div>
 			<label for="thumbnail" class="upload-btn btn"><span>Upload</span><br>your own image</label>
 			<div class="spacer"></div>
@@ -96,14 +96,14 @@ get_header(); ?>
 		</div>
 
 		<div class="form-line goal">
-			<label for="fundraiser-goal">Goal</label>
+			<label for="fundraiser-goal">Goal <?php echo info_svg(); ?></label>
 			<?php echo dollar_svg(); ?>
 			<input type="text" id="fundraiser-goal" name="fundraiserGoal" value="<?php echo isset($_POST['fundraiser-goal']) ? htmlspecialchars($_POST['fundraiser-goal']) : ''; ?>" placeholder="Enter Amount">
 		</div>
 
 		<div class="form-line">
 			<div class="split-line">
-				<label for="start-date">Start Date</label>
+				<label for="start-date">Start Date <?php echo info_svg(); ?></label>
 				<div class="date-wrapper">
 					<input type="date" id="start-date" name="startDate" value="<?php echo isset($_POST['start-date']) ? htmlspecialchars($_POST['start-date']) : ''; ?>" required>
 					<?php echo calendar_svg(); ?>
@@ -111,7 +111,7 @@ get_header(); ?>
 			</div>
 
 			<div class="split-line">
-				<label for="end-date">End Date</label>
+				<label for="end-date">End Date <?php echo info_svg(); ?></label>
 				<div class="date-wrapper">
 					<input type="date" id="end-date" name="endDate" value="<?php echo isset($_POST['end-date']) ? htmlspecialchars($_POST['end-date']) : ''; ?>" required>
 					<?php echo calendar_svg(); ?>
@@ -120,7 +120,7 @@ get_header(); ?>
 		</div>
 
 		<div class="form-line">
-			<label for="description">Story</label>
+			<label for="description">Story <?php echo info_svg(); ?></label>
 			<textarea id="description" name="description"><?php echo isset($_POST['description']) ? htmlspecialchars($_POST['description']) : ''; ?></textarea>
 		</div>
 

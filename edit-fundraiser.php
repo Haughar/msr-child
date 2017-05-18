@@ -9,16 +9,25 @@
  * @since 1.0.0
  */
 
+$new = false;
+
 if($_POST){
 	edit_fundraiser($_POST['post_id']);
 	$id = $_POST['post_id'];
 } else {
 	$id = $_GET['post_id'];
+	$new = $_GET['new'];
 }
 
 get_header(); ?>
 
 <main id="main" class="fundraising">
+
+<?php if ($new) { ?>
+	<div class="new-fundraiser-prompt">
+		<p><strong>Thank you for creating a new fundraiser!</strong> Your fundraiser has been submitted for review by our team. You will be notified via email when it has been published.</p>
+	</div>
+<?php } ?>
 
 <?php global $user_ID;
 $query_array = array('p' => $id,
@@ -52,9 +61,14 @@ if (have_posts()) : while (have_posts()) : the_post();
 	</div>
 
 	<div class="form-line goal">
-		<label for="fundraiser-goal">Goal</label>
-		<?php echo dollar_svg(); ?>
-		<input type="text" id="fundraiser-goal" name="fundraiserGoal" value="<?php echo isset($_POST['fundraiser-goal']) ? htmlspecialchars($_POST['fundraiser-goal']) : get_post_meta($id, 'fundraiser-goal', true); ?>" placeholder="Enter Amount">
+		<div class="split-line">
+			<label for="fundraiser-goal">Goal</label>
+			<?php echo dollar_svg(); ?>
+			<input type="text" id="fundraiser-goal" name="fundraiserGoal" value="<?php echo isset($_POST['fundraiser-goal']) ? htmlspecialchars($_POST['fundraiser-goal']) : get_post_meta($id, 'fundraiser-goal', true); ?>" placeholder="Enter Amount">
+		</div>
+		<div class="split-line">
+			<p><span>$<?php echo number_format(get_fundraiser_amount_raised($id), 0, '.', ','); ?></span> USD raised</p>
+		</div>
 	</div>
 
 	<div class="form-line">
