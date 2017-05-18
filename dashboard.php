@@ -10,9 +10,9 @@
  */
 
 $user_id = get_current_user_id();
+$json_object = get_customer_contributions($user_id);
 
 get_header();
-$json_object = get_customer_contributions($user_id);
 
 ?>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js"></script>
@@ -203,18 +203,18 @@ $json_object = get_customer_contributions($user_id);
 
 	$("#save-btn").click(function() {
 		$dataString = "subID=" + $('#subID').val();
-		alert("Subscription deleted");
-		// $.ajax({
-		// 	data: $dataString,
-		// 	type: "GET",
-		// 	url:'/recurring.php',
-		// 	success: function (response) {
-		// 	  	alert("Recurring payment deleted");
-		// 	},
-		// 	error: function(xhr) {
-		// 		alert(xhr.status + " " + xhr.statusText);
-		// 	}
-		// });
+
+		$.ajax({
+			data: $dataString,
+			type: "GET",
+			url:'cancel-recurring.php',
+			success: function (response) {
+			  	alert("Recurring payment deleted");
+			},
+			error: function(xhr) {
+				alert(xhr.status + " " + xhr.statusText);
+			}
+		});
 	});
 
 	document.getElementById("totalText").textContent = "Total Raised: $" + $("#totalRaised").val();
