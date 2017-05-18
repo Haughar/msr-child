@@ -46,8 +46,56 @@ get_header(); ?>
 			$difference = $endDate - time();
 			$totalDiff = floor($difference/60/60/24);
 			if($totalDiff >= 0) {
-				$count++;
-				echo '<br>';
+				$count++; ?>
+
+				<article id="post-<?php the_ID(); ?>" <?php post_class('post-grid'); ?>>
+		
+					<?php if ( has_post_thumbnail() ) { 
+					/** Normal container for posts with thumbnail */ ?>
+					
+					<?php $image_thumb_src = wp_get_attachment_image_src(get_post_thumbnail_id(), 'msr-post-grid-thumb');?>
+					
+					<a class="entry-thumb" href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>" style="background-image:url( <?php echo $image_thumb_src[0]; ?> );">
+						<div class="entry-thumb-icon"></div>
+					</a>
+
+					<div class="entry-text-content">
+						
+					<?php } else {
+					/** Added class for adjusting post size without thumbnail */ ?>
+					
+					<div class="entry-text-content no-thumb">
+					
+					<?php } ?>
+						
+						<header class="entry-header">
+							<?php the_title( sprintf( '<h3 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h3>' ); ?>
+							<?php if ( 'post' == get_post_type() ) : ?>
+							<div class="entry-meta">
+								<?php the_time('M j, Y') ?> 
+							</div><!-- .entry-meta -->
+							<?php endif; ?>
+						</header><!-- .entry-header -->
+					
+						<?php if(has_tag('feature', null)){ ?>
+							<div class="feature-content"><span>Feature</span></div>
+						<?php } ?>
+
+						<div class="entry-content">
+							<?php echo the_excerpt(); ?>
+						</div><!-- .entry-content -->
+					</div>
+					<div class="entry-more">
+						
+						<?php if ( has_post_format( 'video' )) { ?>
+							<a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>"> Watch Video</a>
+						<?php } else { ?>
+							<a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>"><?php echo __('Read More', 'msr') ?></a>
+						<?php } ?>
+					</div>
+				</article><!-- #post-## -->
+				<?php 
+				/* echo '<br>';
 				if ( has_post_thumbnail() ) {
 					the_post_thumbnail( array(100,100) );
 				}
@@ -58,13 +106,10 @@ get_header(); ?>
 
 				if (get_post_meta($id, 'fundraiser-goal', true) && get_post_meta($id, 'fundraiser-amount-raised', true)) { ?>
 					<p><?php echo get_percentage_to_goal(floatval(get_post_meta($id, 'fundraiser-amount-raised', true)), floatval(get_post_meta($id, 'fundraiser-goal', true)));?> %</p>
-				<?php }
+				<?php } */
 			}
 		} ?>
 		<input type="hidden" value="<?php echo $count ?>" id="total">
-		<!-- ******Show only active campaigns instead of both active and pending campaigns -->
-		<?php // get_fundraiser_list($user_id); ?>
-
 	<?php endwhile; // end of the loop. ?>
 
 </main>

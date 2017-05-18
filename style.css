@@ -739,8 +739,8 @@
 }
 
 .name-on-profile {
-	font-family: "futura-pt-condensed", Arial, Sans-Serif;
-	font-weight: bold;
+	font-family: "futura-pt", Arial, Sans-Serif;
+	font-weight: 500;
     font-size: 40px;
     margin-bottom: 0px;
     margin-top: 0px;
@@ -750,6 +750,9 @@
 	font-weight: bold;
 }
 
+.r-input-check {
+	width: 10% !important;
+}
 
 /** EDIT FUNDRAISER **/
 .fundraising .action-btns #delete-fundraiser {
@@ -834,6 +837,17 @@
 .normal-text a {
 	text-decoration: none;
 	color: #000000;
+}
+
+ .c-pct {
+	padding-top: 3.6em;
+	width: 26px;
+}
+
+
+.c-pct span {
+	font-size: 10px;
+	color: #828282;
 }
 
 .pct {
@@ -990,6 +1004,14 @@
 
 
 /** LANDING PAGE **/
+.general .btn-spot #wow-modal-overlay-1 svg {
+	position: absolute;
+	padding: 5px 3px;
+	height: 37px;
+	width: 26px;
+	margin-left: 0px;
+}
+
 .top-landing-banner {
 	position: relative;
 	width: 100%;
@@ -1023,7 +1045,7 @@
 .campaign-banner {
 	width: 100%;
 	margin: -350px 0 0 0;
-	max-height: 1000px;
+	max-height: 900px;
 }
 
 .general {
@@ -1091,12 +1113,12 @@
     font-size: 25px;
 }
 
-.blck-btn {
+.blck-btn-landing {
 	border-color: #000000;
 	color: #000000;
 }
 
-.blck-btn:hover { 
+.blck-btn-landing:hover { 
 	color: grey;
 	border-color: grey;
 }

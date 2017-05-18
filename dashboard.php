@@ -83,7 +83,7 @@ $json_object = get_customer_contributions($user_id);
 							<span class="cancel-txt pad-left-ten">Monthly</span>
 							<span class="cancel-txt">Last Contribution: <?php echo date("M j, Y", $data['current_period_start']); ?></span>
 							<span class="cancel-txt next-recurr">Next Contribution: <?php echo date("M j, Y", $data['current_period_end']); ?></span>
-							<span class="recurr-box"><input type="checkbox" name="cancel"></span>
+							<span class="recurr-box"><input id="cancel-sub" type="checkbox" name="cancel"></span>
 						</div>
 					<?php } ?>
 					<div class="save-btn">
@@ -189,8 +189,8 @@ $json_object = get_customer_contributions($user_id);
   	var hash = $.trim( window.location.hash);
     if (hash) $('#tabs a[href$="'+hash+'"]').trigger('click');
 	
-	$("input").on("click", function () {
-		if($("input").is(':checked')) {
+	$("#cancel-sub").on("click", function () {
+		if($("#cancel-sub").is(':checked')) {
 			$("#save-btn").attr("disabled", false);
 			$("#save-btn").removeClass("disabled-btn");
 			$("#save-btn").addClass("blck-btn");

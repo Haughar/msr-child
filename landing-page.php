@@ -10,16 +10,11 @@
 get_header(); ?>
 
 <!-- Current Campaign Banner -->
-<!-- Use PHP to grab current campaign by MSR -->
 <div class="top-landing-banner">
-	<img class="campaign-banner" src="<?php echo home_url() . '/wp-content/uploads/2016/02/RwanadaImagesForMSRBlog-9.jpg'; ?>">
-	<div class="to-center">
-		<h1>One Device, Endless Impact</h1>
-		<button class="campaign-btn landing-campaign">Find Out More</button>
-	</div>
+	<?php echo get_msr_campaign(); ?>
 </div>
 <!-- General Contribution Banner -->
-<div class="general">
+<div class="general fundraising">
 	<div class="gen-text inline-top">
 		<p class="no-margin banner-title">What is MSR Global Health working on?</p>
 		<p class="no-margin gen-descr">MSR Global Health a leading innovator and manufacturer of low cost, field-proven products that improve access to basic human needs for people living in low-resource communities of the developing world. Please support MSR Global Heatlh by contributing directly to MSR campaigns or our supporters’ fundraisers.</p>
@@ -29,7 +24,7 @@ get_header(); ?>
 		<br>
 		<?php echo do_shortcode("[Wow-Modal-Windows id=1]"); ?>
 		<div class="btn-wrapper">
-			<button class="banner-btn blck-btn" id='wow-modal-id-1'>General Contribution</button>
+			<button class="banner-btn blck-btn-landing" id='wow-modal-id-1'>General Contribution</button>
 		</div>
 	</div>
 </div>
@@ -57,7 +52,14 @@ get_header(); ?>
 		<div class="inline-top btn-spot">
 			<?php echo hand_money(); ?>
 			<br>
-			<button class="banner-btn" onclick="window.location.href='/create-fundraiser/'">New Fundraiser</button>
+			<?php echo do_shortcode("[Wow-Modal-Windows id=2]"); ?>
+			<?php echo do_shortcode("[Wow-Modal-Windows id=3]"); ?>
+			<?php 
+				if(is_user_logged_in()) {
+					echo "<button class='banner-btn' onclick=\"window.location.href='/create-fundraiser/'\">New Fundraiser</button>"; 
+				} else {
+					echo "<button class='banner-btn' id='wow-modal-id-2'>New Fundraiser</button>";
+				} ?>
 		</div>
 	</div>
 </div>

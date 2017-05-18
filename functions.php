@@ -142,7 +142,7 @@ function get_customer_contributions($user_id) {
 
 	$json_object = [];
 	if($customer_id) {
-		$charges = \Stripe\Charge::all(array('customer' => $customer_id, 'limit' => 50));
+		$charges = \Stripe\Charge::all(array('customer' => $customer_id, 'limit' => 100));
 
 		$subscription = \Stripe\Subscription::all(array('customer' => $customer_id));
 		$subscription_json = $subscription->__toJSON();
@@ -333,7 +333,7 @@ function get_fundraiser_list($user_id, $type) {
 	if ($count == 0 && $type != "pending") { 
 		if($type == "active") { ?>
 			<div class="recurr-div">
-				<p class="none-p">You have no active fundraisers. Create a new one now.</p> 
+				<p class="none-p">You have no active fundraisers.</p> 
 			</div>
 			<div class="dashboard-space"></div>
 		<?php } else if($type == "expired") { ?>
@@ -456,7 +456,7 @@ function create_contributions_list($user_id, $json_object) {
 			<?php } else { 
 				// single time payments
 				$post_id = $charge['description'];
-				$post = get_post($post_id); 
+				// $post = get_post($post_id); 
 				$fundraiser_details = get_fundraiser_stripe_info($post_id); ?>
 				<div class="dashb-fundraisers"> 
 					<?php if($post_id == "general") { ?>
@@ -466,7 +466,7 @@ function create_contributions_list($user_id, $json_object) {
 						</div>
 					<?php } else {
 						if ( has_post_thumbnail() ) {
-						the_post_thumbnail( array(100,100) );
+							the_post_thumbnail(array(100,100) );
 						} ?>
 						<div class="fundraise-info inline-top">
 							<?php
@@ -485,7 +485,7 @@ function create_contributions_list($user_id, $json_object) {
 							<!-- Amount of days remaining -->
 							<span class="day-text"><?php echo get_fundraising_days_left(get_post_meta($post_id, 'fundraiser-end', true)); ?> days left</span>
 						</div>
-						<div class="pct inline-top"> 
+						<div class="c-pct inline-top"> 
 							<!-- Percentage of amount made -->
 							<span><?php echo get_percentage_to_goal($fundraiser_details['total'],  get_post_meta($post_id, 'fundraiser-goal', true)); ?>%</span>
 						</div>
@@ -507,6 +507,32 @@ function create_contributions_list($user_id, $json_object) {
 			}
 		}
 	} 
+}
+
+function get_msr_campaign() {
+	$args = array(
+		'post_type' => 'fundraiser',
+		'post_status' => 'publish',
+		'author_name' => 'globalhealth_admin'
+	);
+	$post_query = new WP_Query($args); 
+	if($post_query->have_posts()) {
+		while($post_query->have_posts()) {
+			$post_query->the_post();
+			$post = get_post();
+			$id = $post->ID; ?>
+			<img class="campaign-banner" src="<?php if(has_post_thumbnail() ) { echo get_the_post_thumbnail_url(); }	?>">
+			<div class="to-center">
+				<?php if(get_the_title()) {?>
+					<h1><?php echo get_the_title(); ?></h1>
+				<?php } ?>
+				<button class="campaign-btn landing-campaign" onclick="window.location.href='<?php echo get_permalink($post_id); ?>'">Find Out More</button>
+			</div>
+			<?php 
+			$post = NULL;
+			break;
+		}
+	}
 }
 
 function console_log( $data ){
