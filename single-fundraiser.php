@@ -88,7 +88,7 @@ get_header(); ?>
 				<div class="contribution-constraint">
 					<div class="contribution-wrapper">
 						<?php foreach($object['contribution-data'] as $contribution) { ?>
-							<p class="<?php if ($index > 3) { echo 'hide'; } ?>"><?php echo $contribution["metadata"]["customer_name"]; ?><span>$<?php echo number_format($contribution['amount']/100, 0, '.', ','); ?></span></p>
+							<p class="<?php if ($index > 3) { echo 'hide'; } ?>"><?php echo $contribution["metadata"]["display_name"]; ?><span>$<?php echo number_format($contribution['amount']/100, 0, '.', ','); ?></span></p>
 						<?php $index++;
 						} ?>
 					</div>
