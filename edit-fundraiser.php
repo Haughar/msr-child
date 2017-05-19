@@ -81,14 +81,26 @@ if (have_posts()) : while (have_posts()) : the_post();
 		</div>
 		<div class="split-line">
 			<?php if (get_post_meta($id, 'fundraiser-end', true)) { ?>
-				<p><?php echo get_fundraising_days_left(get_post_meta($id, 'fundraiser-end', true)); ?>&nbsp;day(s) left</p>
+				<p>
+					<?php $days_left = get_fundraising_days_left(get_post_meta($id, 'fundraiser-end', true));
+						if ($days_left > 1) {
+							echo $days_left . "&nbsp;days left";
+						} else if ($days_left == 1) {
+							echo $days_left . "&nbsp;day left";
+						} else if ($days_left == 0){
+							echo "Ending tonight";
+						} else if ($days_left < 0) {
+							echo "Closed";
+						}
+					?>
+				</p>
 			<?php } ?>
 		</div>
 	</div>
 
 	<div class="form-line">
 		<label for="description">Story</label>
-		<textarea id="description" name="description"><?php echo isset($_POST['description']) ? htmlspecialchars($_POST['description']) : htmlspecialchars(the_content()); ?></textarea>
+		<textarea id="description" name="description"><?php echo isset($_POST['description']) ? htmlspecialchars($_POST['description']) : get_the_content(); ?></textarea>
 	</div>
 
 	<input type="hidden" name="post_id" value="<?php echo $id ?>" />
