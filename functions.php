@@ -13,6 +13,8 @@ function msr_child_enqueue_styles() {
 }
 add_action( 'wp_enqueue_scripts', 'msr_child_enqueue_styles' );
 
+remove_filter('get_the_content', 'wpautop');
+
 function display_generic_comments($comments_array) {
 	
 }
@@ -27,7 +29,7 @@ function get_fundraising_days_left($end_date) {
 	$today = time();
 
 	$difference = $end - $today;
-	return floor($difference/60/60/24);
+	return floor($difference/60/60/24) + 2;
 }
 
 function new_contribution($post, $current_user) {

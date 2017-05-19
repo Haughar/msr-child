@@ -72,7 +72,19 @@ get_header(); ?>
 			<?php } ?>
 
 			<?php if (get_post_meta($id, 'fundraiser-end', true)) { ?>
-				<p class="time-left"><?php echo get_fundraising_days_left(get_post_meta($id, 'fundraiser-end', true)); ?>&nbsp;day(s) left</p>
+				<p class="time-left">
+					<?php $days_left = get_fundraising_days_left(get_post_meta($id, 'fundraiser-end', true));
+						if ($days_left > 1) {
+							echo $days_left . "&nbsp;days left";
+						} else if ($days_left == 1) {
+							echo $days_left . "&nbsp;day left";
+						} else if ($days_left == 0){
+							echo "Ending tonight";
+						} else if ($days_left < 0) {
+							echo "Closed";
+						}
+					?>
+				</p>
 			<?php } ?>
 
 			<?php echo do_shortcode("[Wow-Modal-Windows id=1]"); ?>
