@@ -22,6 +22,10 @@
 	opacity: 1; 
 }
 
+.has-featured-image .site-header .main-navigation .sub-menu li a {
+	color: #000000;
+}
+
 /** DASHBOARD'S LEFT NAVIGATION BAR **/
 .ui-tabs.ui-tabs-vertical {
     padding: 0;
