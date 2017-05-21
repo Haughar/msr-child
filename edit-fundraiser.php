@@ -16,12 +16,16 @@ if($_POST){
 	$id = $_POST['post_id'];
 } else {
 	$id = $_GET['post_id'];
-	$new = $_GET['new'];
+	if (isset($_GET['new'])) {
+		$new = $_GET['new'];
+	} else {
+		$new = false;
+	}
 }
 
 get_header(); ?>
 
-<main id="main" class="fundraising">
+<main id="main" class="fundraising edit-fundraising">
 
 <?php if ($new) { ?>
 	<div class="new-fundraiser-prompt">
@@ -38,6 +42,9 @@ $query_array = array('p' => $id,
 query_posts($query_array);
 
 if (have_posts()) : while (have_posts()) : the_post();
+	if ( get_post_status ( $id ) == 'pending' ) {
+		echo 'yeahhhhh.... you gonna have to wait';
+	}
 ?>
 
 <form id="fundraiser" name="fundraiser" enctype="multipart/form-data" method="post" action="">
@@ -67,7 +74,7 @@ if (have_posts()) : while (have_posts()) : the_post();
 			<input type="text" id="fundraiser-goal" name="fundraiserGoal" value="<?php echo isset($_POST['fundraiser-goal']) ? htmlspecialchars($_POST['fundraiser-goal']) : get_post_meta($id, 'fundraiser-goal', true); ?>" placeholder="Enter Amount">
 		</div>
 		<div class="split-line">
-			<p><span>$<?php echo number_format(get_fundraiser_amount_raised($id), 0, '.', ','); ?></span> USD raised</p>
+			<p><span id="amount-raised">$<?php echo number_format(get_fundraiser_amount_raised($id), 0, '.', ','); ?></span> USD raised</p>
 		</div>
 	</div>
 
