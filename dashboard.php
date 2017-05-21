@@ -12,6 +12,11 @@
 $user_id = get_current_user_id();
 $json_object = get_customer_contributions($user_id);
 
+if($_POST){
+	change_profile_picture($user_id);
+	// cancel_recurring_payment();
+}
+
 get_header();
 
 ?>
@@ -23,8 +28,19 @@ get_header();
 
 	<div id="tabs">
 	    <ul>
-			<li class="prof-pic"><?php echo get_avatar($user_id, 145); ?></li>
-    		<li class="dashb-username"> <?php echo get_user_meta( $user_id, 'nickname', true); ?> </li>
+			<li id="prof-pic" class="prof-pic no-bullet">
+				<?php if(get_user_meta($user_id, "user-profile-picture", true)) { ?>
+					<img src="<?php echo get_user_meta($user_id, "user-profile-picture", true); ?>">
+				<?php } else {
+					echo get_avatar($user_id, 145);
+				} ?>
+				<form id="upload-pic-form" name="upload-pic-form" method="post" enctype="multipart/form-data" action="">
+					<input type="file" name="pic-upload" id="pic-upload" class="no-bullet pic-upload" accept="image/*">
+					<?php wp_nonce_field( 'prof-pic-upload-action', 'prof-pic-upload-nonce' ); ?>
+					<input type="submit" id="submit-prof-pic" name="submit" class="pic-upload">
+				</form>
+			</li>
+    		<li class="dashb-username no-bullet"> <?php echo get_user_meta( $user_id, 'nickname', true); ?> </li>
 	        <li>
 	            <a href="#fundraisers">My Fundraisers</a>
 	        </li>
@@ -78,17 +94,20 @@ get_header();
 				<div class="all-recurr">
 					<?php foreach ($json_object['subscription_data'] as $data) { ?>
 						<div class="recurr_div">
-							<input id="subID" type="hidden" value="<?php echo $data['id']; ?>">
 							<span class="amt-text"><?php echo '$' . $data['quantity']; ?></span>
 							<span class="cancel-txt pad-left-ten">Monthly</span>
 							<span class="cancel-txt">Last Contribution: <?php echo date("M j, Y", $data['current_period_start']); ?></span>
 							<span class="cancel-txt next-recurr">Next Contribution: <?php echo date("M j, Y", $data['current_period_end']); ?></span>
 							<span class="recurr-box"><input id="cancel-sub" type="checkbox" name="cancel"></span>
 						</div>
-					<?php } ?>
-					<div class="save-btn">
-						<button id="save-btn" class="disabled-btn" disabled>Save</button>
+						<div class="save-btn">
+						<form id="cancel-recurring" name="cancel-recurring" method="post" action="">
+							<input id="subID" name="subID" type="hidden" value="<?php echo $data['id']; ?>">
+							<?php wp_nonce_field( 'cancel-recurring-action', 'cancel-recurring-nonce' ); ?>
+							<input type="submit" name="submit" id="save-btn" value="Save" class="disabled-btn">
+						</form>
 					</div>
+					<?php } ?>
 				</div>
 				<div class="dashboard-space"></div>
 				<div class="dashboard-space"></div>
@@ -192,32 +211,44 @@ get_header();
 	$("#cancel-sub").on("click", function () {
 		if($("#cancel-sub").is(':checked')) {
 			$("#save-btn").attr("disabled", false);
-			$("#save-btn").removeClass("disabled-btn");
-			$("#save-btn").addClass("blck-btn");
+			// $("#save-btn").removeClass("disabled-btn");
+			// $("#save-btn").addClass("blck-btn");
 		} else {
 			$("#save-btn").attr("disabled", true);
-			$("#save-btn").addClass("disabled-btn");
-			$("#save-btn").removeClass("blck-btn");
+			// $("#save-btn").addClass("disabled-btn");
+			// $("#save-btn").removeClass("blck-btn");
 		}
 	});
 
-	$("#save-btn").click(function() {
-		$dataString = "subID=" + $('#subID').val();
+	// $("#save-btn").click(function() {
+	// 	$dataString = "subID=" + $('#subID').val();
 
-		$.ajax({
-			data: $dataString,
-			type: "GET",
-			url:'cancel-recurring.php',
-			success: function (response) {
-			  	alert("Recurring payment deleted");
-			},
-			error: function(xhr) {
-				alert(xhr.status + " " + xhr.statusText);
-			}
-		});
-	});
+	// 	$.ajax({
+	// 		data: $dataString,
+	// 		type: "GET",
+	// 		url:'cancel-recurring.php',
+	// 		success: function (response) {
+	// 		  	alert("Recurring payment deleted");
+	// 		},
+	// 		error: function(xhr) {
+	// 			alert(xhr.status + " " + xhr.statusText);
+	// 		}
+	// 	});
+	// });
 
 	document.getElementById("totalText").textContent = "Total Raised: $" + $("#totalRaised").val();
+
+	document.getElementById('prof-pic').onclick = function() {
+    	document.getElementById('pic-upload').click();
+	};
+
+	$("#pic-upload").change(function() {
+		$("#submit-prof-pic").click();
+	});
+
+	function validate_form() {
+		return (true);
+	}
 </script>
 
 <!-- <link rel="stylesheet" type="text/css" href="style.css">
