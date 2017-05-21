@@ -203,7 +203,7 @@ function get_fundraiser_stripe_info($post_id) {
 
 	\Stripe\Stripe::setApiKey($secret_key);
 
-	$charges = \Stripe\Charge::all(array('limit' => 100)); // need to be able to do pagination stuff
+	$charges = \Stripe\Charge::all(array('limit' => 100)); // need to be able to do pagination
 
 	$json_object = [];
 
@@ -241,7 +241,7 @@ function get_fundraiser_amount_raised($post_id) {
 
 	\Stripe\Stripe::setApiKey($secret_key);
 
-	$charges = \Stripe\Charge::all(array('limit' => 100)); // need to be able to do pagination stuff
+	$charges = \Stripe\Charge::all(array('limit' => 100)); // need to be able to do pagination
 
 	$contributions = [];
 
@@ -452,8 +452,8 @@ function create_contributions_list($user_id, $json_object) {
 							<span class="normal-text">General Contribution</span>
 						</div>
 					<?php } else {
-						if ( has_post_thumbnail() ) {
-							the_post_thumbnail(array(100,100) );
+						if ( has_post_thumbnail($post_id) ) {
+							echo get_the_post_thumbnail($post_id, array(100, 100));
 						} ?>
 						<div class="fundraise-info inline-top">
 							<?php
@@ -502,7 +502,7 @@ function get_msr_campaign() {
 		'post_status' => 'publish',
 		'author_name' => 'globalhealth_admin'
 	);
-	$post_query = new WP_Query($args); 
+	$post_query = new WP_Query($args);
 	if($post_query->have_posts()) {
 		while($post_query->have_posts()) {
 			$post_query->the_post();
