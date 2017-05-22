@@ -504,6 +504,31 @@
 	display: none;
 }
 
+.single-fundraiser h3#reply-title {
+	margin-bottom: 5px;
+}
+
+.single-fundraiser textarea#comment {
+	height: 100px;
+	margin-bottom: 0;
+	width: 90%;
+}
+
+.single-fundraiser form#commentform .form-submit {
+	margin-right: 10%;
+	margin-top: 10px;
+	text-align: right;
+}
+
+.single-fundraiser form#commentform .comment-form-comment {
+	margin: 0;
+}
+
+.single-fundraiser form#commentform .logged-in-as {
+	font-size: 12px;
+	margin-top: 5px;
+}
+
 .single-fundraiser .contributors p span {
 	float: right;
 }
@@ -523,12 +548,8 @@
 	text-transform: none;
 }
 
-.single-fundraiser .comment-form {
-	display: none;
-}
-
 .hide {
-	display: none;
+	display: none !important;
 }
 
 /** CONTRIBUTION MODAL **/
@@ -773,6 +794,19 @@
 .fundraising .new-fundraiser-prompt p {
 	margin: 0;
 	padding: 15px;
+}
+
+.fundraising span#amount-raised {
+	font-size: 30px;
+	font-weight: 800;
+}
+
+.edit-fundraising .form-line .split-line {
+	width: auto;
+}
+
+.edit-fundraising .form-line .split-line:first-child {
+	margin-right: 30px;
 }
 
 

@@ -35,21 +35,6 @@ function get_fundraising_days_left($end_date) {
 	return floor($difference/60/60/24) + 2;
 }
 
-function new_contribution($post, $current_user) {
-	$commentdata = array(
-		'comment_post_ID' => $post->ID, // to which post the comment will show up
-		'comment_author' => $current_user->name, //fixed value - can be dynamic 
-		'comment_author_email' => 'someone@example.com', //fixed value - can be dynamic 
-		'comment_author_url' => 'http://example.com', //fixed value - can be dynamic 
-		'comment_content' => '$1000', //fixed value - can be dynamic 
-		'comment_type' => 'contribution', //empty for regular comments, 'pingback' for pingbacks, 'trackback' for trackbacks
-		'comment_parent' => 0, //0 if it's not a reply to another comment; if it's a reply, mention the parent comment ID here
-		'user_id' => $current_user->ID, //passing current user ID or any predefined as per the demand
-	);
-
-	wp_new_comment( $commentdata );
-}
-
 function new_share($post, $current_user) {
 	$commentdata = array(
 		'comment_post_ID' => $post->ID, // to which post the comment will show up

@@ -54,7 +54,6 @@ get_header(); ?>
 			</div>
 		</ol>
 		<button id="expand-comments" class="hide">Show more comments</button>
-		<button id="leave-comment">Leave a comment</button>
 		<div class="comment-form">
 			<?php comment_form(array('title_reply' => __( 'Leave a Comment', 'textdomain' ), 'comment_notes_after' => ''), $post->ID); ?>
 		</div>
@@ -154,6 +153,8 @@ endif; ?>
 		if($('.commentlist').outerHeight() < $('.comment-wrapper').outerHeight()) {
 			$("#expand-comments").removeClass("hide");
 		}
+		console.log($('.commentlist').outerHeight());
+		console.log($('.comment-wrapper').outerHeight());
 	});
 
 	$('#expand-contributions').click(function() {
@@ -173,12 +174,6 @@ endif; ?>
 	    	$('#expand-comments').hide("fade", {}, 300);
 	    });
 	});
-
-	$('#leave-comment').click(function() {
-		$('.comment-form').slideToggle("fast");
-	});
-
-
 </script>
 <?php
 get_footer();
