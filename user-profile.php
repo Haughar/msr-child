@@ -13,8 +13,14 @@ $user_id = get_current_user_id();
 get_header(); ?>
 
 <main id="main">
-	<div class="profile-head inline-top">
-		<?php echo get_avatar($user_id, 145);?>
+	<div class="profile-head">
+		<div class="user-profile-pic inline-top">
+			<?php if(get_user_meta($user_id, "user-profile-picture", true)) { ?>
+				<img src="<?php echo get_user_meta($user_id, "user-profile-picture", true); ?>">
+			<?php } else {
+				echo get_avatar($user_id, 145);
+			} ?>
+		</div>
 		<div class="user-info inline-top">
 			<p class="name-on-profile"><?php $user = get_userdata(get_current_user_id());
 			$name = $user->first_name . " " . $user->last_name;
