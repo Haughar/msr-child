@@ -11,6 +11,9 @@ function msr_child_enqueue_styles() {
         array( $parent_style ),
         wp_get_theme()->get('Version'));
 }
+
+
+
 add_action( 'wp_enqueue_scripts', 'msr_child_enqueue_styles' );
 
 remove_filter('get_the_content', 'wpautop');
@@ -519,11 +522,91 @@ function get_msr_campaign() {
 				<?php } ?>
 				<button class="campaign-btn landing-campaign" onclick="window.location.href='<?php echo get_permalink($post_id); ?>'">Find Out More</button>
 			</div>
-			<?php 
+			<?php
 			$post = NULL;
 			break;
 		}
 	}
+}
+
+function dashboard_functions($user_id) {
+	if($_FILES) {
+		change_profile_picture($user_id);
+	} else if($_POST['subID']) {
+		cancel_recurring_payment();
+	}
+}
+
+
+function change_profile_picture($user_id) {
+	if ( empty($_POST) || !wp_verify_nonce($_POST['prof-pic-upload-nonce'],'prof-pic-upload-action') ){
+
+		// Just redirect to dashboard 
+		echo 'Sorry, your nonce did not verify.';
+		exit;
+	}
+
+	$attach_id = 0;
+
+	if (!function_exists('wp_generate_attachment_metadata')){
+        require_once(ABSPATH . "wp-admin" . '/includes/image.php');
+        require_once(ABSPATH . "wp-admin" . '/includes/file.php');
+        require_once(ABSPATH . "wp-admin" . '/includes/media.php');
+    }
+
+    if ($_FILES) {
+		$uploadedfile = $_FILES['pic-upload'];
+		$allowed_file_types = array('image/jpg','image/jpeg', 'image/png');
+		$uploaded_file_type = $uploadedfile['type'];
+
+		if(in_array($uploaded_file_type, $allowed_file_types)) {
+			// Only process the file if the file is a jpeg or png file. 
+			$upload_overrides = array( 'test_form' => false );
+
+			$pic_file = wp_handle_upload( $uploadedfile, $upload_overrides);
+			$pic_url = $pic_file['url'];
+			$pic_locate = $pic_file['file'];
+
+			$current_user_pic = get_user_meta($user_id, 'user-profile-picture', true);
+			$current_user_pic_locate = get_user_meta($user_id, 'user-profile-file', true);
+
+			// Check if user already has a url assigned to them, delete the picture in the uploads folder
+			if($current_user_pic && $current_user_pic_locate) {
+				unlink($current_user_pic_locate);
+			}
+			update_user_meta( $user_id, 'user-profile-picture', $pic_url);
+			update_user_meta( $user_id, 'user-profile-file', $pic_locate);
+		} else {
+			console_log("That's an incorrect format, please upload a PNG, JPEG, or JPG. ");
+		}
+	}
+}
+
+function cancel_recurring_payment() {
+	if ( empty($_POST) || !wp_verify_nonce($_POST['cancel-recurring-nonce'],'cancel-recurring-action') ){
+		// Just redirect to dashboard 
+		echo 'Sorry, your nonce did not verify.';
+		exit;
+	}
+	global $stripe_options;
+
+	$subID = $_POST['subID'];
+
+	// load the stripe libraries
+	require_once(STRIPE_BASE_DIR . '/lib/latest/init.php');	
+
+	// check if we are using test mode
+	if(isset($stripe_options['test_mode']) && $stripe_options['test_mode']) {
+		$secret_key = $stripe_options['test_secret_key'];
+	} else {
+		$secret_key = $stripe_options['live_secret_key'];
+	}
+
+	\Stripe\Stripe::setApiKey($secret_key);
+	$sub = \Stripe\Subscription::retrieve($subID);
+	$sub->cancel();
+	// Pop up a confirmation modal
+	// do_shortcode("[Wow-Modal-Windows id=4]");
 }
 
 function console_log( $data ){
