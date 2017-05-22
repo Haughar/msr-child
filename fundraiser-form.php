@@ -16,70 +16,13 @@ if($_POST){
 
 get_header(); ?>
 
-<script type="text/javascript">
-	function validate_form() {
-
-		if (document.fundraiser.fundraiserName.value == "") {
-			alert("please provide a name!");
-			document.fundraiser.fundraiserName.focus();
-			return false;
-		}
-		if (document.fundraiser.fundraiserGoal.value == "") {
-			alert("Please provide a goal");
-			document.fundraiser.fundraiserGoal.focus();
-			return false;
-		}
-
-		if (document.fundraiser.tagline.value == "") {
-			alert("Please provide a tagline");
-			document.fundraiser.tagline.focus();
-			return false;
-		}
-
-		if (document.fundraiser.startDate.value == "" && document.fundraiser.endDate.value == "") {
-			alert("Please provide a date range");
-			document.fundraiser.startDate.focus();
-			return false;
-		}
-
-		if (document.fundraiser.startDate.value == "") {
-			alert("Please provide a start date");
-			document.fundraiser.startDate.focus();
-			return false;
-		}
-
-		if (document.fundraiser.endDate.value == "") {
-			alert("Please provide an end date");
-			document.fundraiser.endDate.focus();
-			return false;
-		}
-
-		if (document.fundraiser.description.value == "") {
-			alert("Please provide a description");
-			document.fundraiser.description.focus();
-			return false;
-		}
-
-		var start = new Date(document.fundraiser.startDate.value);
-		var end = new Date(document.fundraiser.endDate.value);
-		if (start >= end) {
-			alert("Please enter a valid date range-- start date needs to be before end date");
-			document.fundraiser.startDate.focus();
-			return false;
-		}
-
-		return( true );
-	}
-
-</script>
-
 <main id="main" class="fundraising funraiser-form">
 
 	<div class="title-wrapper">
 		<h2>Create a New Fundraiser</h2>
 	</div>
 
-	<form id="fundraiser" name="fundraiser" method="post" action="" encrypt="multipart/form-data" onsubmit="return(validate_form());">
+	<form id="fundraiser" name="fundraiser" method="post" action="" enctype="multipart/form-data">
 
 		<div class="form-line">
 			<label for="fundraiser-name">Fundraiser Name <?php echo info_svg(); ?></label>
