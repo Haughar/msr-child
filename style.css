@@ -1034,6 +1034,11 @@ html {
 }
 
 /** Dashboard - Contributions Tab **/
+.blck-btn-contribute {
+	background-color: #000000 !important;
+	border-color: #000000 !important;
+}
+
 .marg-bot-sevenfive {
 	margin-bottom: 0.75em;
 }

@@ -210,12 +210,12 @@ get_header();
 	$("#cancel-sub").on("click", function () {
 		if($("#cancel-sub").is(':checked')) {
 			$("#save-btn").attr("disabled", false);
-			// $("#save-btn").removeClass("disabled-btn");
-			// $("#save-btn").addClass("blck-btn");
+			$("#save-btn").removeClass("disabled-btn");
+			$("#save-btn").addClass("blck-btn-contribute");
 		} else {
 			$("#save-btn").attr("disabled", true);
-			// $("#save-btn").addClass("disabled-btn");
-			// $("#save-btn").removeClass("blck-btn");
+			$("#save-btn").addClass("disabled-btn");
+			$("#save-btn").removeClass("blck-btn-contribute");
 		}
 	});
 
