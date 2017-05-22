@@ -1286,21 +1286,23 @@ html {
 	font-size: 27px;
 	margin-left: 15px;
 	display: inline;
+	color: #ffffff;
 }
 
 .login-close {
 	margin-top: -2px !important;
-
 }
 
 .login-close span {
-	font-family: "Source Sans Pro", Arial, Sans-Serif;
 	font-size: 1.5em;
 }
 
 .btn-spot .modal .modal-dialog .modal-content .modal-header {
 	background-color: #E2383F;
-	color: #ffffff;
+}
+
+.btn-spot .modal .modal-dialog .modal-content {
+	border: none;
 }
 
 .btn-spot .modal .modal-dialog {

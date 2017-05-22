@@ -63,7 +63,8 @@ get_header(); ?>
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
 							  <div class="modal-header">
-							    <button type="button" class="close login-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-circle" aria-hidden="true"></i><i class="fa fa-times" aria-hidden="true"></i></span></button>
+							    <button type="button" class="close login-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle fa-3" aria-hidden="true"></i></span>
+							    </button>
 							    <h4 class="modal-title" id="myModalLabel">Log in</h4>
 							  </div>
 							  <div class="modal-body">
