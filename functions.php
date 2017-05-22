@@ -4,7 +4,8 @@ include 'svg-icons.php';
 
 function msr_child_enqueue_styles() {
     $parent_style = 'msr-style'; 
- 
+ 	
+ 	wp_enqueue_style( 'bootstrap_css', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' );
     wp_enqueue_style( $parent_style, get_template_directory_uri() . '/style.css' );
     wp_enqueue_style( 'msr-cild-style',
         get_stylesheet_directory_uri() . '/style.css',
@@ -13,8 +14,14 @@ function msr_child_enqueue_styles() {
 }
 
 
-
 add_action( 'wp_enqueue_scripts', 'msr_child_enqueue_styles' );
+
+function msr_child_enqueue_js() {
+	global $wp_scripts;
+	wp_enqueue_script( 'bootstrap_js', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js');
+}
+
+add_action( 'wp_enqueue_scripts', 'msr_child_enqueue_js');
 
 remove_filter('get_the_content', 'wpautop');
 
