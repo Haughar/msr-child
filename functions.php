@@ -70,24 +70,28 @@ function create_new_fundraiser() {
 
 	$new_fundraiser = wp_insert_post($fundraiser);
 	$attach_id = 0;
+	if ($_POST['defaultImage'] != "not-here") {
+		$attach_id = intval($_POST['defaultImage']);
+	} else {
 
-	if (!function_exists('wp_generate_attachment_metadata')){
-        require_once(ABSPATH . "wp-admin" . '/includes/image.php');
-        require_once(ABSPATH . "wp-admin" . '/includes/file.php');
-        require_once(ABSPATH . "wp-admin" . '/includes/media.php');
-    }
-    if ($_FILES) {
-        foreach ($_FILES as $file => $array) {
-            if ($_FILES[$file]['error'] !== UPLOAD_ERR_OK) {
-                return "upload error : " . $_FILES[$file]['error'];
-            }
-            $attach_id = media_handle_upload( $file, $new_fundraiser );
-        }   
-    }
+		if (!function_exists('wp_generate_attachment_metadata')){
+	        require_once(ABSPATH . "wp-admin" . '/includes/image.php');
+	        require_once(ABSPATH . "wp-admin" . '/includes/file.php');
+	        require_once(ABSPATH . "wp-admin" . '/includes/media.php');
+	    }
+	    if ($_FILES) {
+	        foreach ($_FILES as $file => $array) {
+	            if ($_FILES[$file]['error'] !== UPLOAD_ERR_OK) {
+	                return "upload error : " . $_FILES[$file]['error'];
+	            }
+	            $attach_id = media_handle_upload( $file, $new_fundraiser );
+	        }   
+	    }
+	}
     if ($attach_id > 0){
-        //and if you want to set that image as Post  then use:
         update_post_meta($new_fundraiser,'_thumbnail_id',$attach_id);
     }
+    var_dump($_FILES);
 
     wp_redirect( home_url() . '/edit-fundraiser/?post_id=' . $new_fundraiser . '&new=true' );
 }
@@ -671,6 +675,12 @@ function get_active_fundraisers($fundraiser_id) {
 function console_log( $data ){
 	echo '<script>';
 	echo 'console.log("'. $data .'")';
+	echo '</script>';
+}
+
+function alert( $data ){
+	echo '<script>';
+	echo 'alert("'. $data .'")';
 	echo '</script>';
 }
 ?>

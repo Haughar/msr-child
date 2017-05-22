@@ -215,10 +215,26 @@
 	display: none;
 }
 
+.fundraising .form-line .cover-image {
+	background-color: #F8F8F8;
+	border: 1px solid #000;
+	height: 300px;
+	width: 100%;
+}
+
 .fundraising .form-line .cover-image img {
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
+	height: 300px;
+}
+
+.fundraising .form-line .cover-image .cover-image-plchdr {
+	color: #BDBDBD;
+	font-size: 48px;
+	font-weight: 800;
+	text-align: center;
+	text-transform: uppercase;
 }
 
 .fundraising .image .btn {
@@ -339,6 +355,16 @@
 	margin-left: 20px;
 	padding: 10px 20px;
 	width: auto;
+}
+
+.fundraising button.default {
+	background-color: transparent;
+	border: 0;
+}
+
+.fundraising .default img {
+	max-height: 200px;
+	max-width: 200px;
 }
 
 /** SINGLE FUNDRAISER PAGE **/
