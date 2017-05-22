@@ -13,8 +13,7 @@ $user_id = get_current_user_id();
 $json_object = get_customer_contributions($user_id);
 
 if($_POST){
-	change_profile_picture($user_id);
-	// cancel_recurring_payment();
+	dashboard_functions($user_id);
 }
 
 get_header();

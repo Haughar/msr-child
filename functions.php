@@ -540,6 +540,15 @@ function get_msr_campaign() {
 	}
 }
 
+function dashboard_functions($user_id) {
+	if($_FILES) {
+		change_profile_picture($user_id);
+	} else if($_POST['subID']) {
+		cancel_recurring_payment();
+	}
+}
+
+
 function change_profile_picture($user_id) {
 	if ( empty($_POST) || !wp_verify_nonce($_POST['prof-pic-upload-nonce'],'prof-pic-upload-action') ){
 
@@ -582,46 +591,10 @@ function change_profile_picture($user_id) {
 			console_log("That's an incorrect format, please upload a PNG, JPEG, or JPG. ");
 		}
 	}
-
-
-   			//$arr_file_type = wp_check_filetype(basename($file['name']));
-			// $uploaded_file_type = $arr_file_type['type'];
-
-			// $allowed_file_types = array('image/jpg','image/jpeg', 'image/png');
-
-			// if(in_array($uploaded_file_type, $allowed_file_types)) {
-			// 	$upload_overrides = array( 'test_form' => false ); 
-			// 	$uploaded_file = wp_handle_upload($file, $upload_overrides);
-
-			// 	if(isset($uploaded_file['file'])) {
-			// 		console_log($uploaded_file['file']);
-			// 		$file_name_and_location = $uploaded_file['file'];
-			// 	}
-			// }
- 
-
-    // if (isset($_FILES['pic-upload']) && ($_FILES['pic-upload']['size'] > 0)) {
-    // 	$arr_file_type = wp_check_filetype(basename($_FILES['pic-upload']['name']));
-    //     $uploaded_file_type = $arr_file_type['type'];
-    //     console_log("Checking file");
-
-    //     $allowed_file_types = array('image/jpg','image/jpeg', 'image/png');
-
-    //     if(in_array($uploaded_file_type, $allowed_file_types)) {
-    //     	$upload_overrides = array( 'test_form' => false ); 
-    //     	$uploaded_file = wp_handle_upload($_FILES['pic-upload'], $upload_overrides);
-
-    //     	if(isset($uploaded_file['file'])) {
-    //     		console_log($uploaded_file['file']);
-    //     		$file_name_and_location = $uploaded_file['file'];
-    // 		}
-    // 	}
-    // }
 }
 
 function cancel_recurring_payment() {
 	if ( empty($_POST) || !wp_verify_nonce($_POST['cancel-recurring-nonce'],'cancel-recurring-action') ){
-
 		// Just redirect to dashboard 
 		echo 'Sorry, your nonce did not verify.';
 		exit;
@@ -644,7 +617,7 @@ function cancel_recurring_payment() {
 	$sub = \Stripe\Subscription::retrieve($subID);
 	$sub->cancel();
 	// Pop up a confirmation modal
-	do_shortcode("[Wow-Modal-Windows id=4]");
+	// do_shortcode("[Wow-Modal-Windows id=4]");
 }
 
 function console_log( $data ){
