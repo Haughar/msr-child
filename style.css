@@ -10,6 +10,10 @@
  Text Domain:  msr-child
 */
 
+html {
+	font-size: 16px;
+}
+
 /** Header Sub-menu **/
 .main-navigation ul ul {
 	background-color: #FFFFFF;

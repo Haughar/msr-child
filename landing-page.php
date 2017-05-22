@@ -52,14 +52,27 @@ get_header(); ?>
 		<div class="inline-top btn-spot">
 			<?php echo hand_money(); ?>
 			<br>
-			<?php echo do_shortcode("[Wow-Modal-Windows id=2]"); ?>
-			<?php echo do_shortcode("[Wow-Modal-Windows id=3]"); ?>
 			<?php 
 				if(is_user_logged_in()) {
 					echo "<button class='banner-btn' onclick=\"window.location.href='/create-fundraiser/'\">New Fundraiser</button>"; 
-				} else {
-					echo "<button class='banner-btn' id='wow-modal-id-2'>New Fundraiser</button>";
-				} ?>
+				} else { ?>
+					<!-- <button class='banner-btn' id='wow-modal-id-2'>New Fundraiser</button> -->
+					<button type="button" class="banner-btn" data-toggle="modal" data-target="#loginModal">New Fundraiser</button>
+
+					<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+							  <div class="modal-header">
+							    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							    <h4 class="modal-title" id="myModalLabel">Log in</h4>
+							  </div>
+							  <div class="modal-body">
+							    <?php echo do_shortcode('[ultimatemember form_id=8849]'); ?>
+							  </div>
+							</div>
+						</div>
+					</div>
+				<?php } ?>
 		</div>
 	</div>
 </div>
