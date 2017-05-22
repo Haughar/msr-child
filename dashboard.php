@@ -31,7 +31,7 @@ get_header();
 				<?php if(get_user_meta($user_id, "user-profile-picture", true)) { ?>
 					<img src="<?php echo get_user_meta($user_id, "user-profile-picture", true); ?>">
 				<?php } else {
-					echo get_avatar($user_id, 145);
+					echo get_avatar($user_id, 168);
 				} ?>
 				<form id="upload-pic-form" name="upload-pic-form" method="post" enctype="multipart/form-data" action="">
 					<input type="file" name="pic-upload" id="pic-upload" class="no-bullet pic-upload" accept="image/*">

@@ -755,7 +755,7 @@
 }
 
 .profile-head img {
-	border-radius: 72.5px;
+	border-radius: 50%;
 	margin-left: 16em;
 }
 
@@ -774,6 +774,7 @@
 
 .user-on-profile {
 	font-weight: bold;
+	margin-top: 0px;
 }
 
 .r-input-check {
@@ -788,9 +789,29 @@
 }
 
 .user-profile-pic img {
-	max-width: 100%;
-	height: 145px;
+	max-width: 168px;
+	height: 168px;
+	width: auto;
 }
+
+.profile-fundraiser-list article .entry-text-content .entry-content p {
+	font-size: 14px;
+	margin-top: 1.1em;
+}
+
+.profile-fundraiser-list article .entry-more {
+	margin-bottom: 15px;
+}
+
+.profile-pct {
+	font-size: 12px;
+}
+
+.profile-days {
+	font-size: 12px;
+	float: right;
+}
+
 
 /** EDIT FUNDRAISER **/
 .fundraising .action-btns #delete-fundraiser {

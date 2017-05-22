@@ -605,6 +605,69 @@ function cancel_recurring_payment() {
 	// do_shortcode("[Wow-Modal-Windows id=4]");
 }
 
+
+function get_active_fundraisers($fundraiser_id) {
+	$fundraiser_details = get_fundraiser_stripe_info($fundraiser_id); ?>
+	<article id="post-<?php the_ID(); ?>" <?php post_class('post-grid'); ?>>
+		<?php if ( has_post_thumbnail() ) { 
+		/** Normal container for posts with thumbnail */ ?>
+		
+		<?php $image_thumb_src = wp_get_attachment_image_src(get_post_thumbnail_id(), 'msr-post-grid-thumb');?>
+		
+		<a class="entry-thumb" href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>" style="background-image:url( <?php echo $image_thumb_src[0]; ?> );">
+			<div class="entry-thumb-icon"></div>
+		</a>
+
+		<div class="entry-text-content">
+			
+		<?php } else {
+		/** Added class for adjusting post size without thumbnail */ ?>
+		
+		<div class="entry-text-content no-thumb">
+		
+		<?php } ?>
+			
+			<header class="entry-header">
+				<?php the_title( sprintf( '<h3 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h3>' ); ?>
+				<?php if ( 'post' == get_post_type() ) : ?>
+				<div class="entry-meta">
+					<?php the_time('M j, Y') ?> 
+				</div><!-- .entry-meta -->
+				<?php endif; ?>
+			</header><!-- .entry-header -->
+		
+			<?php if(has_tag('feature', null)){ ?>
+				<div class="feature-content"><span>Feature</span></div>
+			<?php } ?>
+
+			<div class="entry-content">
+				<?php echo the_excerpt(); ?>
+			</div><!-- .entry-content -->
+		</div>
+		<div class="entry-more">
+
+			<div class="myProgress">
+	  		<div class="myBar" style="width: <?php 
+	  			$pct = get_percentage_to_goal($fundraiser_details['total'],  get_post_meta($fundraiser_id, 'fundraiser-goal', true)); 
+	  			if ($pct > 100) {
+	  				$pct = 100;
+	  			}
+	  			echo $pct ?>%"></div>
+			</div>
+			<!-- Percentage of amount made -->
+			<span class="profile-pct"><?php echo get_percentage_to_goal($fundraiser_details['total'],  get_post_meta($fundraiser_id, 'fundraiser-goal', true)); ?>%</span>
+			<span class="profile-days"><?php echo get_fundraising_days_left(get_post_meta($fundraiser_id, 'fundraiser-end', true)); ?> days left</span>
+		<!-- 	<?php if ( has_post_format( 'video' )) { ?>
+				<a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>"> Watch Video</a>
+			<?php } else { ?>
+				<a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>"><?php echo __('Read More', 'msr') ?></a>
+			<?php } ?> -->
+		</div>
+	</article><!-- #post-## --> 
+	<?php
+}
+
+
 function console_log( $data ){
 	echo '<script>';
 	echo 'console.log("'. $data .'")';
