@@ -298,7 +298,7 @@ function get_fundraiser_list($user_id, $type) {
 			$totalDiff = floor($difference/60/60/24);
 			if($totalDiff >= 0 && $type == 'active') {
 				$count++;
-			} else if($totalDiff < 0 && $type == 'expired') {
+			} else if($type == 'expired') {
 				$count++;
 			} else if($post->post_status == "pending" && $type == "pending") {
 				$count++;
@@ -376,7 +376,7 @@ function get_fundraiser_list($user_id, $type) {
 				</div>
 				<div class="dashboard-space"></div>
 			<?php
-			} else if ($totalDiff >= 0 && ($type == 'active' || $type == 'pending')) { ?>
+			} else if (($totalDiff >= 0 && $type == 'active') || $type == 'pending') { ?>
 				<div class="dashb-fundraisers">
 					<?php if ( has_post_thumbnail() ) {
 						the_post_thumbnail( array(100,100) );

@@ -54,18 +54,6 @@ get_header(); ?>
 				if($totalDiff >= 0) {
 					$count++;
 					get_active_fundraisers($id);
-					/* echo '<br>';
-					if ( has_post_thumbnail() ) {
-						the_post_thumbnail( array(100,100) );
-					}
-					if (get_the_title($id)) {
-						echo get_the_title($id);
-					} 
-					echo '<br>';
-
-					if (get_post_meta($id, 'fundraiser-goal', true) && get_post_meta($id, 'fundraiser-amount-raised', true)) { ?>
-						<p><?php echo get_percentage_to_goal(floatval(get_post_meta($id, 'fundraiser-amount-raised', true)), floatval(get_post_meta($id, 'fundraiser-goal', true)));?> %</p>
-					<?php } */
 				}
 			} ?>
 		<input type="hidden" value="<?php echo $count ?>" id="total">
