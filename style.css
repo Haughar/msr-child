@@ -46,6 +46,7 @@
     position: relative;
     right: -2px;
     z-index: 2;
+    list-style-type: none;
 }
 .ui-tabs.ui-tabs-vertical .ui-tabs-nav li a {
     display: block;
@@ -743,7 +744,7 @@
 }
 
 .name-on-profile {
-	font-family: "futura-pt", Arial, Sans-Serif;
+	font-family: "futura-pt-condensed", Arial, Sans-Serif;
 	font-weight: 500;
     font-size: 40px;
     margin-bottom: 0px;
@@ -777,12 +778,28 @@
 
 /** DASHBOARD **/
 .prof-pic {
-	width: 100%;
+	width: 168px !important;
+	height: 168px;
 	text-align: center;
+	border-radius: 50%;
+}
+
+.prof-pic:hover {
+	border: 3px solid;
 }
 
 .prof-pic img {
-	border-radius: 72.5px;
+	height: 100%;
+	width: auto;
+	max-width: none;
+}
+
+.pic-upload {
+	display: none;
+}
+
+.no-bullet {
+	text-decoration: none;
 }
 
 #title {
@@ -968,14 +985,9 @@
 	text-align:center;
 }
 
-.blck-btn {
-	background-color: #000000;
-	border-color: #000000;
-}
-
 .disabled-btn {
-	border-color: #000000;
-	background-color: #c4c4c4;
+	border-color: #000000 !important;
+	background: #c4c4c4 !important;
 }
 
 .next-recurr {
@@ -1022,10 +1034,7 @@
 }
 
 .top-landing-banner h1 {
-	/*left: 15%;*/
-	font-family: "futura-pt", Arial, Sans-Serif;
-	font-weight: 500;
-	font-size: 60px;
+	font-size: 82px;
 	color: #fff;
 }
 
@@ -1039,11 +1048,9 @@
 	background-color: transparent;
 	width: 257px;
 	height: 79px;
-    font-family: "futura-pt", Arial, Sans-Serif;
     font-weight: 500;
-    font-size: 25px;
+    font-size: 34px;
     margin-left: -130px;
-    margin-top: 30px;
 }
 
 .campaign-banner {
@@ -1088,7 +1095,7 @@
 
 .banner-title {
 	font-size: 30px;
-	font-family: "futura-pt", Arial, Sans-Serif;
+	font-weight: 700;
 }
 
 .gen-text {
@@ -1112,9 +1119,8 @@
 	background-color: transparent;
 	width: 257px;
 	height: 79px;
-    font-family: "futura-pt", Arial, Sans-Serif;
     font-weight: 500;
-    font-size: 25px;
+    font-size: 28px;
 }
 
 .blck-btn-landing {

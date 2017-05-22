@@ -556,27 +556,34 @@ function change_profile_picture($user_id) {
         require_once(ABSPATH . "wp-admin" . '/includes/media.php');
     }
 
-	$uploadedfile = $_FILES['pic-upload'];
-
-	$upload_overrides = array( 'test_form' => false );
-
-	$pic_file = wp_handle_upload( $uploadedfile, $upload_overrides);
-	$pic_url = $pic_file['url'];
-	$pic_locate = $pic_file['file'];
-
-	$current_user_pic = get_user_meta($user_id, 'user-profile-picture', true);
-	$current_user_pic_locate = get_user_meta($user_id, 'user-profile-file', true);
-
-	// Check if user already has a url assigned to them, delete the picture in the uploads folder
-	if($current_user_pic && $current_user_pic_locate) {
-		unlink($current_user_pic_locate);
-	}
-	update_user_meta( $user_id, 'user-profile-picture', $pic_url);
-	update_user_meta( $user_id, 'user-profile-file', $pic_locate);
-
-
     if ($_FILES) {
-        foreach ($_FILES as $file => $array) {
+		$uploadedfile = $_FILES['pic-upload'];
+		$allowed_file_types = array('image/jpg','image/jpeg', 'image/png');
+		$uploaded_file_type = $uploadedfile['type'];
+
+		if(in_array($uploaded_file_type, $allowed_file_types)) {
+			// Only process the file if the file is a jpeg or png file. 
+			$upload_overrides = array( 'test_form' => false );
+
+			$pic_file = wp_handle_upload( $uploadedfile, $upload_overrides);
+			$pic_url = $pic_file['url'];
+			$pic_locate = $pic_file['file'];
+
+			$current_user_pic = get_user_meta($user_id, 'user-profile-picture', true);
+			$current_user_pic_locate = get_user_meta($user_id, 'user-profile-file', true);
+
+			// Check if user already has a url assigned to them, delete the picture in the uploads folder
+			if($current_user_pic && $current_user_pic_locate) {
+				unlink($current_user_pic_locate);
+			}
+			update_user_meta( $user_id, 'user-profile-picture', $pic_url);
+			update_user_meta( $user_id, 'user-profile-file', $pic_locate);
+		} else {
+			console_log("That's an incorrect format, please upload a PNG, JPEG, or JPG. ");
+		}
+	}
+
+
    			//$arr_file_type = wp_check_filetype(basename($file['name']));
 			// $uploaded_file_type = $arr_file_type['type'];
 
@@ -591,8 +598,7 @@ function change_profile_picture($user_id) {
 			// 		$file_name_and_location = $uploaded_file['file'];
 			// 	}
 			// }
-        }   
-    }
+ 
 
     // if (isset($_FILES['pic-upload']) && ($_FILES['pic-upload']['size'] > 0)) {
     // 	$arr_file_type = wp_check_filetype(basename($_FILES['pic-upload']['name']));
