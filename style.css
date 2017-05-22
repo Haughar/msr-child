@@ -1276,3 +1276,28 @@ html {
 	position: absolute;
 	top: 30%;
 }
+
+.modal .modal-dialog .modal-content .modal-header h4 {
+	font-size: 27px;
+	margin-left: 15px;
+	display: inline;
+}
+
+.login-close {
+	margin-top: -2px !important;
+
+}
+
+.login-close span {
+	font-family: "Source Sans Pro", Arial, Sans-Serif;
+	font-size: 1.5em;
+}
+
+.btn-spot .modal .modal-dialog .modal-content .modal-header {
+	background-color: #E2383F;
+	color: #ffffff;
+}
+
+.btn-spot .modal .modal-dialog {
+	width: 455px;
+}
