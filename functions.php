@@ -588,7 +588,7 @@ function change_profile_picture() {
 				        <h4 class="modal-title">Modal title</h4>
 				      </div>
 				      <div class="modal-body">
-				        <p>hat's an incorrect format, please upload a PNG, JPEG, or JPG.</p>
+				        <p>That's an incorrect format, please upload a PNG, JPEG, or JPG.</p>
 				      </div>
 				      <div class="modal-footer">
 				        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
