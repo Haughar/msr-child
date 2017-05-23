@@ -12,10 +12,6 @@
 $user_id = get_current_user_id();
 $json_object = get_customer_contributions($user_id);
 
-if($_POST){
-	dashboard_functions($user_id);
-}
-
 get_header();
 
 ?>
@@ -34,10 +30,12 @@ get_header();
 					echo get_avatar($user_id, 168);
 				} ?>
 				<span>Edit</span>
-				<form id="upload-pic-form" name="upload-pic-form" method="post" enctype="multipart/form-data" action="">
+				<form id="upload-pic-form" name="upload-pic-form" method="post" enctype="multipart/form-data" action="<?php echo admin_url('admin-ajax.php'); ?>">
 					<input type="file" name="pic-upload" id="pic-upload" class="no-bullet pic-upload" accept="image/*">
 					<?php wp_nonce_field( 'prof-pic-upload-action', 'prof-pic-upload-nonce' ); ?>
-					<input type="submit" id="submit-prof-pic" name="submit-prof-pic" class="pic-upload">
+					<input name="action" value="change_profile_picture" type="hidden">
+					<input name="userID" value="<?php echo $user_id; ?>" type="hidden">
+					<input type="button" id="submit-prof-pic" name="submit" class="pic-upload" data-toggle="modal" data-target="#upload-progress">
 				</form>
 			</li>
     		<li class="dashb-username no-bullet"> <?php echo get_user_meta( $user_id, 'nickname', true); ?> </li>
@@ -62,14 +60,14 @@ get_header();
 				<button onclick="window.location.href='/create-fundraiser/'">New Fundraiser</button>
 			</div>
 				<!-- User's Active Fundraisers -->
-			<?php //$totalRaisedActive = get_fundraiser_list($user_id, "active"); ?>
+			<?php $totalRaisedActive = get_fundraiser_list($user_id, "active"); ?>
 				<!-- User's Pending Fundraisers -->	
 			<?php 
-				// $totalRaisedPending = get_fundraiser_list($user_id, "pending"); 
+				$totalRaisedPending = get_fundraiser_list($user_id, "pending"); 
 			?>
 				<!-- User's Past Fundraisers -->
 			<?php 
-				// $totalRaisedExpired = get_fundraiser_list($user_id, "expired"); 
+				$totalRaisedExpired = get_fundraiser_list($user_id, "expired"); 
 			?>
 			<input id="totalRaised" type="hidden" value="<?php echo $totalRaisedActive + $totalRaisedPending + $totalRaisedExpired ?>">
  		</div>
@@ -137,7 +135,7 @@ get_header();
 			<div>
 				<span class="day-text"><?php 
 					if($json_object['charge-data']) {
-						// create_contributions_list($user_id, $json_object); ?>
+						create_contributions_list($user_id, $json_object); ?>
 						</span>
 					<?php } else {  ?>
 						</span>
@@ -153,6 +151,24 @@ get_header();
 			<?php echo do_shortcode("[ultimatemember_account]"); ?>
 		</div>
 	</div>
+
+	<!-- Progress Bar Upload Modal -->
+	<div class="modal fade" id="upload-progress" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  	<div class="modal-dialog" role="document">
+	    	<div class="modal-content">
+	      		<div class="modal-header">
+	        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        		<h5 class="modal-title" id="myModalLabel">Upload Progress</h5>
+	      		</div>
+	      		<div class="modal-body">
+	        		<div class="progress" style="display:none">
+					  <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">0%</div>
+					</div>			      
+        		</div>
+	    	</div>
+	  	</div>
+	</div>
+
 </main>
 
 
@@ -250,6 +266,22 @@ get_header();
 	$('#confirm-cancel').click(function() {
 		$('#cancel-recurring').submit();
 	});
+
+ 	var progressbar = $('.progress-bar');
+
+    $("#submit-prof-pic").click(function(){
+		$("#upload-pic-form").ajaxForm( {
+	  		beforeSend: function() {
+				$(".progress").css("display","block");
+				progressbar.width('0%');
+				progressbar.text('0%');
+            },
+	    	uploadProgress: function (event, position, total, percentComplete) {
+	        	progressbar.width(percentComplete + '%');
+	        	progressbar.text(percentComplete + '%');
+	     	}
+		}).submit();
+    });
 </script>
 
 <!-- <link rel="stylesheet" type="text/css" href="style.css">

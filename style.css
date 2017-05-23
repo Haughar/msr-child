@@ -874,6 +874,11 @@ html {
 
 
 /** DASHBOARD **/
+.modal-body .progress-bar {
+	background-color: #E2383F;
+	color: #ffffff;
+}
+
 .prof-pic {
 	width: 168px !important;
 	height: 168px;
