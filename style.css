@@ -1290,7 +1290,7 @@ html {
 }
 
 .login-close {
-	margin-top: -2px !important;
+	margin-top: 5px !important;
 }
 
 .login-close span {
@@ -1306,5 +1306,5 @@ html {
 }
 
 .btn-spot .modal .modal-dialog {
-	width: 455px;
+	width: 600px;
 }
