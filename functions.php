@@ -539,8 +539,6 @@ function get_msr_campaign() {
 function dashboard_functions($user_id) {
 	if($_FILES) {
 		change_profile_picture($user_id);
-	} else if($_POST['subID']) {
-		cancel_recurring_payment();
 	}
 }
 
@@ -588,34 +586,6 @@ function change_profile_picture($user_id) {
 		}
 	}
 }
-
-function cancel_recurring_payment() {
-	if ( empty($_POST) || !wp_verify_nonce($_POST['cancel-recurring-nonce'],'cancel-recurring-action') ){
-		// Just redirect to dashboard 
-		echo 'Sorry, your nonce did not verify.';
-		exit;
-	}
-	global $stripe_options;
-
-	$subID = $_POST['subID'];
-
-	// load the stripe libraries
-	require_once(STRIPE_BASE_DIR . '/lib/latest/init.php');	
-
-	// check if we are using test mode
-	if(isset($stripe_options['test_mode']) && $stripe_options['test_mode']) {
-		$secret_key = $stripe_options['test_secret_key'];
-	} else {
-		$secret_key = $stripe_options['live_secret_key'];
-	}
-
-	\Stripe\Stripe::setApiKey($secret_key);
-	$sub = \Stripe\Subscription::retrieve($subID);
-	$sub->cancel();
-	// Pop up a confirmation modal
-	// do_shortcode("[Wow-Modal-Windows id=4]");
-}
-
 
 function get_active_fundraisers($fundraiser_id) {
 	$fundraiser_details = get_fundraiser_stripe_info($fundraiser_id); ?>
@@ -678,6 +648,34 @@ function get_active_fundraisers($fundraiser_id) {
 	<?php
 }
 
+function cancel_recurring_payment() {
+	if ( empty($_POST) || !wp_verify_nonce($_POST['cancel-recurring-nonce'],'cancel-recurring-action') ) {
+	    echo 'You targeted the right function, but sorry, your nonce did not verify.';
+	    die();
+	} else {
+    	global $stripe_options;
+
+		$subID = $_POST['subID'];
+
+		// load the stripe libraries
+		require_once(STRIPE_BASE_DIR . '/lib/latest/init.php');	
+
+		// check if we are using test mode
+		if(isset($stripe_options['test_mode']) && $stripe_options['test_mode']) {
+			$secret_key = $stripe_options['test_secret_key'];
+		} else {
+			$secret_key = $stripe_options['live_secret_key'];
+		}
+
+		\Stripe\Stripe::setApiKey($secret_key);
+		$sub = \Stripe\Subscription::retrieve($subID);
+		$sub->cancel();
+	    wp_redirect("/dashboard/#contributions");
+	    // Pop up a modal that says the cancellation was successful. 
+	}
+}
+
+add_action('wp_ajax_cancel_recurring', 'cancel_recurring_payment');
 
 function console_log( $data ){
 	echo '<script>';
