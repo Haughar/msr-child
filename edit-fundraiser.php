@@ -63,7 +63,7 @@ if (have_posts()) : while (have_posts()) : the_post();
 		</div>
 		<label for="thumbnail" class="upload-btn btn"><span>Upload</span><br>your own image</label>
 		<div class="spacer"></div>
-		<label class="btn"><span>Choose</span><br>one of ours</label>
+		<label class="btn" data-toggle="modal" data-target="#default-img-modal"><span>Choose</span><br>one of ours</label>
 		<input type="file" name="thumbnail" id="thumbnail" value="Choose File">
 	</div>
 
@@ -126,5 +126,7 @@ endwhile;
 endif; ?>
 
 </main>
+
+<?php echo default_image_modal(); ?>
 
 <?php get_footer(); ?>

@@ -30,6 +30,11 @@ html {
 	color: #000000;
 }
 
+/** BOOTSTRAP OVERRIDES **/
+.btn {
+	border-radius: 0;
+}
+
 /** DASHBOARD'S LEFT NAVIGATION BAR **/
 .ui-tabs.ui-tabs-vertical {
     padding: 0;
@@ -364,12 +369,12 @@ html {
 	width: auto;
 }
 
-.fundraising button.default {
+.modal button.default {
 	background-color: transparent;
 	border: 0;
 }
 
-.fundraising .default img {
+.modal .default img {
 	max-height: 200px;
 	max-width: 200px;
 }

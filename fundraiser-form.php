@@ -21,8 +21,6 @@ get_header(); ?>
 	<div class="title-wrapper">
 		<h2>Create a New Fundraiser</h2>
 	</div>
-	<?php do_shortcode("[default_images]"); ?>
-
 	<form id="fundraiser" name="fundraiser" method="post" action="" enctype="multipart/form-data">
 
 		<div class="form-line">
@@ -38,7 +36,7 @@ get_header(); ?>
 			</div>
 			<label for="thumbnail" class="upload-btn btn"><span>Upload</span><br>your own image</label>
 			<div class="spacer"></div>
-			<label class="btn"><span>Choose</span><br>one of ours</label>
+			<label class="btn" data-toggle="modal" data-target="#default-img-modal"><span>Choose</span><br>one of ours</label>
 			<input type="file" name="thumbnail" id="thumbnail" value="Choose File">
 		</div>
 
@@ -86,6 +84,8 @@ get_header(); ?>
 
 	</form>
 </main>
+
+<?php echo default_image_modal(); ?>
 
 <script type="text/javascript">
 	$('.default').click(function() {

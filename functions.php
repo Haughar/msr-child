@@ -692,8 +692,25 @@ function cancel_recurring_payment() {
 	    // Pop up a modal that says the cancellation was successful. 
 	}
 }
-
 add_action('wp_ajax_cancel_recurring', 'cancel_recurring_payment');
+
+function default_image_modal() { ?>
+
+	<div class="modal fade" id="default-img-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h5 class="modal-title" id="myModalLabel">Choose an Image</h5>
+				</div>
+				<div class="modal-body">
+					<?php echo do_shortcode('[default_images]'); ?>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<?php }
 
 function console_log( $data ){
 	echo '<script>';
