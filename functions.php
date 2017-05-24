@@ -536,16 +536,8 @@ function get_msr_campaign() {
 	}
 }
 
-function dashboard_functions($user_id) {
-	if($_FILES) {
-		change_profile_picture($user_id);
-	} else if($_POST['subID']) {
-		cancel_recurring_payment();
-	}
-}
 
-
-function change_profile_picture($user_id) {
+function change_profile_picture() {
 	if ( empty($_POST) || !wp_verify_nonce($_POST['prof-pic-upload-nonce'],'prof-pic-upload-action') ){
 
 		// Just redirect to dashboard 
@@ -553,7 +545,7 @@ function change_profile_picture($user_id) {
 		exit;
 	}
 
-	$attach_id = 0;
+	$user_id = $_POST['userID'];
 
 	if (!function_exists('wp_generate_attachment_metadata')){
         require_once(ABSPATH . "wp-admin" . '/includes/image.php');
@@ -583,39 +575,35 @@ function change_profile_picture($user_id) {
 			}
 			update_user_meta( $user_id, 'user-profile-picture', $pic_url);
 			update_user_meta( $user_id, 'user-profile-file', $pic_locate);
+			wp_redirect("/dashboard");
 		} else {
-			console_log("That's an incorrect format, please upload a PNG, JPEG, or JPG. ");
+			// Modal popup with this message. 
+			?>
+			<!-- How to run this after the redirect??? -->
+			<div class="modal fade" tabindex="-1" role="dialog">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				        <h4 class="modal-title">Modal title</h4>
+				      </div>
+				      <div class="modal-body">
+				        <p>That's an incorrect format, please upload a PNG, JPEG, or JPG.</p>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				        <button type="button" class="btn btn-primary">Save changes</button>
+				      </div>
+				    </div><!-- /.modal-content -->
+				  </div><!-- /.modal-dialog -->
+			</div><!-- /.modal -->
+			<?php
+			wp_redirect("/dashboard");
 		}
 	}
 }
 
-function cancel_recurring_payment() {
-	if ( empty($_POST) || !wp_verify_nonce($_POST['cancel-recurring-nonce'],'cancel-recurring-action') ){
-		// Just redirect to dashboard 
-		echo 'Sorry, your nonce did not verify.';
-		exit;
-	}
-	global $stripe_options;
-
-	$subID = $_POST['subID'];
-
-	// load the stripe libraries
-	require_once(STRIPE_BASE_DIR . '/lib/latest/init.php');	
-
-	// check if we are using test mode
-	if(isset($stripe_options['test_mode']) && $stripe_options['test_mode']) {
-		$secret_key = $stripe_options['test_secret_key'];
-	} else {
-		$secret_key = $stripe_options['live_secret_key'];
-	}
-
-	\Stripe\Stripe::setApiKey($secret_key);
-	$sub = \Stripe\Subscription::retrieve($subID);
-	$sub->cancel();
-	// Pop up a confirmation modal
-	// do_shortcode("[Wow-Modal-Windows id=4]");
-}
-
+add_action('wp_ajax_change_profile_picture', 'change_profile_picture');
 
 function get_active_fundraisers($fundraiser_id) {
 	$fundraiser_details = get_fundraiser_stripe_info($fundraiser_id); ?>
@@ -678,6 +666,34 @@ function get_active_fundraisers($fundraiser_id) {
 	<?php
 }
 
+function cancel_recurring_payment() {
+	if ( empty($_POST) || !wp_verify_nonce($_POST['cancel-recurring-nonce'],'cancel-recurring-action') ) {
+	    echo 'You targeted the right function, but sorry, your nonce did not verify.';
+	    die();
+	} else {
+    	global $stripe_options;
+
+		$subID = $_POST['subID'];
+
+		// load the stripe libraries
+		require_once(STRIPE_BASE_DIR . '/lib/latest/init.php');	
+
+		// check if we are using test mode
+		if(isset($stripe_options['test_mode']) && $stripe_options['test_mode']) {
+			$secret_key = $stripe_options['test_secret_key'];
+		} else {
+			$secret_key = $stripe_options['live_secret_key'];
+		}
+
+		\Stripe\Stripe::setApiKey($secret_key);
+		$sub = \Stripe\Subscription::retrieve($subID);
+		$sub->cancel();
+	    wp_redirect("/dashboard/#contributions");
+	    // Pop up a modal that says the cancellation was successful. 
+	}
+}
+
+add_action('wp_ajax_cancel_recurring', 'cancel_recurring_payment');
 
 function console_log( $data ){
 	echo '<script>';

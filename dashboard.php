@@ -12,10 +12,6 @@
 $user_id = get_current_user_id();
 $json_object = get_customer_contributions($user_id);
 
-if($_POST){
-	dashboard_functions($user_id);
-}
-
 get_header();
 
 ?>
@@ -33,10 +29,13 @@ get_header();
 				<?php } else {
 					echo get_avatar($user_id, 168);
 				} ?>
-				<form id="upload-pic-form" name="upload-pic-form" method="post" enctype="multipart/form-data" action="">
+				<span>Edit</span>
+				<form id="upload-pic-form" name="upload-pic-form" method="post" enctype="multipart/form-data" action="<?php echo admin_url('admin-ajax.php'); ?>">
 					<input type="file" name="pic-upload" id="pic-upload" class="no-bullet pic-upload" accept="image/*">
 					<?php wp_nonce_field( 'prof-pic-upload-action', 'prof-pic-upload-nonce' ); ?>
-					<input type="submit" id="submit-prof-pic" name="submit" class="pic-upload">
+					<input name="action" value="change_profile_picture" type="hidden">
+					<input name="userID" value="<?php echo $user_id; ?>" type="hidden">
+					<input type="button" id="submit-prof-pic" name="submit" class="pic-upload" data-toggle="modal" data-target="#upload-progress">
 				</form>
 			</li>
     		<li class="dashb-username no-bullet"> <?php echo get_user_meta( $user_id, 'nickname', true); ?> </li>
@@ -100,12 +99,30 @@ get_header();
 							<span class="recurr-box"><input id="cancel-sub" type="checkbox" name="cancel"></span>
 						</div>
 						<div class="save-btn">
-						<form id="cancel-recurring" name="cancel-recurring" method="post" action="">
-							<input id="subID" name="subID" type="hidden" value="<?php echo $data['id']; ?>">
-							<?php wp_nonce_field( 'cancel-recurring-action', 'cancel-recurring-nonce' ); ?>
-							<input type="submit" name="submit" id="save-btn" value="Save" class="disabled-btn">
-						</form>
-					</div>
+							<form id="cancel-recurring" name="cancel-recurring" method="post" action="<?php echo admin_url('admin-ajax.php'); ?>">
+								<input id="subID" name="subID" type="hidden" value="<?php echo $data['id']; ?>">
+								<?php wp_nonce_field( 'cancel-recurring-action', 'cancel-recurring-nonce' ); ?>
+								<input name="action" value="cancel_recurring" type="hidden">
+								<input type="button" id="save-btn" value="Save" class="disabled-btn" disabled="disabled" data-toggle="modal" data-target="#cancel-confirm">
+							</form>
+							<div class="modal fade" id="cancel-confirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+									  <div class="modal-header">
+									    	<button type="button" class="close login-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle fa-3" aria-hidden="true"></i></span></button>
+								    		<h5 class="modal-title" id="myModalLabel">Cancellation Confirmation</h5>
+									  	</div>
+									  	<div class="modal-body">
+									  		<p>Are you sure you want to cancel your monthly payment of $<?php echo $data['quantity'];?>?</p>
+									  	</div>
+									  	<div class="modal-footer">
+							        		<button type="button" class="cancel-btn" data-dismiss="modal">Close</button>
+								        	<input type="submit" class="confirm-btn" id="confirm-cancel" value="Confirm">
+								     	 </div>
+									</div>
+								</div>
+							</div>
+						</div>
 					<?php } ?>
 				</div>
 				<div class="dashboard-space"></div>
@@ -134,6 +151,24 @@ get_header();
 			<?php echo do_shortcode("[ultimatemember_account]"); ?>
 		</div>
 	</div>
+
+	<!-- Progress Bar Upload Modal -->
+	<div class="modal fade" id="upload-progress" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  	<div class="modal-dialog" role="document">
+	    	<div class="modal-content">
+	      		<div class="modal-header">
+	        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        		<h5 class="modal-title" id="myModalLabel">Upload Progress</h5>
+	      		</div>
+	      		<div class="modal-body">
+	        		<div class="progress" style="display:none">
+					  <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">0%</div>
+					</div>			      
+        		</div>
+	    	</div>
+	  	</div>
+	</div>
+
 </main>
 
 
@@ -199,7 +234,6 @@ get_header();
 	//     options: options
 	// });
 
-
 	$('#tabs')
 	    .tabs()
 	    .addClass('ui-tabs-vertical ui-helper-clearfix');
@@ -219,22 +253,6 @@ get_header();
 		}
 	});
 
-	// $("#save-btn").click(function() {
-	// 	$dataString = "subID=" + $('#subID').val();
-
-	// 	$.ajax({
-	// 		data: $dataString,
-	// 		type: "GET",
-	// 		url:'cancel-recurring.php',
-	// 		success: function (response) {
-	// 		  	alert("Recurring payment deleted");
-	// 		},
-	// 		error: function(xhr) {
-	// 			alert(xhr.status + " " + xhr.statusText);
-	// 		}
-	// 	});
-	// });
-
 	document.getElementById("totalText").textContent = "Total Raised: $" + $("#totalRaised").val();
 
 	document.getElementById('prof-pic').onclick = function() {
@@ -245,9 +263,25 @@ get_header();
 		$("#submit-prof-pic").click();
 	});
 
-	function validate_form() {
-		return (true);
-	}
+	$('#confirm-cancel').click(function() {
+		$('#cancel-recurring').submit();
+	});
+
+ 	var progressbar = $('.progress-bar');
+
+    $("#submit-prof-pic").click(function(){
+		$("#upload-pic-form").ajaxForm( {
+	  		beforeSend: function() {
+				$(".progress").css("display","block");
+				progressbar.width('0%');
+				progressbar.text('0%');
+            },
+	    	uploadProgress: function (event, position, total, percentComplete) {
+	        	progressbar.width(percentComplete + '%');
+	        	progressbar.text(percentComplete + '%');
+	     	}
+		}).submit();
+    });
 </script>
 
 <!-- <link rel="stylesheet" type="text/css" href="style.css">
