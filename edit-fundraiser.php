@@ -55,17 +55,20 @@ if (have_posts()) : while (have_posts()) : the_post();
 	</div>
 
 	<div class="form-line image">
-		<label>Cover Image</label>
-		<div class="cover-image">
-			<?php if ( has_post_thumbnail() ) {
-				the_post_thumbnail( array(400,400) );
-			}?>
+			<label>Cover Image <?php echo info_svg(); ?></label>
+			<div class="cover-image">
+				<div id="current-image">
+					<?php if ( has_post_thumbnail() ) {
+						the_post_thumbnail( array(400,400) );
+					}?>
+				</div>
+				<img id="image-preview" src="" />
+			</div>
+			<label for="thumbnail" class="upload-btn btn"><span>Upload</span><br>your own image</label>
+			<div class="spacer"></div>
+			<label class="btn" data-toggle="modal" data-target="#default-img-modal"><span>Choose</span><br>one of ours</label>
+			<input type="file" name="thumbnail" id="thumbnail" value="Choose File">
 		</div>
-		<label for="thumbnail" class="upload-btn btn"><span>Upload</span><br>your own image</label>
-		<div class="spacer"></div>
-		<label class="btn" data-toggle="modal" data-target="#default-img-modal"><span>Choose</span><br>one of ours</label>
-		<input type="file" name="thumbnail" id="thumbnail" value="Choose File">
-	</div>
 
 	<div class="form-line goal">
 		<div class="split-line">
@@ -128,5 +131,37 @@ endif; ?>
 </main>
 
 <?php echo default_image_modal(); ?>
+
+<script type="text/javascript">
+	$('.default').click(function() {
+		$('#current-image').hide();
+		$('#image-preview').attr('src', $(this).children('img').attr('src'));
+		$('input#default-image-input').val($(this).attr('id'));
+		$('.cover-image-plchdr').hide();
+		$('.cover-image').css({'background-color': 'transparent', 'border': '0'});
+		// make sure to close modal once we have it in a modal
+	});
+
+	function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            
+            reader.onload = function (e) {
+            	$('#current-image').hide();
+                $('#image-preview').attr('src', e.target.result);
+                $('input#default-image-input').val("not-here");
+                // change styling of surrounding div
+                $('.cover-image-plchdr').hide();
+                $('.cover-image').css({'background-color': 'transparent', 'border': '0'});
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    
+    $("#thumbnail").change(function(){
+        readURL(this);
+        // clear val of input field
+    });
+</script>
 
 <?php get_footer(); ?>

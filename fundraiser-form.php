@@ -113,7 +113,6 @@ get_header(); ?>
     
     $("#thumbnail").change(function(){
         readURL(this);
-        // clear val of input field
     });
 </script>
 
