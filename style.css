@@ -81,12 +81,12 @@ html {
     padding-left: 3em;
 }
 
-.tooltip {
+.msr-tooltip {
 	position: relative;
 }
 
 /* Tooltip text */
-.tooltip .tooltiptext {
+.msr-tooltip .msr-tooltiptext {
     visibility: hidden;
     width: 120px;
     background-color: black;
@@ -104,7 +104,7 @@ html {
     z-index: 1;
 }
 
-.tooltip .tooltiptext::after {
+.msr-tooltip .msr-tooltiptext::after {
     content: " ";
     position: absolute;
     bottom: 100%;  /* At the top of the tooltip */
@@ -115,7 +115,7 @@ html {
     border-color: transparent transparent black transparent;
 }
 
-.tooltip .tooltiptext.success {
+.msr-tooltip .msr-tooltiptext.success {
 	visibility: visible;
 }
 
@@ -127,6 +127,9 @@ html {
 	background-color: #F8F8F8;
 	height: 20px;
 	width: 99%;
+
+	box-shadow: none;
+	-webkit-box-shadow: none;
 }
 
 .ui-progressbar-value {
