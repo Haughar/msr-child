@@ -88,10 +88,8 @@ get_header(); ?>
 					?>
 				</p>
 			<?php } ?>
-
-			<?php echo do_shortcode("[Wow-Modal-Windows id=1]"); ?>
 			<div class="btn-wrapper">
-				<button id='wow-modal-id-1' <?php if (isset($days_left) && $days_left < 0) echo "disabled"; ?>>Contribute</button>
+				<button data-toggle="modal" data-target="#contribute-modal" <?php if (isset($days_left) && $days_left < 0) echo "disabled"; ?>>Contribute</button>
 			</div>
 		</div>
 
@@ -119,6 +117,20 @@ get_header(); ?>
 			<?php } else { ?>
 				<p>There have not been any contributions yet. Be the first!</p>
 			<?php } ?>
+		</div>
+	</div>
+
+	<div class="modal fade" id="contribute-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h5 class="modal-title" id="myModalLabel">Contribute</h5>
+				</div>
+				<div class="modal-body">
+					<?php echo do_shortcode('[payment]'); ?>
+				</div>
+			</div>
 		</div>
 	</div>
 
