@@ -970,9 +970,24 @@ html {
 	width: auto;
 }
 
+.profile-fundraiser-list article .entry-text-content .entry-header {
+	overflow: hidden;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+}
+
 .profile-fundraiser-list article .entry-text-content .entry-content p {
-	font-size: 14px;
-	margin-top: 1.1em;
+	font-size: 1em;
+	margin-top: 3em;
+	overflow: hidden;
+	display: -webkit-box;
+	-webkit-line-clamp: 4;
+	-webkit-box-orient: vertical;
+}
+
+.entry-more .myProgress {
+	width: 100%;
 }
 
 .profile-fundraiser-list article .entry-more {
