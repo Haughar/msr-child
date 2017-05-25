@@ -99,7 +99,7 @@ get_header(); ?>
 				<div class="contribution-constraint">
 					<div class="contribution-wrapper">
 						<?php foreach($object['contribution-data'] as $contribution) { 
-							if ($contribution['metadata']['anonymous'] == "true" || $contribution['metadata']['display_name'] == "") { 
+							if ($contribution['metadata']['anonymous'] == "true" || $contribution['metadata']['customer_name'] == "") { 
 								$display = "Anonymous";
 							} else {
 								$display = $contribution['metadata']['customer_name'];

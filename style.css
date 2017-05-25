@@ -654,6 +654,12 @@ html {
 	width: 100%;
 }
 
+#payment-form .red {
+	color: #E2383F;
+	font-size: 16px;
+	font-weight: 800;
+}
+
 #payment-form .left {
 	width: 55%;
 }
@@ -678,7 +684,8 @@ html {
 }
 
 #payment-form .default-amounts {
-	margin-left: 5px;
+	text-align: center;
+	width: 90%;
 }
 
 #payment-form .default-amounts button {
@@ -688,7 +695,7 @@ html {
 	font-size: 16px;
 	margin-right: 0px;
 	margin-left: 0px;
-	width: 65px;
+	width: 80px;
 }
 
 #payment-form .form-row.amount {
@@ -736,7 +743,7 @@ html {
 	font-size: 10px;
 	font-weight: 100;
 	margin-bottom: 0;
-	margin-top: 10px;
+	margin-top: 5px;
 }
 
 #payment-form .form-row.split-row div {
