@@ -408,7 +408,11 @@ function get_fundraiser_list($user_id, $type) {
 							</div>
 						</div>
 						<!-- Amount of days remaining -->
-						<span class="day-text"><?php echo get_fundraising_days_left(get_post_meta($id, 'fundraiser-end', true)); ?> days left</span>
+						<span class="day-text <?php 
+							if (get_fundraising_days_left(get_post_meta($id, 'fundraiser-end', true)) <= 10) {
+								echo "red-text";
+							}
+						 	?>"><?php echo get_fundraising_days_left(get_post_meta($id, 'fundraiser-end', true)); ?> days left</span>
 					</div>
 					<div class="inline-top dashb-amt">
 						<!-- Amount Raised -->

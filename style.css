@@ -1005,6 +1005,10 @@ html {
 	margin-top: 4px;
 }
 
+.red-text {
+	color: #e2383f;
+}
+
 .dashb-amt {
 	padding-top: 1.6em;
 	margin-right: 1.5em;
