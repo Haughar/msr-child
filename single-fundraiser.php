@@ -102,7 +102,7 @@ get_header(); ?>
 							if ($contribution['metadata']['anonymous'] == "true" || $contribution['metadata']['display_name'] == "") { 
 								$display = "Anonymous";
 							} else {
-								$display = $contribution['metadata']['display_name'];
+								$display = $contribution['metadata']['customer_name'];
 							} ?>
 
 							<p class="<?php if ($index > 3) { echo 'hide'; } ?>"><?php echo $display; ?><span>$<?php echo number_format($contribution['amount']/100, 0, '.', ','); ?></span></p>

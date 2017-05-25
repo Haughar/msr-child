@@ -607,6 +607,10 @@ html {
 	height: 74px;
 }
 
+.modal-body {
+	display: flex;
+}
+
 .modal-header h5 {
 	display: inline-block;
 	font-size: 27px;
@@ -644,6 +648,10 @@ html {
 #wow-modal-window-1 #wow-modal-close-1 {
 	top: 10px !important;
 	right: 10px !important;
+}
+
+#payment-form {
+	width: 100%;
 }
 
 #payment-form .left {
