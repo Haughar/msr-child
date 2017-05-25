@@ -1,5 +1,4 @@
 <?php
-
 if (isset($_SERVER['HTTP_REFERER'])) {
 	console_log($_SERVER['HTTP_REFERER']);
 }
@@ -37,9 +36,9 @@ get_header(); ?>
 			<div class="sharing">
 				<a href="http://www.facebook.com/sharer.php?u=<?php the_permalink();?>&amp;t=<?php the_title(); ?>" title="Share on Facebook." target="_blank"><?php echo facebook_svg(); ?></a>
 				<a href="http://twitter.com/home/?status=<?php the_title(); ?> - <?php the_permalink(); ?>" title="Tweet this!" target="_blank"><?php echo twitter_svg(); ?></a>
-				<a id="copy-link" class="tooltip">
+				<a id="copy-link" class="msr-tooltip">
 					<?php echo copy_svg(); ?>
-					<p id="copy-success" class="tooltiptext">Copied!</p>
+					<p id="copy-success" class="msr-tooltiptext">Copied!</p>
 				</a>
 			</div>
 		</div>
@@ -54,9 +53,12 @@ get_header(); ?>
 			</div>
 		</ol>
 		<button id="expand-comments" class="hide">Show more comments</button>
-		<div class="comment-form">
-			<?php comment_form(array('title_reply' => __( 'Leave a Comment', 'textdomain' ), 'comment_notes_after' => ''), $post->ID); ?>
-		</div>
+
+		<?php if(is_user_logged_in()) { ?>
+			<div class="comment-form">
+				<?php comment_form(array('title_reply' => __( 'Leave a Comment', 'textdomain' ), 'comment_notes_after' => ''), $post->ID); ?>
+			</div>
+		<?php } ?>
 
 	</div>
 
@@ -66,13 +68,13 @@ get_header(); ?>
 
 			<div id="campaign-progress" class="progress-bar"></div>
 
-			<?php if (get_post_meta($id, 'fundraiser-goal', true)) { ?>
-				<p class="progress-percent"><?php echo get_percentage_to_goal($object['total'], get_post_meta($id, 'fundraiser-goal', true)); ?>% of $<?php echo number_format(get_post_meta($id, 'fundraiser-goal', true), 0, '.', ','); ?></p>
+			<?php if (get_post_meta($id, 'fundraiserGoal', true)) { ?>
+				<p class="progress-percent"><?php echo get_percentage_to_goal($object['total'], get_post_meta($id, 'fundraiserGoal', true)); ?>% of $<?php echo number_format(get_post_meta($id, 'fundraiserGoal', true), 0, '.', ','); ?></p>
 			<?php } ?>
 
-			<?php if (get_post_meta($id, 'fundraiser-end', true)) { ?>
+			<?php if (get_post_meta($id, 'fundraiserEnd', true)) { ?>
 				<p class="time-left">
-					<?php $days_left = get_fundraising_days_left(get_post_meta($id, 'fundraiser-end', true));
+					<?php $days_left = get_fundraising_days_left(get_post_meta($id, 'fundraiserEnd', true));
 						if ($days_left > 1) {
 							echo $days_left . "&nbsp;days left";
 						} else if ($days_left == 1) {
@@ -80,15 +82,13 @@ get_header(); ?>
 						} else if ($days_left == 0){
 							echo "Ending tonight";
 						} else if ($days_left < 0) {
-							echo "Closed";
+							echo "Ended";
 						}
 					?>
 				</p>
 			<?php } ?>
-
-			<?php echo do_shortcode("[Wow-Modal-Windows id=1]"); ?>
 			<div class="btn-wrapper">
-				<button id='wow-modal-id-1'>Contribute</button>
+				<button data-toggle="modal" data-target="#contribute-modal" <?php if (isset($days_left) && $days_left < 0) echo "disabled"; ?>>Contribute</button>
 			</div>
 		</div>
 
@@ -98,8 +98,14 @@ get_header(); ?>
 				<h2>Contributions(<?php echo count($object['contribution-data']); ?>)</h2>
 				<div class="contribution-constraint">
 					<div class="contribution-wrapper">
-						<?php foreach($object['contribution-data'] as $contribution) { ?>
-							<p class="<?php if ($index > 3) { echo 'hide'; } ?>"><?php echo $contribution["metadata"]["display_name"]; ?><span>$<?php echo number_format($contribution['amount']/100, 0, '.', ','); ?></span></p>
+						<?php foreach($object['contribution-data'] as $contribution) { 
+							if ($contribution['metadata']['anonymous'] == "true" || $contribution['metadata']['display_name'] == "") { 
+								$display = "Anonymous";
+							} else {
+								$display = $contribution['metadata']['display_name'];
+							} ?>
+
+							<p class="<?php if ($index > 3) { echo 'hide'; } ?>"><?php echo $display; ?><span>$<?php echo number_format($contribution['amount']/100, 0, '.', ','); ?></span></p>
 						<?php $index++;
 						} ?>
 					</div>
@@ -110,6 +116,20 @@ get_header(); ?>
 			<?php } else { ?>
 				<p>There have not been any contributions yet. Be the first!</p>
 			<?php } ?>
+		</div>
+	</div>
+
+	<div class="modal fade" id="contribute-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h5 class="modal-title" id="myModalLabel">Contribute</h5>
+				</div>
+				<div class="modal-body">
+					<?php echo do_shortcode('[payment]'); ?>
+				</div>
+			</div>
 		</div>
 	</div>
 
@@ -142,7 +162,7 @@ endif; ?>
 
 	$( function() {
 		$( "#campaign-progress" ).progressbar({
-		  value: <?php echo get_percentage_to_goal($object['total'], get_post_meta($id, 'fundraiser-goal', true)); ?>
+		  value: <?php echo get_percentage_to_goal($object['total'], get_post_meta($id, 'fundraiserGoal', true)); ?>
 		});
 
 		var $sumCommentHeight = 0;
@@ -173,6 +193,10 @@ endif; ?>
 	    $('.commentlist').animate({height: height + "px"}, 500, function() {
 	    	$('#expand-comments').hide("fade", {}, 300);
 	    });
+	});
+
+	$(document).ready(function(){
+	    $('[data-toggle="tooltip"]').tooltip(); 
 	});
 </script>
 <?php

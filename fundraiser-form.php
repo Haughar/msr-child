@@ -9,6 +9,11 @@
  * @since 1.0.0
  */
 
+if (!is_user_logged_in()) {
+	wp_redirect(get_home_url());
+	exit;
+}
+
 if($_POST){
 	console_log("Got here");
 	create_new_fundraiser();
@@ -21,36 +26,51 @@ get_header(); ?>
 	<div class="title-wrapper">
 		<h2>Create a New Fundraiser</h2>
 	</div>
-	<?php do_shortcode("[default_images]"); ?>
-
 	<form id="fundraiser" name="fundraiser" method="post" action="" enctype="multipart/form-data">
 
 		<div class="form-line">
-			<label for="fundraiser-name">Fundraiser Name <?php echo info_svg(); ?></label>
+			<label for="fundraiser-name">Fundraiser Name 
+				<span data-toggle="tooltip" data-placement="right" title="Create an eye-catching name">
+					<?php echo info_svg(); ?>
+					<!-- <p class="tooltiptext">Create an eye-catching name</p> -->
+				</span>
+			</label>
 			<input type="text" id="fundraiser-name" name="fundraiserName" value="<?php echo isset($_POST['fundraiserName']) ? htmlspecialchars($_POST['fundraiserName']) : ''; ?>" placeholder="Give your fundraiser a title">
 		</div>
 
 		<div class="form-line image">
-			<label>Cover Image <?php echo info_svg(); ?></label>
+			<label>Cover Image 
+				<span data-toggle="tooltip" data-placement="right" title="Choose an eye-catching image">
+					<?php echo info_svg(); ?>
+				</span>
+			</label>
 			<div class="cover-image">
 				<p class="cover-image-plchdr">Add a photo</p>
 				<img id="image-preview" src="" />
 			</div>
 			<label for="thumbnail" class="upload-btn btn"><span>Upload</span><br>your own image</label>
 			<div class="spacer"></div>
-			<label class="btn"><span>Choose</span><br>one of ours</label>
+			<label class="btn" data-toggle="modal" data-target="#default-img-modal"><span>Choose</span><br>one of ours</label>
 			<input type="file" name="thumbnail" id="thumbnail" value="Choose File">
 		</div>
 
 		<div class="form-line goal">
-			<label for="fundraiser-goal">Goal <?php echo info_svg(); ?></label>
+			<label for="fundraiser-goal">Goal 
+				<span class="not-money" data-toggle="tooltip" data-placement="right" title="Set a goal amount to raise">
+					<?php echo info_svg(); ?>
+				</span>
+			</label>
 			<?php echo dollar_svg(); ?>
 			<input type="text" id="fundraiser-goal" name="fundraiserGoal" value="<?php echo isset($_POST['fundraiserGoal']) ? htmlspecialchars($_POST['fundraiserGoal']) : ''; ?>" placeholder="Enter Amount">
 		</div>
 
 		<div class="form-line">
 			<div class="split-line">
-				<label for="start-date">Start Date <?php echo info_svg(); ?></label>
+				<label for="start-date">Start Date 
+					<span data-toggle="tooltip" data-placement="right" title="Pick a date to start your fundraiser">
+						<?php echo info_svg(); ?>
+					</span>
+				</label>
 				<div class="date-wrapper">
 					<input type="date" id="start-date" name="startDate" value="<?php echo isset($_POST['startDate']) ? htmlspecialchars($_POST['startDate']) : ''; ?>" required>
 					<?php echo calendar_svg(); ?>
@@ -58,7 +78,11 @@ get_header(); ?>
 			</div>
 
 			<div class="split-line">
-				<label for="end-date">End Date <?php echo info_svg(); ?></label>
+				<label for="end-date">End Date 
+					<span data-toggle="tooltip" data-placement="right" title="Indicate when you want your fundraiser to end">
+						<?php echo info_svg(); ?>
+					</span>
+				</label>
 				<div class="date-wrapper">
 					<input type="date" id="end-date" name="endDate" value="<?php echo isset($_POST['endDate']) ? htmlspecialchars($_POST['endDate']) : ''; ?>" required>
 					<?php echo calendar_svg(); ?>
@@ -67,7 +91,11 @@ get_header(); ?>
 		</div>
 
 		<div class="form-line">
-			<label for="description">Story <?php echo info_svg(); ?></label>
+			<label for="description">Story 
+				<span data-toggle="tooltip" data-placement="right" title="Tell us why you created this fundraiser">
+					<?php echo info_svg(); ?>
+				</span>
+			</label>
 			<textarea id="description" name="description"><?php echo isset($_POST['description']) ? htmlspecialchars($_POST['description']) : ''; ?></textarea>
 		</div>
 
@@ -86,6 +114,8 @@ get_header(); ?>
 
 	</form>
 </main>
+
+<?php echo default_image_modal(); ?>
 
 <script type="text/javascript">
 	$('.default').click(function() {
@@ -113,8 +143,11 @@ get_header(); ?>
     
     $("#thumbnail").change(function(){
         readURL(this);
-        // clear val of input field
     });
+
+    $(document).ready(function(){
+	    $('[data-toggle="tooltip"]').tooltip(); 
+	});
 </script>
 
 <?php get_footer(); ?>

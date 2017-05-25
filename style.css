@@ -30,6 +30,11 @@ html {
 	color: #000000;
 }
 
+/** BOOTSTRAP OVERRIDES **/
+.btn {
+	border-radius: 0;
+}
+
 /** DASHBOARD'S LEFT NAVIGATION BAR **/
 .ui-tabs.ui-tabs-vertical {
     padding: 0;
@@ -81,12 +86,12 @@ html {
     padding-left: 3em;
 }
 
-.tooltip {
+.msr-tooltip {
 	position: relative;
 }
 
 /* Tooltip text */
-.tooltip .tooltiptext {
+.msr-tooltip .msr-tooltiptext {
     visibility: hidden;
     width: 120px;
     background-color: black;
@@ -104,7 +109,7 @@ html {
     z-index: 1;
 }
 
-.tooltip .tooltiptext::after {
+.msr-tooltip .msr-tooltiptext::after {
     content: " ";
     position: absolute;
     bottom: 100%;  /* At the top of the tooltip */
@@ -115,7 +120,7 @@ html {
     border-color: transparent transparent black transparent;
 }
 
-.tooltip .tooltiptext.success {
+.msr-tooltip .msr-tooltiptext.success {
 	visibility: visible;
 }
 
@@ -127,6 +132,9 @@ html {
 	background-color: #F8F8F8;
 	height: 20px;
 	width: 99%;
+
+	box-shadow: none;
+	-webkit-box-shadow: none;
 }
 
 .ui-progressbar-value {
@@ -282,6 +290,18 @@ html {
 	width: 26px;
 }
 
+.fundraising .goal .not-money svg {
+	height: auto;
+	padding: 0;
+	position: static;
+	width: auto;
+}
+
+.fundraising .form-line span svg {
+	margin-top: 2px;
+	margin-left: 5px;
+}
+
 .fundraising .goal input[type="text"] {
 	padding-left: 25px;
 }
@@ -361,12 +381,12 @@ html {
 	width: auto;
 }
 
-.fundraising button.default {
+.modal button.default {
 	background-color: transparent;
 	border: 0;
 }
 
-.fundraising .default img {
+.modal .default img {
 	max-height: 200px;
 	max-width: 200px;
 }
@@ -583,6 +603,21 @@ html {
 }
 
 /** CONTRIBUTION MODAL **/
+.modal-header {
+	height: 74px;
+}
+
+.modal-header h5 {
+	display: inline-block;
+	font-size: 27px;
+	font-weight: 800;
+	text-transform: none;
+}
+
+.single-fundraiser .modal .modal-dialog {
+	width: 768px;
+}
+
 #wow-modal-window-1 {
 	border-radius: 0 !important;
 	padding: 0 !important;
@@ -611,22 +646,118 @@ html {
 	right: 10px !important;
 }
 
-#payment-form h2 {
-	display: inline-block;
-	font-size: 20px;
-	text-transform: uppercase;
-	width: 275px;
+#payment-form .left {
+	width: 55%;
 }
 
-#payment-form .amount {
+#payment-form .right {
+	width: 45%;
+}
+
+#payment-form .left {
+	float: left;
+}
+
+#payment-form .right {
+	float: right;
+}
+
+#payment-form h2 {
+	font-size: 24px;
+	text-transform: uppercase;
+	margin-bottom: 20px;
+	margin-left: 10px;
+}
+
+#payment-form .default-amounts {
+	margin-left: 5px;
+}
+
+#payment-form .default-amounts button {
+	background-color: #FF963B;
+	border-radius: 5px;
+	color: #FFF;
+	font-size: 16px;
+	margin-right: 0px;
+	margin-left: 0px;
+	width: 65px;
+}
+
+#payment-form .form-row.amount {
+	background-color: #F2F2F2;
+	border-radius: 5px;
+	margin-left: 0;
+	margin-top: 10px;
+	padding: 15px;
+	position: relative;
+	width: 90%;
+}
+
+#payment-form .form-row.amount p {
+	font-style: italic;
+	font-size: 16px;
+	margin-bottom: 5px;
+}
+
+#payment-form .form-row.amount p.subtext {
+	font-size: 12px;
+}
+
+#payment-form .form-row.amount div {
 	display: inline-block;
+	position: absolute;
+	right: 15px;
+	top: 0;
+}
+
+#payment-form .form-row.amount input {
 	width: 125px;
 }
 
-.fundraising #payment-form form label {
+#payment-form h4 {
+	font-size: 18px;
+	margin-left: 10px;
+	text-transform: none;
+}
+
+#payment-form input {
+	background-color: transparent;
+}
+
+#payment-form form label {
 	font-size: 10px;
+	font-weight: 100;
 	margin-bottom: 0;
-	margin-top: 20px;
+	margin-top: 10px;
+}
+
+#payment-form .form-row.split-row div {
+	display: inline-block;
+	width: 45%;
+}
+#payment-form .form-row {
+	margin-left: 10px;
+}
+
+#payment-form .form-row.split-row input, #payment-form .form-row.split-row label {
+	width: 95%;
+}
+
+#payment-form .form-row.check-input input {
+	display: inline-block;
+	width: auto;
+}
+
+#payment-form .form-row.check-input label {
+	display: inline-block;
+	margin-left: 5px;
+}
+
+#payment-form .helper-text {
+	color: #BDBDBD;
+	font-style: italic;
+	font-size: 12px;
+	margin-bottom: 0;
 }
 
 #payment-form input {
@@ -634,7 +765,11 @@ html {
 	border-right: none;
 	border-left: none;
 	padding: 7px;
-	width: 100%;
+	width: 90%;
+}
+
+#payment-form .right {
+	margin-top: 20px;
 }
 
 #payment-form input.user-amount {
@@ -652,25 +787,36 @@ html {
 }
 
 #payment-form .expiration.group {
-	width: 290px;
-}
-
-#payment-form .expiration input {
-	margin-right: 20px;
+	width: 60%;
 }
 
 #payment-form .group {
 	display: inline-block;
-	margin-bottom: 20px;
 }
 
 #payment-form .group input {
 	display: inline-block;
-	width: 120px;
+	width: 44%;
 }
 
 #payment-form .ccv.group {
-	width: 120px;
+	width: 30%;
+}
+
+#payment-form .ccv.group input {
+	width: 100%;
+}
+
+#payment-form .comment-form h3 {
+	text-transform: none;
+}
+
+#payment-form .comment-form .logged-in-as {
+	display: none;
+}
+
+#payment-form .comment-form label {
+	display: none;
 }
 
 #payment-form .appearance {
