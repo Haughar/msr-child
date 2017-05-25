@@ -1047,7 +1047,7 @@ html {
 	text-align: center;
 	padding-bottom: 6em;
 	font-weight: bold;
-	margin-top: 1em;
+	margin-top: 1em !important;
 }
 
 .dashboard-space {
@@ -1223,6 +1223,11 @@ html {
 	position: relative;
 	max-width: 1040px;
 	margin: auto;
+	background-color: #56CCF2;
+}
+
+.gen-contribute {
+	background-color: #56CCF2;
 }
 
 .browse {
@@ -1279,16 +1284,6 @@ html {
 	height: 79px;
     font-weight: 500;
     font-size: 28px;
-}
-
-.blck-btn-landing {
-	border-color: #000000;
-	color: #000000;
-}
-
-.blck-btn-landing:hover { 
-	color: grey;
-	border-color: grey;
 }
 
 .btn-spot {
