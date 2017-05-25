@@ -615,7 +615,7 @@ function get_active_fundraisers($fundraiser_id) {
 		<?php if ( has_post_thumbnail() ) { 
 		/** Normal container for posts with thumbnail */ ?>
 		
-		<?php $image_thumb_src = wp_get_attachment_image_src(get_post_thumbnail_id(), 'msr-post-grid-thumb');?>
+		<?php $image_thumb_src = wp_get_attachment_image_src(get_post_thumbnail_id($fundraiser_id), 'msr-post-grid-thumb');?>
 		
 		<a class="entry-thumb" href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>" style="background-image:url( <?php echo $image_thumb_src[0]; ?> );">
 			<div class="entry-thumb-icon"></div>
@@ -639,32 +639,42 @@ function get_active_fundraisers($fundraiser_id) {
 				<?php endif; ?>
 			</header><!-- .entry-header -->
 		
-			<?php if(has_tag('feature', null)){ ?>
+			<?php if(get_post_field( 'post_author', $fundraiser_id) == 2){ ?>
 				<div class="feature-content"><span>Feature</span></div>
 			<?php } ?>
 
+			<div class="author-name">
+				<?php 
+					$author_id = get_post_field( 'post_author', $fundraiser_id); 
+					echo get_user_meta($author_id, 'nickname',true);	
+				?>
+			</div>
 			<div class="entry-content">
 				<?php echo the_excerpt(); ?>
 			</div><!-- .entry-content -->
 		</div>
 		<div class="entry-more">
-
-			<div class="myProgress">
-	  		<div class="myBar" style="width: <?php 
-	  			$pct = get_percentage_to_goal($fundraiser_details['total'],  get_post_meta($fundraiser_id, 'fundraiser-goal', true)); 
-	  			if ($pct > 100) {
-	  				$pct = 100;
-	  			}
-	  			echo $pct ?>%"></div>
-			</div>
-			<!-- Percentage of amount made -->
-			<span class="profile-pct"><?php echo get_percentage_to_goal($fundraiser_details['total'],  get_post_meta($fundraiser_id, 'fundraiser-goal', true)); ?>%</span>
-			<span class="profile-days"><?php echo get_fundraising_days_left(get_post_meta($fundraiser_id, 'fundraiser-end', true)); ?> days left</span>
-		<!-- 	<?php if ( has_post_format( 'video' )) { ?>
-				<a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>"> Watch Video</a>
-			<?php } else { ?>
-				<a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>"><?php echo __('Read More', 'msr') ?></a>
-			<?php } ?> -->
+			<?php if(get_fundraising_days_left(get_post_meta($fundraiser_id, 'fundraiser-end', true)) >= 0) { ?>
+				<!-- Active fundraisers -->
+				<div class="myProgress">
+		  		<div class="myBar" style="width: <?php 
+		  			$pct = get_percentage_to_goal($fundraiser_details['total'],  get_post_meta($fundraiser_id, 'fundraiser-goal', true)); 
+		  			if ($pct > 100) {
+		  				$pct = 100;
+		  			}
+		  			echo $pct ?>%"></div>
+				</div>
+				<!-- Percentage of amount made -->
+				<span class="profile-pct"><?php echo get_percentage_to_goal($fundraiser_details['total'],  get_post_meta($fundraiser_id, 'fundraiser-goal', true)); ?>%</span>
+				<span class="profile-days"><?php echo get_fundraising_days_left(get_post_meta($fundraiser_id, 'fundraiser-end', true)); ?> days left</span>
+			<?php } else if (get_fundraising_days_left(get_post_meta($fundraiser_id, 'fundraiser-end', true)) < 0) { ?> 
+				<!-- Past campaigns -->
+				<p class="date-text">Ended <?php 
+					$sqldate = get_post_meta($fundraiser_id, 'fundraiser-end', true);
+					$end = strtotime($sqldate);
+					echo date('n/j/y', $end) ?>
+				</p>
+			<?php }  ?>
 		</div>
 	</article><!-- #post-## --> 
 	<?php
