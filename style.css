@@ -1566,6 +1566,35 @@ button.cancel {
 	margin: auto;
 }
 
-.browse-banner img {
-	width: 100%;
+#browse-banner img {
+	width: 100% !important;
+}
+
+.browse-fundraisers article .entry-more {
+	height: 30px;
+}
+
+#browse-banner {
+	position: relative;
+}
+
+.browse-new-btn {
+	position: absolute;
+	bottom: 80px;
+	right: 150px;
+	width: 247px;
+	height: 67px;
+    font-weight: 500;
+    font-size: 30px;
+}
+
+.author-name {
+    font-family: "futura-pt", Arial, Sans-Serif;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+#loginModal .um-form .um-field-area input[type=text], #loginModal .um-form .um-field-area input[type=password]  {
+	border: 0 !important;
+	border-bottom: 1px solid #D9D9D9 !important;
 }

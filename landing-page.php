@@ -60,7 +60,7 @@ get_header(); ?>
 		<div class="inline-top middle-btn-spot">
 			<?php echo water_drop(); ?>
 			<br>
-			<button class="banner-btn" onclick="window.location.href='/fundraiser/'">Start Browsing</button>
+			<button class="banner-btn" onclick="window.location.href='/browse/'">Start Browsing</button>
 		</div>
 		<div class="browse-text inline-top">
 			<p class="no-margin white-text banner-title">Contribute to a Fundraiser</p>
