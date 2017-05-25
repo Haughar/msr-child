@@ -38,7 +38,9 @@ get_header();
 					<input type="button" id="submit-prof-pic" name="submit" class="pic-upload" data-toggle="modal" data-target="#upload-progress">
 				</form>
 			</li>
-    		<li class="dashb-username no-bullet"> <?php echo get_user_meta( $user_id, 'nickname', true); ?> </li>
+    		<li class="dashb-username no-bullet"> <?php $user = get_userdata(get_current_user_id());
+			$name = $user->first_name . " " . $user->last_name;
+			echo $name; ?> </li>
 	        <li>
 	            <a href="#fundraisers">My Fundraisers</a>
 	        </li>
@@ -233,6 +235,10 @@ get_header();
 	//     data: data,
 	//     options: options
 	// });
+
+	$(document).ready(function() {
+		window.scrollTo(0,0);
+	});
 
 	$('#tabs')
 	    .tabs()

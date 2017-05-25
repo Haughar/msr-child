@@ -1107,14 +1107,16 @@ html {
 
 .fundraise-info {
 	padding-top: 1.25em;
-	width: 200px;
+	width: 53%;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
 }
 
 .myProgress {
-    width: 100%;
+    width: 200px;
     background-color: #E0E0E0;
     margin-top: 1.2em;
-    vertical-align: top;
 }
 .myBar {
     width: 0%;
@@ -1136,15 +1138,15 @@ html {
 	width: 26px;
 }
 
-
 .c-pct span {
 	font-size: 10px;
 	color: #828282;
 }
 
 .pct {
-	padding-top: 3.3em;
+	padding-top: 0.47em;
 	width: 26px;
+	text-align: right;
 }
 
 .pct span {
@@ -1157,8 +1159,11 @@ html {
 	margin-top: 4px;
 }
 
+.red-text {
+	color: #e2383f;
+}
+
 .dashb-amt {
-	margin-left: 8em;
 	padding-top: 1.6em;
 	margin-right: 1.5em;
 	text-align: right;
@@ -1196,6 +1201,7 @@ html {
 	text-align: center;
 	padding-bottom: 6em;
 	font-weight: bold;
+	margin-top: 1em !important;
 }
 
 .dashboard-space {
@@ -1373,6 +1379,10 @@ html {
 	margin: auto;
 }
 
+.gen-contribute {
+	background-color: #56CCF2;
+}
+
 .browse {
 	width: 100%;
 	height: 477px;
@@ -1427,16 +1437,6 @@ html {
 	height: 79px;
     font-weight: 500;
     font-size: 28px;
-}
-
-.blck-btn-landing {
-	border-color: #000000;
-	color: #000000;
-}
-
-.blck-btn-landing:hover { 
-	color: grey;
-	border-color: grey;
 }
 
 .btn-spot {
@@ -1511,4 +1511,16 @@ html {
 
 .btn-spot .modal .modal-dialog {
 	width: 600px;
+}
+
+.intro-banner-title {
+	font-size: 30px;
+	font-weight: 700;
+	padding-top: 3em;
+	margin-left: 4em;
+}
+
+.intro-descr {
+	margin: 3em 5em;
+	font-size: 20px;
 }

@@ -367,10 +367,9 @@ function get_fundraiser_list($user_id, $type) {
 							echo date('n/j/y', $end) ?> 
 						</p>
 					</div>
-					<div class="pct inline-top"></div>
 					<div class="inline-top dashb-amt">
 						<!-- Amount Raised -->
-						<span class="amt-text">$<?php 
+						<span class="amt-text">$<?php
 							$fundraised = $fundraiser_details['total'];
 							$totalRaised += $fundraised;
 							echo $fundraised; ?>			
@@ -394,20 +393,26 @@ function get_fundraiser_list($user_id, $type) {
 							?> <span class="normal-text"><a href="<?php echo get_permalink($id); ?>"><?php echo get_the_title($id); ?></a> </span> <?php
 						}  ?>
 						<!-- Progress bar -->
-						<div class="myProgress">
-					  		<div class="myBar" style="width: <?php 
-					  			$pct = get_percentage_to_goal($fundraiser_details['total'],  get_post_meta($id, 'fundraiser-goal', true)); 
-					  			if ($pct > 100) {
-					  				$pct = 100;
-					  			}
-					  			echo $pct ?>%"></div>
+						<div>
+							<div class="myProgress inline-top">
+						  		<div class="myBar" style="width: <?php 
+						  			$pct = get_percentage_to_goal($fundraiser_details['total'],  get_post_meta($id, 'fundraiser-goal', true)); 
+						  			if ($pct > 100) {
+						  				$pct = 100;
+						  			}
+						  			echo $pct ?>%"></div>
+							</div>
+							<div class="pct inline-top"> 
+								<!-- Percentage of amount made -->
+								<span><?php echo get_percentage_to_goal($fundraiser_details['total'],  get_post_meta($id, 'fundraiser-goal', true)); ?>%</span>
+							</div>
 						</div>
 						<!-- Amount of days remaining -->
-						<span class="day-text"><?php echo get_fundraising_days_left(get_post_meta($id, 'fundraiser-end', true)); ?> days left</span>
-					</div>
-					<div class="pct inline-top"> 
-						<!-- Percentage of amount made -->
-						<span><?php echo get_percentage_to_goal($fundraiser_details['total'],  get_post_meta($id, 'fundraiser-goal', true)); ?>%</span>
+						<span class="day-text <?php 
+							if (get_fundraising_days_left(get_post_meta($id, 'fundraiser-end', true)) <= 10) {
+								echo "red-text";
+							}
+						 	?>"><?php echo get_fundraising_days_left(get_post_meta($id, 'fundraiser-end', true)); ?> days left</span>
 					</div>
 					<div class="inline-top dashb-amt">
 						<!-- Amount Raised -->
@@ -457,7 +462,6 @@ function create_contributions_list($user_id, $json_object) {
 			<?php } else { 
 				// single time payments
 				$post_id = $charge['description'];
-				// $post = get_post($post_id); 
 				$fundraiser_details = get_fundraiser_stripe_info($post_id); ?>
 				<div class="dashb-fundraisers"> 
 					<?php if($post_id == "general") { ?>
