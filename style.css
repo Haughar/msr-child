@@ -1223,7 +1223,6 @@ html {
 	position: relative;
 	max-width: 1040px;
 	margin: auto;
-	background-color: #56CCF2;
 }
 
 .gen-contribute {
@@ -1358,4 +1357,16 @@ html {
 
 .btn-spot .modal .modal-dialog {
 	width: 600px;
+}
+
+.intro-banner-title {
+	font-size: 30px;
+	font-weight: 700;
+	padding-top: 3em;
+	margin-left: 4em;
+}
+
+.intro-descr {
+	margin: 3em 5em;
+	font-size: 20px;
 }

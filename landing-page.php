@@ -13,6 +13,12 @@ get_header(); ?>
 <div class="top-landing-banner">
 	<?php echo get_msr_campaign(); ?>
 </div>
+<!-- Contribution to MSR GH Overview -->
+<div class="general fundraising">
+	<p class="intro-banner-title">What is MSR Global Health working on?</p>
+	<p class="intro-descr">MSR Global Health a leading innovator and manufacturer of low cost, field-proven products that improve access to basic human needs for people living in low-resource communities of the developing world. Please support MSR Global Heatlh by contributing directly to MSR campaigns or our supporters’ fundraisers.</p>
+</div>
+
 <!-- Create a Fundraiser banner -->
 <div class="create">
 	<div class="create-banner color-banner">
@@ -66,8 +72,8 @@ get_header(); ?>
 <div class="gen-contribute">
 	<div class="general fundraising">
 		<div class="gen-text inline-top">
-			<p class="no-margin white-text banner-title">What is MSR Global Health working on?</p>
-			<p class="no-margin white-text gen-descr">MSR Global Health a leading innovator and manufacturer of low cost, field-proven products that improve access to basic human needs for people living in low-resource communities of the developing world. Please support MSR Global Heatlh by contributing directly to MSR campaigns or our supporters’ fundraisers.</p>
+			<p class="no-margin white-text banner-title">Make a General Contribution</p>
+			<p class="no-margin white-text gen-descr">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 		</div>
 		<div class="inline-top btn-spot">
 			<?php echo cups(); ?>
