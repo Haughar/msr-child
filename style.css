@@ -970,20 +970,25 @@ html {
 	width: auto;
 }
 
-.profile-fundraiser-list article .entry-text-content .entry-header {
+.profile-fundraiser-list article .entry-text-content .entry-header, .browse-fundraisers article .entry-text-content .entry-header {
 	overflow: hidden;
 	display: -webkit-box;
 	-webkit-line-clamp: 2;
 	-webkit-box-orient: vertical;
+	height: 48px;	
 }
 
-.profile-fundraiser-list article .entry-text-content .entry-content p {
+.profile-fundraiser-list article .entry-text-content .entry-content p, .browse-fundraisers article .entry-text-content .entry-content p {
 	font-size: 1em;
 	margin-top: 3em;
 	overflow: hidden;
 	display: -webkit-box;
 	-webkit-line-clamp: 4;
 	-webkit-box-orient: vertical;
+}
+
+.profile-fundraiser-list article .entry-text-content .entry-content, .browse-fundraisers article .entry-text-content .entry-content {
+	margin: 0px;
 }
 
 .entry-more .myProgress {
@@ -1530,4 +1535,14 @@ html {
 .intro-descr {
 	margin: 3em 5em;
 	font-size: 20px;
+}
+
+/** BROWSE PAGE **/
+.browse-fundraisers {
+	width: 900px;
+	margin: auto;
+}
+
+.browse-banner img {
+	width: 100%;
 }
