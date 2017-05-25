@@ -1,5 +1,4 @@
 <?php
-
 if (isset($_SERVER['HTTP_REFERER'])) {
 	console_log($_SERVER['HTTP_REFERER']);
 }
@@ -194,6 +193,10 @@ endif; ?>
 	    $('.commentlist').animate({height: height + "px"}, 500, function() {
 	    	$('#expand-comments').hide("fade", {}, 300);
 	    });
+	});
+
+	$(document).ready(function(){
+	    $('[data-toggle="tooltip"]').tooltip(); 
 	});
 </script>
 <?php
