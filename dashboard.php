@@ -135,7 +135,7 @@ get_header();
 			<div>
 				<span class="day-text"><?php 
 					if($json_object['charge-data']) {
-						create_contributions_list($user_id, $json_object); ?>
+						//create_contributions_list($user_id, $json_object); ?>
 						</span>
 					<?php } else {  ?>
 						</span>

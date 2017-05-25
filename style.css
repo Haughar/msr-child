@@ -953,14 +953,16 @@ html {
 
 .fundraise-info {
 	padding-top: 1.25em;
-	width: 200px;
+	width: 53%;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
 }
 
 .myProgress {
-    width: 100%;
+    width: 200px;
     background-color: #E0E0E0;
     margin-top: 1.2em;
-    vertical-align: top;
 }
 .myBar {
     width: 0%;
@@ -982,15 +984,15 @@ html {
 	width: 26px;
 }
 
-
 .c-pct span {
 	font-size: 10px;
 	color: #828282;
 }
 
 .pct {
-	padding-top: 3.3em;
+	padding-top: 0.47em;
 	width: 26px;
+	text-align: right;
 }
 
 .pct span {
@@ -1004,7 +1006,6 @@ html {
 }
 
 .dashb-amt {
-	margin-left: 8em;
 	padding-top: 1.6em;
 	margin-right: 1.5em;
 	text-align: right;
