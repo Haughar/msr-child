@@ -462,7 +462,6 @@ function create_contributions_list($user_id, $json_object) {
 			<?php } else { 
 				// single time payments
 				$post_id = $charge['description'];
-				// $post = get_post($post_id); 
 				$fundraiser_details = get_fundraiser_stripe_info($post_id); ?>
 				<div class="dashb-fundraisers"> 
 					<?php if($post_id == "general") { ?>

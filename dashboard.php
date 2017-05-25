@@ -135,7 +135,7 @@ get_header();
 			<div>
 				<span class="day-text"><?php 
 					if($json_object['charge-data']) {
-						//create_contributions_list($user_id, $json_object); ?>
+						create_contributions_list($user_id, $json_object); ?>
 						</span>
 					<?php } else {  ?>
 						</span>
@@ -233,6 +233,10 @@ get_header();
 	//     data: data,
 	//     options: options
 	// });
+
+	$(document).ready(function() {
+		window.scrollTo(0,0);
+	});
 
 	$('#tabs')
 	    .tabs()
