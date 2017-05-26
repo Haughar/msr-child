@@ -172,8 +172,6 @@ endif; ?>
 		if($('.commentlist').outerHeight() < $('.comment-wrapper').outerHeight()) {
 			$("#expand-comments").removeClass("hide");
 		}
-		console.log($('.commentlist').outerHeight());
-		console.log($('.comment-wrapper').outerHeight());
 	});
 
 	$('#expand-contributions').click(function() {
@@ -197,6 +195,8 @@ endif; ?>
 	$(document).ready(function(){
 	    $('[data-toggle="tooltip"]').tooltip(); 
 	});
+
+	document.body.classList.remove("has-featured-image");
 </script>
 <?php
 get_footer();

@@ -568,8 +568,33 @@ button.cancel {
 
 .single-fundraiser textarea#comment {
 	height: 100px;
-	margin-bottom: 0;
+	padding: 9px 12px;
 	width: 90%;
+}
+
+/* do not group these rules */
+*::-webkit-input-placeholder {
+    color: #BDBDBD;
+    font-size: 12px;
+    font-style: italic;
+}
+*:-moz-placeholder {
+    /* FF 4-18 */
+    color: #BDBDBD;
+    font-size: 12px;
+    font-style: italic;
+}
+*::-moz-placeholder {
+    /* FF 19+ */
+    color: #BDBDBD;
+    font-size: 12px;
+    font-style: italic;
+}
+*:-ms-input-placeholder {
+    /* IE 10+ */
+    color: #BDBDBD;
+    font-size: 12px;
+    font-style: italic;
 }
 
 .single-fundraiser form#commentform .form-submit {
@@ -834,11 +859,11 @@ button.cancel {
 	text-transform: none;
 }
 
-#payment-form .comment-form .logged-in-as {
-	display: none;
+#payment-form textarea {
+	margin-bottom: 20px;
 }
 
-#payment-form .comment-form label {
+#payment-form .comment-form .logged-in-as {
 	display: none;
 }
 
@@ -909,7 +934,14 @@ button.cancel {
 }
 
 #payment-form .buttons {
+	margin-right: 10%;
 	text-align: right;
+}
+
+#payment-form .buttons .cancel {
+	background-color: transparent;
+	color: #828282;
+	padding-right: 0;
 }
 
 #payment-form .buttons a {
