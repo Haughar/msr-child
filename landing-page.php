@@ -15,8 +15,8 @@ get_header(); ?>
 </div>
 <!-- Contribution to MSR GH Overview -->
 <div class="general fundraising">
-	<p class="intro-banner-title">What is MSR Global Health working on?</p>
-	<p class="intro-descr">MSR Global Health a leading innovator and manufacturer of low cost, field-proven products that improve access to basic human needs for people living in low-resource communities of the developing world. Please support MSR Global Heatlh by contributing directly to MSR campaigns or our supporters’ fundraisers.</p>
+	<p class="intro-banner-title">How does the fundraising platform work?</p>
+	<p class="intro-descr">All funds raised on this platform will help us with the manufacturing cost of our products that improve access to basic human needs for people living in low-resource communities of the developing world. Please support MSR Global Heatlh by contributing directly to MSR campaigns or our supporters’ fundraisers.</p>
 </div>
 
 <!-- Create a Fundraiser banner -->
@@ -24,7 +24,7 @@ get_header(); ?>
 	<div class="create-banner color-banner">
 		<div class="gen-text inline-top">
 			<p class="no-margin white-text banner-title">Create a Fundraiser</p>
-			<p class="no-margin white-text gen-descr">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+			<p class="no-margin white-text gen-descr">Have your own outdoor adventure that you would like to share with others? Why not raise money at the same time, by creating a fundraiser. Share your outdoor adventure on our platform to help us achieve our global health initiatives.</p>
 		</div>	
 		<div class="inline-top btn-spot">
 			<?php echo hand_money(); ?>
@@ -64,7 +64,7 @@ get_header(); ?>
 		</div>
 		<div class="browse-text inline-top">
 			<p class="no-margin white-text banner-title">Contribute to a Fundraiser</p>
-			<p class="no-margin white-text gen-descr">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+			<p class="no-margin white-text gen-descr">Explore fundraisers created by people just like you. If you stumble upon fundraisers that you connect with, you'll be able donate to those fundraisers and easily share them to your friends and family. </p>
 		</div>
 	</div>
 </div>
@@ -73,7 +73,7 @@ get_header(); ?>
 	<div class="general fundraising">
 		<div class="gen-text inline-top">
 			<p class="no-margin white-text banner-title">Make a General Contribution</p>
-			<p class="no-margin white-text gen-descr">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+			<p class="no-margin white-text gen-descr">If you would like to donate directly to MSR Global Health, general contributions is the way to go. In just two clicks, you would have successfully completed your general contribution to us.</p>
 		</div>
 		<div class="inline-top btn-spot">
 			<?php echo cups(); ?>

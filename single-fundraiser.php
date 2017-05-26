@@ -37,7 +37,7 @@ get_header(); ?>
 						echo get_avatar($post->post_author, 168);
 					} ?>
 				</div>
-				<p><?php echo the_author_meta('user_login'); ?></p>
+				<p><?php echo the_author_meta('nickname'); ?></p>
 			</div>
 
 			<div class="sharing">
