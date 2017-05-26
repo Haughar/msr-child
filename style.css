@@ -242,6 +242,11 @@ button.cancel {
 	width: 100%;
 }
 
+.fundraising.edit-fundraising .form-line .cover-image {
+	background-color: transparent;
+	border: none;
+}
+
 .fundraising .form-line .cover-image img {
 	display: block;
 	margin-left: auto;
@@ -421,6 +426,7 @@ button.cancel {
 .single-fundraiser .main-content {
 	display: inline-block;
 	float: left;
+	margin-bottom: 30px;
 	margin-top: 50px;
 	padding-right: 20px;
 	width: 60%;
@@ -440,10 +446,23 @@ button.cancel {
 .single-fundraiser .author div p {
 	font-size: 16px;
 	margin-top: 0;
+	padding-left: 62px;
+	padding-top: 13px;
 }
 
 .single-fundraiser .author .sharing {
 	text-align: right;
+}
+
+.single-fundraiser .author .author-pic {
+	display: inline-block;
+	float: left;
+	max-height: 50px;
+	width: 50px;
+}
+
+.single-fundraiser .author .author-pic img {
+	border-radius: 25px;
 }
 
 .single-fundraiser .description {
@@ -495,17 +514,23 @@ button.cancel {
 	width: 100%;
 }
 
+.single-fundraiser .contributors h2 {
+	background-color: #E0E0E0;
+	padding: 13px 21px 9px 21px;
+}
+
+.single-fundraiser .contributors p {
+	border-bottom: 1px solid #CCC;
+	margin: 0;
+	padding: 10px 0;
+}
+
 .single-fundraiser h2 {
 	font-size: 18px;
 }
 
-.single-fundraiser .contributors h2 {
-	border-bottom: 1px solid #CCC;
-	padding-bottom: 5px;
-}
-
 .single-fundraiser .comment {
-	border-top: 1px solid #CCC;
+	border-bottom: 1px solid #CCC;
 	padding-top: 20px;
 }
 
@@ -518,6 +543,7 @@ button.cancel {
 
 .single-fundraiser .commentlist {
 	font-size: 16px;
+	margin-bottom: 0;
 	padding-left: 0;
 }
 
@@ -562,8 +588,54 @@ button.cancel {
 	display: none;
 }
 
+.single-fundraiser .comment-form {
+	background-color: #F2F2F2;
+	border-radius: 5px;
+	padding: 13px 24px;
+	position: relative;
+}
+
+.single-fundraiser .comment-form .user-comment-pic {
+	display: inline-block;
+	float: left;
+	position: absolute;
+}
+
+.single-fundraiser .comment-form .user-comment-pic p {
+	padding-top: 5px;
+	text-align: center;
+}
+
+.single-fundraiser .comment-form .user-comment-pic img {
+	border-radius: 30px;
+	max-height: 60px;
+	width: 60px;
+}
+
+.single-fundraiser .comment-form textarea#comment {
+	border-radius: 5px;
+	height: 60px;
+}
+
+.single-fundraiser .comment-form form {
+	margin: 0 0 0 24px;
+	padding: 0; 
+}
+
+.single-fundraiser .comment-form .comment-respond {
+	margin-left: 60px;
+}
+
+.single-fundraiser .comment-form textarea#comment {
+	width: 100%;
+}
+
+.single-fundraiser .comment-form .form-submit {
+	margin-bottom: 0;
+}
+
 .single-fundraiser h3#reply-title {
-	margin-bottom: 5px;
+	display: none;
 }
 
 .single-fundraiser textarea#comment {
@@ -598,18 +670,24 @@ button.cancel {
 }
 
 .single-fundraiser form#commentform .form-submit {
-	margin-right: 10%;
 	margin-top: 10px;
 	text-align: right;
+}
+
+.single-fundraiser form#commentform .form-submit input {
+	padding: 5px 20px;
 }
 
 .single-fundraiser form#commentform .comment-form-comment {
 	margin: 0;
 }
 
+.single-fundraiser form#commentform .comment-form-comment label {
+	display: none;
+}
+
 .single-fundraiser form#commentform .logged-in-as {
-	font-size: 12px;
-	margin-top: 5px;
+	display: none;
 }
 
 .single-fundraiser .contributors p span {
@@ -620,14 +698,15 @@ button.cancel {
 	overflow: hidden;
 }
 
-.single-fundraiser #expand-contributions, .single-fundraiser #expand-comments, .single-fundraiser #leave-comment {
+.single-fundraiser .wide-btn {
 	background-color: transparent;
-	border-color: #000;
-	color: #000;
+	border: 0;
+	border-bottom: 1px solid #CCC;
+	color: #828282;
 	display: block;
 	font-size: 12px;
-	margin-right: auto;
-	margin-left: auto;
+	font-weight: 100;
+	width: 100%;
 	text-transform: none;
 }
 
@@ -641,7 +720,12 @@ button.cancel {
 }
 
 .modal-body {
+	text-align: center;
+}
+
+.single-fundraiser .modal-body {
 	display: flex;
+	text-align: auto;
 }
 
 .modal-header h5 {

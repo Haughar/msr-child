@@ -30,6 +30,13 @@ get_header(); ?>
 
 		<div class="author">
 			<div>
+				<div class="author-pic">
+					<?php if(get_user_meta($post->post_author, "user-profile-picture", true)) { ?>
+						<img src="<?php echo get_user_meta($post->post_author, "user-profile-picture", true); ?>">
+					<?php } else {
+						echo get_avatar($post->post_author, 168);
+					} ?>
+				</div>
 				<p><?php echo the_author_meta('user_login'); ?></p>
 			</div>
 
@@ -46,19 +53,27 @@ get_header(); ?>
 		<div class="description"><?php echo the_content(); ?></div>	
 
 		<h2>Updates and Comments</h2>
+		<?php if(is_user_logged_in()) { ?>
+			<div class="comment-form">
+				<div class="user-comment-pic">
+					<?php if(get_user_meta(get_current_user_id(), "user-profile-picture", true)) { ?>
+						<img src="<?php echo get_user_meta(get_current_user_id(), "user-profile-picture", true); ?>">
+					<?php } else {
+						echo get_avatar(get_current_user_id(), 168);
+					} 
+					$current_user = wp_get_current_user(); ?>
+					<p><?php echo $current_user->user_login; ?></p>
+				</div>
+				<?php comment_form(array('comment_notes_after' => '', 'label_submit' => __( 'Post', 'textdomain' )), $post->ID); ?>
+			</div>
+		<?php } ?>
 		<?php $comments = get_comments(array('post_id' => $post->ID, 'type' => 'comment', 'status' => 'approve')); ?>
 		<ol class="commentlist">
 			<div class="comment-wrapper">
 				<?php wp_list_comments(array('reverse_top_level' => false, 'style' => 'ol' ), $comments); ?>
 			</div>
 		</ol>
-		<button id="expand-comments" class="hide">Show more comments</button>
-
-		<?php if(is_user_logged_in()) { ?>
-			<div class="comment-form">
-				<?php comment_form(array('title_reply' => __( 'Leave a Comment', 'textdomain' ), 'comment_notes_after' => ''), $post->ID); ?>
-			</div>
-		<?php } ?>
+		<button id="expand-comments" class="wide-btn hide">Show more comments</button>
 
 	</div>
 
@@ -111,7 +126,7 @@ get_header(); ?>
 					</div>
 				</div>
 				<?php if($index > 3) { ?>
-					<button id="expand-contributions">See More Contributions</button>
+					<button id="expand-contributions" class="wide-btn">See More Contributions</button>
 				<?php } ?>
 			<?php } else { ?>
 				<p>There have not been any contributions yet. Be the first!</p>

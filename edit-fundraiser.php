@@ -43,7 +43,7 @@ query_posts($query_array);
 
 if (have_posts()) : while (have_posts()) : the_post();
 	if ( get_post_status ( $id ) == 'pending' ) {
-		echo 'yeahhhhh.... you gonna have to wait';
+		// echo 'yeahhhhh.... you gonna have to wait';
 	}
 ?>
 
