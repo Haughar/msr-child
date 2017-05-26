@@ -494,20 +494,22 @@ function create_contributions_list($user_id, $json_object) {
 								?> <span class="normal-text"><a href="<?php echo get_permalink($post_id); ?>"><?php echo get_the_title($post_id); ?> </span></a><?php
 							}  ?>
 							<!-- Progress bar -->
-							<div class="myProgress">
-						  		<div class="myBar" style="width: <?php 
-						  			$pct = get_percentage_to_goal($fundraiser_details['total'],  get_post_meta($post_id, 'fundraiser-goal', true)); 
-						  			if ($pct > 100) {
-						  				$pct = 100;
-						  			}
-						  			echo $pct ?>%"></div>
+							<div>
+								<div class="myProgress inline-top">
+							  		<div class="myBar" style="width: <?php 
+							  			$pct = get_percentage_to_goal($fundraiser_details['total'],  get_post_meta($post_id, 'fundraiser-goal', true)); 
+							  			if ($pct > 100) {
+							  				$pct = 100;
+							  			}
+							  			echo $pct ?>%"></div>
+								</div>
+				  				<div class="c-pct inline-top"> 
+									<!-- Percentage of amount made -->
+									<span><?php echo get_percentage_to_goal($fundraiser_details['total'],  get_post_meta($post_id, 'fundraiser-goal', true)); ?>%</span>
+								</div>
 							</div>
 							<!-- Amount of days remaining -->
 							<span class="day-text"><?php echo get_fundraising_days_left(get_post_meta($post_id, 'fundraiser-end', true)); ?> days left</span>
-						</div>
-						<div class="c-pct inline-top"> 
-							<!-- Percentage of amount made -->
-							<span><?php echo get_percentage_to_goal($fundraiser_details['total'],  get_post_meta($post_id, 'fundraiser-goal', true)); ?>%</span>
 						</div>
 					<?php } ?>
 					<div class="inline-top contrib-amt">
@@ -681,7 +683,10 @@ function get_active_fundraisers($fundraiser_id) {
 				</div>
 				<!-- Percentage of amount made -->
 				<span class="profile-pct"><?php echo get_percentage_to_goal($fundraiser_details['total'],  get_post_meta($fundraiser_id, 'fundraiser-goal', true)); ?>%</span>
-				<span class="profile-days"><?php echo get_fundraising_days_left(get_post_meta($fundraiser_id, 'fundraiser-end', true)); ?> days left</span>
+				<span class="profile-days <?php 
+					if(get_fundraising_days_left(get_post_meta($fundraiser_id, 'fundraiser-end', true)) <= 10) {
+						echo "red-text";
+					} ?>"><?php echo get_fundraising_days_left(get_post_meta($fundraiser_id, 'fundraiser-end', true)); ?> days left</span>
 			<?php } else if (get_fundraising_days_left(get_post_meta($fundraiser_id, 'fundraiser-end', true)) < 0) { ?> 
 				<!-- Past campaigns -->
 				<p class="date-text">Ended <?php 

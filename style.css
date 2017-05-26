@@ -735,6 +735,12 @@ button.cancel {
 	text-transform: none;
 }
 
+.save-btn .modal-header h5 {
+	font-size: 18px;
+	font-weight: 700;
+	text-transform: uppercase;
+}
+
 .single-fundraiser .modal .modal-dialog {
 	width: 768px;
 }
@@ -1285,7 +1291,7 @@ button.cancel {
 }
 
  .c-pct {
-	padding-top: 3.6em;
+	padding-top: 0.47em;
 	width: 26px;
 }
 
@@ -1414,7 +1420,6 @@ button.cancel {
 }
 
 .contrib-amt {
-	margin-left: 10em;
 	padding-top: 2em;
 	margin-right: 1.5em;
 	text-align: right;
@@ -1464,7 +1469,7 @@ button.cancel {
 
 .gen-contrib-info {
 	padding-top: 2.5em;
-	width: 226px;
+	width: 53%;
 }
 
 .pad-left-ten {
@@ -1480,7 +1485,6 @@ button.cancel {
 #settings h1 {
 	margin-top: 0px !important;
 }
-
 
 /** LANDING PAGE **/
 .general .btn-spot #wow-modal-overlay-1 svg {
@@ -1696,8 +1700,8 @@ button.cancel {
 
 .browse-new-btn {
 	position: absolute;
-	bottom: 80px;
-	right: 150px;
+	bottom: 65px;
+	right: 100px;
 	width: 247px;
 	height: 67px;
     font-weight: 500;
@@ -1713,4 +1717,12 @@ button.cancel {
 #loginModal .um-form .um-field-area input[type=text], #loginModal .um-form .um-field-area input[type=password]  {
 	border: 0 !important;
 	border-bottom: 1px solid #D9D9D9 !important;
+}
+
+.add-clear {
+	clear: both;
+}
+
+.post-grid {
+	margin-bottom: 2em;
 }
