@@ -725,7 +725,7 @@ button.cancel {
 
 .single-fundraiser .modal-body {
 	display: flex;
-	text-align: auto;
+	text-align: left;
 }
 
 .modal-header h5 {
@@ -1025,6 +1025,7 @@ button.cancel {
 
 #payment-form .buttons {
 	margin-right: 10%;
+	margin-top: 20px;
 	text-align: right;
 }
 
