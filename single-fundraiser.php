@@ -212,6 +212,13 @@ endif; ?>
 	});
 
 	document.body.classList.remove("has-featured-image");
+
+	$('#contribute-modal').on('hidden.bs.modal', function () {
+		// Only if form is hidden
+		if($('#stripe-payment-form').css('display') == 'none') {
+	    	location.reload();
+		}
+	});
 </script>
 <?php
 get_footer();
