@@ -666,7 +666,10 @@ function get_active_fundraisers($fundraiser_id) {
 				</div>
 				<!-- Percentage of amount made -->
 				<span class="profile-pct"><?php echo get_percentage_to_goal($fundraiser_details['total'],  get_post_meta($fundraiser_id, 'fundraiser-goal', true)); ?>%</span>
-				<span class="profile-days"><?php echo get_fundraising_days_left(get_post_meta($fundraiser_id, 'fundraiser-end', true)); ?> days left</span>
+				<span class="profile-days <?php 
+					if(get_fundraising_days_left(get_post_meta($fundraiser_id, 'fundraiser-end', true)) <= 10) {
+						echo "red-text";
+					} ?>"><?php echo get_fundraising_days_left(get_post_meta($fundraiser_id, 'fundraiser-end', true)); ?> days left</span>
 			<?php } else if (get_fundraising_days_left(get_post_meta($fundraiser_id, 'fundraiser-end', true)) < 0) { ?> 
 				<!-- Past campaigns -->
 				<p class="date-text">Ended <?php 

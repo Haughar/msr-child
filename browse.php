@@ -13,7 +13,7 @@ get_header(); ?>
 	<img src="http://ec2-54-70-94-165.us-west-2.compute.amazonaws.com/wp-content/uploads/2017/05/9H9A5730-dcp-1-BW-1.jpg">
 	<?php 
 	if(is_user_logged_in()) {
-		echo "<button onclick=\"window.location.href='/create-fundraiser/'\">New Fundraiser</button>"; 
+		echo "<button class='browse-new-btn' onclick=\"window.location.href='/create-fundraiser/'\">New Fundraiser</button>"; 
 	} else { ?>
 		<!-- <button class='banner-btn' id='wow-modal-id-2'>New Fundraiser</button> -->
 		<button type="button" class="browse-new-btn" data-toggle="modal" data-target="#loginModal">New Fundraiser</button>
