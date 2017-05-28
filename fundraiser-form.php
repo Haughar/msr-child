@@ -32,10 +32,9 @@ get_header(); ?>
 			<label for="fundraiser-name">Fundraiser Name 
 				<span data-toggle="tooltip" data-placement="right" title="Create an eye-catching name">
 					<?php echo info_svg(); ?>
-					<!-- <p class="tooltiptext">Create an eye-catching name</p> -->
 				</span>
 			</label>
-			<input type="text" id="fundraiser-name" name="fundraiserName" value="<?php echo isset($_POST['fundraiserName']) ? htmlspecialchars($_POST['fundraiserName']) : ''; ?>" placeholder="Give your fundraiser a title">
+			<input type="text" id="fundraiser-name" name="fundraiserName" value="<?php echo isset($_POST['fundraiserName']) ? htmlspecialchars($_POST['fundraiserName']) : ''; ?>" placeholder="Give your fundraiser a title" data-validation="alphanumeric" data-validation-allowing=" " autocomplete="off" required>
 		</div>
 
 		<div class="form-line image">
@@ -56,12 +55,12 @@ get_header(); ?>
 
 		<div class="form-line goal">
 			<label for="fundraiser-goal">Goal 
-				<span class="not-money" data-toggle="tooltip" data-placement="right" title="Set a goal amount to raise">
+				<span class="not-money" data-toggle="tooltip" data-placement="right" title="Set a goal amount to raise" data-validation="number" autocomplete="off" required>
 					<?php echo info_svg(); ?>
 				</span>
 			</label>
 			<?php echo dollar_svg(); ?>
-			<input type="text" id="fundraiser-goal" name="fundraiserGoal" value="<?php echo isset($_POST['fundraiserGoal']) ? htmlspecialchars($_POST['fundraiserGoal']) : ''; ?>" placeholder="Enter Amount">
+			<input type="text" id="fundraiser-goal" name="fundraiserGoal" value="<?php echo isset($_POST['fundraiserGoal']) ? htmlspecialchars($_POST['fundraiserGoal']) : ''; ?>" data-validation="number" placeholder="Enter Amount" autocomplete="off" required>
 		</div>
 
 		<div class="form-line">
@@ -72,7 +71,7 @@ get_header(); ?>
 					</span>
 				</label>
 				<div class="date-wrapper">
-					<input type="date" id="start-date" name="startDate" value="<?php echo isset($_POST['startDate']) ? htmlspecialchars($_POST['startDate']) : ''; ?>" required>
+					<input type="date" id="start-date" name="startDate" value="<?php echo isset($_POST['startDate']) ? htmlspecialchars($_POST['startDate']) : ''; ?>" data-validation="date" autocomplete="off" required>
 					<?php echo calendar_svg(); ?>
 				</div>
 			</div>
@@ -84,7 +83,7 @@ get_header(); ?>
 					</span>
 				</label>
 				<div class="date-wrapper">
-					<input type="date" id="end-date" name="endDate" value="<?php echo isset($_POST['endDate']) ? htmlspecialchars($_POST['endDate']) : ''; ?>" required>
+					<input type="date" id="end-date" name="endDate" value="<?php echo isset($_POST['endDate']) ? htmlspecialchars($_POST['endDate']) : ''; ?>" data-validation="date" autocomplete="off" required>
 					<?php echo calendar_svg(); ?>
 				</div>
 			</div>
@@ -96,7 +95,7 @@ get_header(); ?>
 					<?php echo info_svg(); ?>
 				</span>
 			</label>
-			<textarea id="description" name="description"><?php echo isset($_POST['description']) ? htmlspecialchars($_POST['description']) : ''; ?></textarea>
+			<textarea id="description" name="description" required><?php echo isset($_POST['description']) ? htmlspecialchars($_POST['description']) : ''; ?></textarea>
 		</div>
 
 		<input type="hidden" name="post-type" id="post-type" value="fundraiser" />
@@ -117,13 +116,14 @@ get_header(); ?>
 
 <?php echo default_image_modal(); ?>
 
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
+
 <script type="text/javascript">
 	$('.default').click(function() {
 		$('#image-preview').attr('src', $(this).children('img').attr('src'));
 		$('input#default-image-input').val($(this).attr('id'));
 		$('.cover-image-plchdr').hide();
 		$('.cover-image').css({'background-color': 'transparent', 'border': '0'});
-		// make sure to close modal once we have it in a modal
 	});
 
 	function readURL(input) {
@@ -147,6 +147,10 @@ get_header(); ?>
 
     $(document).ready(function(){
 	    $('[data-toggle="tooltip"]').tooltip(); 
+	});
+
+	$.validate({
+	    lang: 'en'
 	});
 </script>
 

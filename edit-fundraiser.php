@@ -51,7 +51,7 @@ if (have_posts()) : while (have_posts()) : the_post();
 
 	<div class="form-line">
 		<label for="fundraiser-name">Fundraiser Name</label>
-		<input type="text" id="fundraiser-name" name="fundraiserName" value="<?php echo isset($_POST['fundraiser-name']) ? htmlspecialchars($_POST['fundraiser-name']) : the_title(); ?>" placeholder="Give your fundraiser a title">
+		<input type="text" id="fundraiser-name" name="fundraiserName" value="<?php echo isset($_POST['fundraiser-name']) ? htmlspecialchars($_POST['fundraiser-name']) : the_title(); ?>" placeholder="Give your fundraiser a title"  data-validation="alphanumeric" data-validation-allowing=" " autocomplete="off" required>
 	</div>
 
 	<div class="form-line image">
@@ -74,7 +74,7 @@ if (have_posts()) : while (have_posts()) : the_post();
 		<div class="split-line">
 			<label for="fundraiser-goal">Goal</label>
 			<?php echo dollar_svg(); ?>
-			<input type="text" id="fundraiser-goal" name="fundraiserGoal" value="<?php echo isset($_POST['fundraiser-goal']) ? htmlspecialchars($_POST['fundraiser-goal']) : get_post_meta($id, 'fundraiser-goal', true); ?>" placeholder="Enter Amount">
+			<input type="text" id="fundraiser-goal" name="fundraiserGoal" value="<?php echo isset($_POST['fundraiser-goal']) ? htmlspecialchars($_POST['fundraiser-goal']) : get_post_meta($id, 'fundraiser-goal', true); ?>" placeholder="Enter Amount" data-validation="number" autocomplete="off" required>
 		</div>
 		<div class="split-line">
 			<p><span id="amount-raised">$<?php echo number_format(get_fundraiser_amount_raised($id), 0, '.', ','); ?></span> USD raised</p>
@@ -85,7 +85,7 @@ if (have_posts()) : while (have_posts()) : the_post();
 		<div class="split-line">
 			<label for="end-date">End Date</label>
 			<div class="date-wrapper">
-				<input type="date" id="end-date" name="endDate" value="<?php echo isset($_POST['end-date']) ? htmlspecialchars($_POST['end-date']) : get_post_meta($id, 'fundraiser-end', true); ?>" required>
+				<input type="date" id="end-date" name="endDate" value="<?php echo isset($_POST['end-date']) ? htmlspecialchars($_POST['end-date']) : get_post_meta($id, 'fundraiser-end', true); ?>" data-validation="date" autocomplete="off" required>
 				<?php echo calendar_svg(); ?>
 			</div>
 		</div>
