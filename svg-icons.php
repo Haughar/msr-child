@@ -165,6 +165,24 @@ function water_drop() { ?>
 
 <?php }
 
+function green_check() { ?>
+<svg width="84" height="84" viewBox="0 0 84 84" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<title>&#224;on&#3;&#11;</title>
+<desc>Created using Figma</desc>
+<g id="Canvas" transform="translate(-10339 2379)">
+<g id="checked">
+<g id="Vector">
+<use xlink:href="#green_check" transform="translate(10339 -2379)" fill="#6AC259"/>
+</g>
+</g>
+</g>
+<defs>
+<path id="green_check" d="M 42 0C 18.8051 0 0 18.8043 0 42C 0 65.1957 18.8051 84 42 84C 65.1974 84 84 65.1957 84 42C 84 18.8043 65.1966 0 42 0ZM 34.2955 63.5746L 15.802 45.0819L 21.966 38.9179L 34.2955 51.2466L 62.034 23.5073L 68.198 29.6713L 34.2955 63.5746Z"/>
+</defs>
+</svg>
+
+<?php }
+
 function hand_money() { ?> 
 <svg width="246" height="200" viewBox="0 0 246 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <title>&#16;)&#9;</title>

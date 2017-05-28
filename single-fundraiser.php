@@ -37,7 +37,7 @@ get_header(); ?>
 						echo get_avatar($post->post_author, 168);
 					} ?>
 				</div>
-				<p><?php echo the_author_meta('user_login'); ?></p>
+				<p><?php echo the_author_meta('nickname'); ?></p>
 			</div>
 
 			<div class="sharing">
@@ -212,6 +212,13 @@ endif; ?>
 	});
 
 	document.body.classList.remove("has-featured-image");
+
+	$('#contribute-modal').on('hidden.bs.modal', function () {
+		// Only if form is hidden
+		if($('#stripe-payment-form').css('display') == 'none') {
+	    	location.reload();
+		}
+	});
 </script>
 <?php
 get_footer();
