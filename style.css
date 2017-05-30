@@ -214,7 +214,7 @@ button.cancel {
 	padding: 7px 12px;
 }
 
-.fundraising form label {
+.fundraising form label, .page-template-landing-page form label {
 	color: #828282;
 	font-size: 12px;
 	text-transform: uppercase;
@@ -296,7 +296,7 @@ button.cancel {
 	position: relative;
 }
 
-.fundraising .goal svg, .fundraising .amount svg {
+.fundraising .goal svg, .fundraising .amount svg, .page-template-landing-page .goal svg, .page-template-landing-page .amount svg {
 	position: absolute;
 	padding: 5px 3px;
 	height: 37px;
@@ -732,7 +732,7 @@ button.cancel {
 	text-align: center;
 }
 
-.single-fundraiser .modal-body {
+.single-fundraiser .modal-body, .page-template-landing-page .modal-body {
 	display: flex;
 	text-align: left;
 }
@@ -750,7 +750,7 @@ button.cancel {
 	text-transform: uppercase;
 }
 
-.single-fundraiser .modal .modal-dialog {
+.single-fundraiser .modal .modal-dialog, .page-template-landing-page .modal .modal-dialog {
 	width: 768px;
 }
 
@@ -999,7 +999,7 @@ button.cancel {
 	width: 200px;
 }
 
-.single-fundraiser #payment-form .appearance .anonymous label {
+.single-fundraiser #payment-form .appearance .anonymous label, .page-template-landing-page #payment-form .appearance .anonymous label {
 	color: #BDBDBD;
 	display: inline-block;
 	font-size: 16px;
@@ -1052,9 +1052,17 @@ button.cancel {
 }
 
 #payment-form .buttons {
+	margin-bottom: 0px;
+	margin-top: 0px;
 	margin-right: 10%;
-	margin-top: 20px;
 	text-align: right;
+}
+
+.page-template-landing-page #payment-form .buttons {
+	bottom: 15px;
+	margin-right: 0;
+	position: absolute;
+	right: 30px;
 }
 
 #payment-form .buttons .cancel {
@@ -1125,10 +1133,6 @@ button.cancel {
 .user-on-profile {
 	font-weight: bold;
 	margin-top: 0px;
-}
-
-.r-input-check {
-	width: 10% !important;
 }
 
 .user-profile-pic {

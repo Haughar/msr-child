@@ -78,9 +78,21 @@ get_header(); ?>
 		<div class="inline-top btn-spot">
 			<?php echo cups(); ?>
 			<br>
-			<?php echo do_shortcode("[Wow-Modal-Windows id=1]"); ?>
 			<div class="btn-wrapper">
-				<button class="banner-btn" id='wow-modal-id-1'>General Contribution</button>
+				<button class="banner-btn" data-toggle="modal" data-target="#contribute-modal">General Contribution</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="contribute-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="myModalLabel">Contribute</h5>
+			</div>
+			<div class="modal-body">
+				<?php echo do_shortcode('[payment]'); ?>
 			</div>
 		</div>
 	</div>
