@@ -19,7 +19,6 @@ add_action( 'wp_enqueue_scripts', 'msr_child_enqueue_styles' );
 function msr_child_enqueue_js() {
 	global $wp_scripts;
 	wp_enqueue_script( 'bootstrap_js', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js');
-	wp_enqueue_scripts( 'jquery_ui', 'http://code.jquery.com/ui/1.9.1/jquery-ui.js');
 }
 
 add_action( 'wp_enqueue_scripts', 'msr_child_enqueue_js');

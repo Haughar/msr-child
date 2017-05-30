@@ -288,7 +288,7 @@ button.cancel {
 	padding: 7px 15px;
 }
 
-.fundraising input[type="text"]#fundraiser-goal {
+.fundraising input[type="text"]#fundraiserGoal {
 	width: 157px;
 }
 
@@ -525,6 +525,12 @@ button.cancel {
 	border-bottom: 1px solid #CCC;
 	margin: 0;
 	padding: 10px 0;
+}
+
+.single-fundraiser .contributors p .date {
+	color: #828282;
+	float: none;
+	font-size: 12px;
 }
 
 .single-fundraiser h2 {
@@ -780,7 +786,7 @@ button.cancel {
 	width: 100%;
 }
 
-#payment-form .red {
+.red {
 	color: #E2383F;
 	font-size: 16px;
 	font-weight: 800;
@@ -1178,9 +1184,101 @@ button.cancel {
 
 
 /** EDIT FUNDRAISER **/
-.fundraising .action-btns #delete-fundraiser {
-	border: 1px solid #E2383F;
-	padding: 12px 20px;
+.page-template-edit-fundraiser .edit-subheader {
+	height: 220px;
+	margin-top: 20px;
+	position: relative;
+	z-index: 1;
+}
+
+.page-template-edit-fundraiser .edit-subheader::after {
+	background-image: url('/wp-content/uploads/2015/09/Backcountry-pic-1.jpg');
+	background-position: 0px -300px;
+	content: "";
+	filter: brightness(50%);
+	-webkit-filter: brightness(50%);
+	-moz-filter: brightness(50%);
+	-o-filter: brightness(50%);
+	-ms-filter: brightness(50%);
+	top: 0;
+	left: 0;
+    bottom: 0;
+	right: 0;
+	position: absolute;
+	z-index: -1;
+}
+
+.page-template-edit-fundraiser .edit-subheader .subheader-wrapper {
+	color: white;
+	margin-left: auto;
+	margin-right: auto;
+	padding-top: 53px;
+	position: relative;
+	width: 700px;
+}
+
+.page-template-edit-fundraiser .edit-subheader h2 {
+	font-size: 28px;
+	font-weight: 300;
+	margin-bottom: 20px;
+	margin-top: 0;
+}
+
+.page-template-edit-fundraiser .edit-subheader #view-fundraiser {
+	background-color: #747474;
+	border-radius: 3px;
+	color: white;
+	padding: 8px 12px;
+	position: absolute;
+	top: 55px;
+	right: 0;
+}
+
+.page-template-edit-fundraiser .edit-subheader #view-fundraiser:hover {
+	text-decoration: none;
+}
+
+.page-template-edit-fundraiser .edit-subheader #fundraiser-progress {
+	height: 8px;
+	margin-top: 20px;
+	width: 350px;
+}
+
+.page-template-edit-fundraiser .edit-subheader #fundraiser-progress .ui-progressbar-value {
+	height: 8px;
+}
+
+.page-template-edit-fundraiser .edit-subheader .percentage {
+	color: #FF9900;
+	font-size: 30px;
+	margin-bottom: 0;
+	padding-left: 385px;
+}
+
+.page-template-edit-fundraiser .edit-subheader .goal {
+	clear: both;
+}
+
+.page-template-edit-fundraiser .pending-notice {
+	background-color: #E0E0E0;
+	text-align: center;
+}
+
+.page-template-edit-fundraiser .pending-notice p {
+	color: #828282;
+	font-size: 20px;
+	font-weight: 300;
+	margin: 0;
+	padding: 25px;
+}
+
+.page-template-edit-fundraiser .pending-notice p span {
+	color: #E2383F;
+	font-weight: 800;
+}
+
+.page-template-edit-fundraiser main {
+	padding-top: 0px;
 }
 
 .fundraising .new-fundraiser-prompt {

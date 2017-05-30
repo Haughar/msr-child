@@ -28,7 +28,7 @@ get_header(); ?>
 	<form id="fundraiser" name="fundraiser" method="post" action="" enctype="multipart/form-data">
 
 		<div class="form-line">
-			<label for="fundraiserName">Fundraiser Name 
+			<label for="fundraiserName">Fundraiser Name <span class="red">*</span> 
 				<span data-toggle="tooltip" data-placement="right" title="Create an eye-catching name">
 					<?php echo info_svg(); ?>
 				</span>
@@ -37,7 +37,7 @@ get_header(); ?>
 		</div>
 
 		<div class="form-line image">
-			<label>Cover Image 
+			<label>Cover Image <span class="red">*</span>
 				<span data-toggle="tooltip" data-placement="right" title="Choose an eye-catching image">
 					<?php echo info_svg(); ?>
 				</span>
@@ -53,7 +53,7 @@ get_header(); ?>
 		</div>
 
 		<div class="form-line goal">
-			<label for="fundraiserGoal">Goal 
+			<label for="fundraiserGoal">Goal <span class="red">*</span>
 				<span class="not-money" data-toggle="tooltip" data-placement="right" title="Set a goal amount to raise" data-validation="number" autocomplete="off" required>
 					<?php echo info_svg(); ?>
 				</span>
@@ -64,7 +64,7 @@ get_header(); ?>
 
 		<div class="form-line">
 			<div class="split-line">
-				<label for="fundraiserStart">Start Date 
+				<label for="fundraiserStart">Start Date <span class="red">*</span>
 					<span data-toggle="tooltip" data-placement="right" title="Pick a date to start your fundraiser">
 						<?php echo info_svg(); ?>
 					</span>
@@ -76,7 +76,7 @@ get_header(); ?>
 			</div>
 
 			<div class="split-line">
-				<label for="fundraiserEnd">End Date 
+				<label for="fundraiserEnd">End Date <span class="red">*</span>
 					<span data-toggle="tooltip" data-placement="right" title="Indicate when you want your fundraiser to end">
 						<?php echo info_svg(); ?>
 					</span>
@@ -89,7 +89,7 @@ get_header(); ?>
 		</div>
 
 		<div class="form-line">
-			<label for="description">Story 
+			<label for="description">Story <span class="red">*</span>
 				<span data-toggle="tooltip" data-placement="right" title="Tell us why you created this fundraiser">
 					<?php echo info_svg(); ?>
 				</span>

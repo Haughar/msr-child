@@ -17,21 +17,13 @@ if($_POST){
 } else {
 	$id = $_GET['post_id'];
 	if (isset($_GET['new'])) {
-		$new = $_GET['new'];
+		$new = "true";
 	} else {
-		$new = false;
+		$new = "false";
 	}
 }
 
 get_header(); ?>
-
-<main id="main" class="fundraising edit-fundraising">
-
-<?php if ($new) { ?>
-	<div class="new-fundraiser-prompt">
-		<p><strong>Thank you for creating a new fundraiser!</strong> Your fundraiser has been submitted for review by our team. You will be notified via email when it has been published.</p>
-	</div>
-<?php } ?>
 
 <?php global $user_ID;
 $query_array = array('p' => $id,
@@ -42,10 +34,39 @@ $query_array = array('p' => $id,
 query_posts($query_array);
 
 if (have_posts()) : while (have_posts()) : the_post();
-	if ( get_post_status ( $id ) == 'pending' ) {
-		// echo 'yeahhhhh.... you gonna have to wait';
-	}
-?>
+$amount_raised = get_fundraiser_amount_raised(get_the_ID());
+$goal_amount = get_post_meta(get_the_id(), 'fundraiserGoal', true); ?>
+
+<div class="edit-subheader">
+	<div class="subheader-wrapper">
+		<h2><?php the_title(); ?></h2>
+		<?php if ( get_post_status ( get_the_ID() ) != 'pending' ) { ?>
+			<a id="view-fundraiser" href="<?php echo get_permalink(); ?>">View</a>
+		<?php } ?>
+		<div id="fundraiser-progress" class="progress-bar"></div>
+		<p class="percentage"><?php echo get_percentage_to_goal($amount_raised, $goal_amount); ?>%</p>
+
+		<p class="goal">Fundraiser Goal: $<?php echo $goal_amount; ?></p>
+	</div>
+</div>
+
+<?php if ( get_post_status ( $id ) == 'pending' ) { ?>
+	<div class="pending-notice">
+		<p>This fundraiser is currently <span>Pending Approval</span></p>
+	</div>
+<?php } ?>
+
+<main id="main" class="fundraising edit-fundraising">
+
+<?php if ($new == "true") { ?>
+	<div class="new-fundraiser-prompt">
+		<p><strong>Thank you for creating a new fundraiser!</strong> Your fundraiser has been submitted for review by our team. You will be notified via email when it has been published.</p>
+	</div>
+<?php } ?>
+
+<div class="title-wrapper">
+	<h2>Create a New Fundraiser</h2>
+</div>
 
 <form id="fundraiser" name="fundraiser" enctype="multipart/form-data" method="post" action="">
 
@@ -55,7 +76,7 @@ if (have_posts()) : while (have_posts()) : the_post();
 	</div>
 
 	<div class="form-line image">
-			<label>Cover Image <?php echo info_svg(); ?></label>
+			<label>Cover Image</label>
 			<div class="cover-image">
 				<div id="current-image">
 					<?php if ( has_post_thumbnail() ) {
@@ -131,14 +152,21 @@ endif; ?>
 
 <?php echo default_image_modal(); ?>
 
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <script type="text/javascript">
+	$( function() {
+		$( "#fundraiser-progress" ).progressbar({
+		  value: <?php echo get_percentage_to_goal($amount_raised, $goal_amount); ?>
+		});
+	});
+
 	$('.default').click(function() {
 		$('#current-image').hide();
 		$('#image-preview').attr('src', $(this).children('img').attr('src'));
 		$('input#default-image-input').val($(this).attr('id'));
 		$('.cover-image-plchdr').hide();
 		$('.cover-image').css({'background-color': 'transparent', 'border': '0'});
-		// make sure to close modal once we have it in a modal
 	});
 
 	function readURL(input) {

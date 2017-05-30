@@ -4,14 +4,10 @@ if (isset($_SERVER['HTTP_REFERER'])) {
 }
 
 get_header(); ?>
-
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
 <main id="main" class="fundraising">
 
 <?php if (have_posts()) : while (have_posts()) : the_post();
 	$post_id = $post->ID;
-	var_dump(get_post_meta($post_id));
 
 	$object = get_fundraiser_stripe_info($post_id);
 
@@ -51,9 +47,15 @@ get_header(); ?>
 			</div>
 		</div>
 
-		<div class="description"><?php echo the_content(); ?></div>	
+		<div class="description"><?php echo the_content(); ?></div>
 
-		<h2>Updates and Comments</h2>
+		<?php if (is_user_logged_in()){
+			$no_comments = "No comments yet, leave the first one!";
+		} else {
+			$no_comments = "No comments yet. Sign in and leave the first one!";
+		} ?>
+
+		<h2><?php echo comments_number($no_comments, "Comments (1)", "Comments (%)"); ?></h2>
 		<?php if(is_user_logged_in()) { ?>
 			<div class="comment-form">
 				<div class="user-comment-pic">
@@ -111,7 +113,7 @@ get_header(); ?>
 		<div class="contributors">
 			<?php if(count($object['contribution-data']) > 0) { 
 				$index = 0; ?>
-				<h2>Contributions(<?php echo count($object['contribution-data']); ?>)</h2>
+				<h2>Contributions (<?php echo count($object['contribution-data']); ?>)</h2>
 				<div class="contribution-constraint">
 					<div class="contribution-wrapper">
 						<?php foreach($object['contribution-data'] as $contribution) { 
@@ -121,7 +123,7 @@ get_header(); ?>
 								$display = $contribution['metadata']['customer_name'];
 							} ?>
 
-							<p class="<?php if ($index > 3) { echo 'hide'; } ?>"><br>date<?php echo $display; ?><span>$<?php echo number_format($contribution['amount']/100, 0, '.', ','); ?></span></p>
+							<p class="<?php if ($index > 3) { echo 'hide'; } ?>"><?php echo $display; ?><span>$<?php echo number_format($contribution['amount']/100, 0, '.', ','); ?></span><br><span class="date"><?php echo date("m/d/y", $contribution["created"]); ?></p>
 						<?php $index++;
 						} ?>
 					</div>
@@ -152,6 +154,8 @@ get_header(); ?>
 endwhile;
 endif; ?>
 </main>
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <script type="text/javascript">
 
