@@ -51,7 +51,7 @@ if (have_posts()) : while (have_posts()) : the_post();
 
 	<div class="form-line">
 		<label for="fundraiser-name">Fundraiser Name</label>
-		<input type="text" id="fundraiser-name" name="fundraiserName" value="<?php echo isset($_POST['fundraiser-name']) ? htmlspecialchars($_POST['fundraiser-name']) : the_title(); ?>" placeholder="Give your fundraiser a title"  data-validation="alphanumeric" data-validation-allowing=" " autocomplete="off" required>
+		<input type="text" id="fundraiserName" name="fundraiserName" value="<?php echo isset($_POST['fundraiserName']) ? htmlspecialchars($_POST['fundraiserName']) : the_title(); ?>" placeholder="Give your fundraiser a title"  data-validation="alphanumeric" data-validation-allowing=" " autocomplete="off" required>
 	</div>
 
 	<div class="form-line image">
@@ -62,7 +62,7 @@ if (have_posts()) : while (have_posts()) : the_post();
 						the_post_thumbnail( array(400,400) );
 					}?>
 				</div>
-				<img id="image-preview" src="" />
+				<img id="image-preview" />
 			</div>
 			<label for="thumbnail" class="upload-btn btn"><span>Upload</span><br>your own image</label>
 			<div class="spacer"></div>
@@ -74,7 +74,7 @@ if (have_posts()) : while (have_posts()) : the_post();
 		<div class="split-line">
 			<label for="fundraiser-goal">Goal</label>
 			<?php echo dollar_svg(); ?>
-			<input type="text" id="fundraiser-goal" name="fundraiserGoal" value="<?php echo isset($_POST['fundraiser-goal']) ? htmlspecialchars($_POST['fundraiser-goal']) : get_post_meta($id, 'fundraiser-goal', true); ?>" placeholder="Enter Amount" data-validation="number" autocomplete="off" required>
+			<input type="text" id="fundraiserGoal" name="fundraiserGoal" value="<?php echo isset($_POST['fundraiserGoal']) ? htmlspecialchars($_POST['fundraiserGoal']) : get_post_meta($id, 'fundraiserGoal', true); ?>" placeholder="Enter Amount" data-validation="number" autocomplete="off" required>
 		</div>
 		<div class="split-line">
 			<p><span id="amount-raised">$<?php echo number_format(get_fundraiser_amount_raised($id), 0, '.', ','); ?></span> USD raised</p>
@@ -85,14 +85,14 @@ if (have_posts()) : while (have_posts()) : the_post();
 		<div class="split-line">
 			<label for="end-date">End Date</label>
 			<div class="date-wrapper">
-				<input type="date" id="end-date" name="endDate" value="<?php echo isset($_POST['end-date']) ? htmlspecialchars($_POST['end-date']) : get_post_meta($id, 'fundraiser-end', true); ?>" data-validation="date" autocomplete="off" required>
+				<input type="date" id="fundraiserEnd" name="fundraiserEnd" value="<?php echo isset($_POST['fundraiserEnd']) ? htmlspecialchars($_POST['fundraiserEnd']) : get_post_meta($id, 'fundraiserEnd', true); ?>" data-validation="date" autocomplete="off" required>
 				<?php echo calendar_svg(); ?>
 			</div>
 		</div>
 		<div class="split-line">
-			<?php if (get_post_meta($id, 'fundraiser-end', true)) { ?>
+			<?php if (get_post_meta($id, 'fundraiserEnd', true)) { ?>
 				<p>
-					<?php $days_left = get_fundraising_days_left(get_post_meta($id, 'fundraiser-end', true));
+					<?php $days_left = get_fundraising_days_left(get_post_meta($id, 'fundraiserEnd', true));
 						if ($days_left > 1) {
 							echo $days_left . "&nbsp;days left";
 						} else if ($days_left == 1) {
@@ -118,10 +118,9 @@ if (have_posts()) : while (have_posts()) : the_post();
 	<?php wp_nonce_field( 'create_fundraiser_action','create_fundraiser_nonce' ); ?>
 
 	<div class="action-btns">
-		<a href="home" id="delete-fundraiser">Delete this fundraiser</a>
+
 		<input type="submit" name="create-button" value="Save" class="btn">
 	</div>
-
 </form>
 
 <?php
@@ -160,7 +159,6 @@ endif; ?>
     
     $("#thumbnail").change(function(){
         readURL(this);
-        // clear val of input field
     });
 </script>
 

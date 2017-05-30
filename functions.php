@@ -19,6 +19,7 @@ add_action( 'wp_enqueue_scripts', 'msr_child_enqueue_styles' );
 function msr_child_enqueue_js() {
 	global $wp_scripts;
 	wp_enqueue_script( 'bootstrap_js', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js');
+	wp_enqueue_scripts( 'jquery_ui', 'http://code.jquery.com/ui/1.9.1/jquery-ui.js');
 }
 
 add_action( 'wp_enqueue_scripts', 'msr_child_enqueue_js');
@@ -30,8 +31,12 @@ function display_generic_comments($comments_array) {
 }
 
 function get_percentage_to_goal($amount, $goal) {
-	$math = floatval($amount / $goal);
-	return round($math, 2) * 100;
+	if ($amount == 0) {
+		return 0;
+	} else {
+		$math = floatval($amount / $goal);
+		return round($math, 2) * 100;
+	}
 }
 
 function get_fundraising_days_left($end_date) {
@@ -67,9 +72,9 @@ function create_new_fundraiser() {
 		'post_title' => $_POST['fundraiserName'],
 		'post_content' => $_POST['description'],
 		'meta_input' => array (
-			'fundraiser-goal' => $_POST['fundraiserGoal'],
-			'fundraiser-start' => $_POST['startDate'],
-			'fundraiser-end' => $_POST['endDate']
+			'fundraiserGoal' => $_POST['fundraiserGoal'],
+			'fundraiserStart' => $_POST['fundraiserStart'],
+			'fundraiserEnd' => $_POST['fundraiserEnd']
 		),
 		'post_status' => 'pending',            // Choose: publish, preview, future, etc.
 		'post_type' => $_POST['post-type']  // Use a custom post type if you want to
@@ -114,8 +119,8 @@ function edit_fundraiser($id) {
 		'post_title' => $_POST['fundraiserName'],
 		'post_content' => $_POST['description'],
 		'meta_input' => array (
-			'fundraiser-goal' => $_POST['fundraiserGoal'],
-			'fundraiser-end' => $_POST['endDate']
+			'fundraiserGoal' => $_POST['fundraiserGoal'],
+			'fundraiserEnd' => $_POST['fundraiserEnd']
 		),
 		'post_content' => $_POST['description']
 	);

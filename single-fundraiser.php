@@ -11,6 +11,7 @@ get_header(); ?>
 
 <?php if (have_posts()) : while (have_posts()) : the_post();
 	$post_id = $post->ID;
+	var_dump(get_post_meta($post_id));
 
 	$object = get_fundraiser_stripe_info($post_id);
 
@@ -120,7 +121,7 @@ get_header(); ?>
 								$display = $contribution['metadata']['customer_name'];
 							} ?>
 
-							<p class="<?php if ($index > 3) { echo 'hide'; } ?>"><?php echo $display; ?><span>$<?php echo number_format($contribution['amount']/100, 0, '.', ','); ?></span></p>
+							<p class="<?php if ($index > 3) { echo 'hide'; } ?>"><br>date<?php echo $display; ?><span>$<?php echo number_format($contribution['amount']/100, 0, '.', ','); ?></span></p>
 						<?php $index++;
 						} ?>
 					</div>
