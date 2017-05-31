@@ -408,6 +408,11 @@ button.cancel {
 	max-width: 200px;
 }
 
+#default-img-modal .close {
+	margin-top: 3px;
+	opacity: 1;
+}
+
 /** SINGLE FUNDRAISER PAGE **/
 
 .single-fundraiser .fundraising .main-image img {
@@ -1879,4 +1884,54 @@ button.cancel {
 
 .post-grid {
 	margin-bottom: 2em;
+}
+
+
+
+
+/** checkmark styling **/
+input[type="checkbox"]:checked + label::after {
+   content: '';
+   position: absolute;
+   width: 8px;
+   height: 5px;
+   background: rgba(0, 0, 0, 0);
+   top: 4px;
+   left: 3px;
+   border: 2px solid #828282;
+   border-top: none;
+   border-right: none;
+   border-radius: 2px;
+   -webkit-transform: rotate(-45deg);
+   -moz-transform: rotate(-45deg);
+   -o-transform: rotate(-45deg);
+   -ms-transform: rotate(-45deg);
+   transform: rotate(-45deg);
+}
+
+input[type="checkbox"] {
+   line-height: 2.1ex;
+}
+
+input[type="checkbox"] {
+    position: absolute;
+    left: -999em;
+}
+
+input[type="checkbox"] + label {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+input[type="checkbox"] + label::before {
+   content: "";
+   display: inline-block;
+   vertical-align: -20%;
+   height: 14px;
+   width: 14px;
+   background-color: white;
+   border: 2px solid #828282;
+   border-radius: 1px;
+   margin-right: 0.5em;
 }

@@ -205,6 +205,45 @@ function hand_money() { ?>
 
 <?php }
 
+function x_svg() { ?>
+
+<svg width="40" height="40" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<title>Group.svg</title>
+<desc>Created using Figma</desc>
+<g id="Canvas" transform="translate(-6594 2584)">
+<g id="Group">
+<g id="circle" filter="url(#filter0_d)">
+<use xlink:href="#part1" transform="translate(6597 -2581)" fill="#FFFFFF"/>
+</g>
+<g id="x">
+<g id="Fill 53">
+<use xlink:href="#part2" transform="translate(6607.54 -2569.95)" fill="#4F4F4F"/>
+</g>
+<g id="Fill 54">
+<use xlink:href="#part3" transform="translate(6607.54 -2569.95)" fill="#4F4F4F"/>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<filter id="filter0_d" filterUnits="userSpaceOnUse" x="6594" y="-2584" width="40" height="40" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 255 0"/>
+<feOffset dx="2" dy="2"/>
+<feGaussianBlur stdDeviation="2.5"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+</filter>
+<path id="part1" fill-rule="evenodd" d="M 15 30C 6.72918 30 0 23.2708 0 15C 0 6.72918 6.72918 0 15 0C 23.2708 0 30 6.72918 30 15C 30 23.2708 23.2708 30 15 30Z"/>
+<path id="part2" fill-rule="evenodd" d="M 0.685855 9.03721L 0 8.35039L 8.35136 0L 9.03721 0.68682L 0.685855 9.03721Z"/>
+<path id="part3" fill-rule="evenodd" d="M 8.35136 9.03721L 0 0.68682L 0.685855 0L 9.03721 8.35039L 8.35136 9.03721Z"/>
+</defs>
+</svg>
+
+
+<?php }
+
 ?>
 
 

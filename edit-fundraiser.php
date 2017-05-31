@@ -159,6 +159,12 @@ endif; ?>
 		$( "#fundraiser-progress" ).progressbar({
 		  value: <?php echo get_percentage_to_goal($amount_raised, $goal_amount); ?>
 		});
+
+		<?php if ($new == "true") { ?>
+			setTimeout( function(){ 
+			    $('.new-fundraiser-prompt').fadeOut(1000);
+			}  , 6000 );
+		<?php } ?>
 	});
 
 	$('.default').click(function() {

@@ -15,6 +15,9 @@ $json_object = get_customer_contributions($user_id);
 get_header();
 
 ?>
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <main id="main">
 
 	<div id="tabs">
