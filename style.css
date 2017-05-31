@@ -1810,6 +1810,31 @@ button.cancel {
 }
 
 /** BROWSE PAGE **/
+
+.page-template-browse #browse-banner {
+	height: 250px;
+	margin-top: 20px;
+	position: relative;
+	z-index: 1;
+}
+
+.page-template-browse #browse-banner::after {
+	background-image: url('/wp-content/uploads/2016/02/9H9A5730-dcp-1-BW.jpg');
+	background-position: 0px -300px;
+	content: "";
+	filter: brightness(50%);
+	-webkit-filter: brightness(50%);
+	-moz-filter: brightness(50%);
+	-o-filter: brightness(50%);
+	-ms-filter: brightness(50%);
+	top: 0;
+	left: 0;
+    bottom: 0;
+	right: 0;
+	position: absolute;
+	z-index: -1;
+}
+
 .browse-fundraisers {
 	width: 900px;
 	margin: auto;
@@ -1829,7 +1854,7 @@ button.cancel {
 
 .browse-new-btn {
 	position: absolute;
-	bottom: 65px;
+	bottom: 50px;
 	right: 100px;
 	width: 247px;
 	height: 67px;
