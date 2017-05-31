@@ -1695,7 +1695,8 @@ button.cancel {
 
 .banner-title {
 	font-size: 30px;
-	font-weight: 700;
+	font-weight: 500;
+	font-family: "futura-pt", Arial, Sans-Serif !important;
 }
 
 .gen-text {
@@ -1800,9 +1801,10 @@ button.cancel {
 
 .intro-banner-title {
 	font-size: 30px;
-	font-weight: 700;
+	font-weight: 500;
 	padding-top: 3em;
 	margin-left: 4em;
+	font-family: "futura-pt", Arial, Sans-Serif !important;
 }
 
 .intro-descr {
