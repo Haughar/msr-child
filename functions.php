@@ -71,6 +71,7 @@ function create_new_fundraiser() {
 		'post_title' => $_POST['fundraiserName'],
 		'post_content' => $_POST['description'],
 		'meta_input' => array (
+			'amountRaised' => 0,
 			'fundraiserGoal' => $_POST['fundraiserGoal'],
 			'fundraiserStart' => $_POST['fundraiserStart'],
 			'fundraiserEnd' => $_POST['fundraiserEnd']
@@ -631,16 +632,17 @@ function change_profile_picture() {
 add_action('wp_ajax_change_profile_picture', 'change_profile_picture');
 
 function get_active_fundraisers($fundraiser_id) {
-	$fundraiser_details = get_fundraiser_stripe_info($fundraiser_id); ?>
+	//$fundraiser_details = get_fundraiser_stripe_info($fundraiser_id); ?>
+	<a href="<?php echo the_permalink(); ?>">
 	<article id="post-<?php the_ID(); ?>" <?php post_class('post-grid'); ?>>
 		<?php if ( has_post_thumbnail() ) { 
 		/** Normal container for posts with thumbnail */ ?>
 		
 		<?php $image_thumb_src = wp_get_attachment_image_src(get_post_thumbnail_id($fundraiser_id), 'msr-post-grid-thumb');?>
 		
-		<a class="entry-thumb" href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>" style="background-image:url( <?php echo $image_thumb_src[0]; ?> );">
+		<div class="entry-thumb" title="<?php the_title_attribute(); ?>" style="background-image:url( <?php echo $image_thumb_src[0]; ?> );">
 			<div class="entry-thumb-icon"></div>
-		</a>
+		</div>
 
 		<div class="entry-text-content">
 			
@@ -652,7 +654,7 @@ function get_active_fundraisers($fundraiser_id) {
 		<?php } ?>
 			
 			<header class="entry-header">
-				<?php the_title( sprintf( '<h3 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h3>' ); ?>
+				<h3 class="entry-title"><?php the_title(); ?></h3>
 				<?php if ( 'post' == get_post_type() ) : ?>
 				<div class="entry-meta">
 					<?php the_time('M j, Y') ?> 
@@ -675,32 +677,33 @@ function get_active_fundraisers($fundraiser_id) {
 			</div><!-- .entry-content -->
 		</div>
 		<div class="entry-more">
-			<?php if(get_fundraising_days_left(get_post_meta($fundraiser_id, 'fundraiser-end', true)) >= 0) { ?>
+			<?php if(get_fundraising_days_left(get_post_meta($fundraiser_id, 'fundraiserEnd', true)) >= 0) { ?>
 				<!-- Active fundraisers -->
 				<div class="myProgress">
 		  		<div class="myBar" style="width: <?php 
-		  			$pct = get_percentage_to_goal($fundraiser_details['total'],  get_post_meta($fundraiser_id, 'fundraiser-goal', true)); 
+		  			$pct = get_percentage_to_goal(get_post_meta($fundraiser_id, 'amountRaised', true),  get_post_meta($fundraiser_id, 'fundraiserGoal', true)); 
 		  			if ($pct > 100) {
 		  				$pct = 100;
 		  			}
 		  			echo $pct ?>%"></div>
 				</div>
 				<!-- Percentage of amount made -->
-				<span class="profile-pct"><?php echo get_percentage_to_goal($fundraiser_details['total'],  get_post_meta($fundraiser_id, 'fundraiser-goal', true)); ?>%</span>
+				<span class="profile-pct"><?php echo get_percentage_to_goal(get_post_meta($fundraiser_id, 'amountRaised', true),  get_post_meta($fundraiser_id, 'fundraiserGoal', true)); ?>%</span>
 				<span class="profile-days <?php 
-					if(get_fundraising_days_left(get_post_meta($fundraiser_id, 'fundraiser-end', true)) <= 10) {
+					if(get_fundraising_days_left(get_post_meta($fundraiser_id, 'fundraiserEnd', true)) <= 10) {
 						echo "red-text";
-					} ?>"><?php echo get_fundraising_days_left(get_post_meta($fundraiser_id, 'fundraiser-end', true)); ?> days left</span>
-			<?php } else if (get_fundraising_days_left(get_post_meta($fundraiser_id, 'fundraiser-end', true)) < 0) { ?> 
+					} ?>"><?php echo get_fundraising_days_left(get_post_meta($fundraiser_id, 'fundraiserEnd', true)); ?> days left</span>
+			<?php } else if (get_fundraising_days_left(get_post_meta($fundraiser_id, 'fundraiserEnd', true)) < 0) { ?> 
 				<!-- Past campaigns -->
 				<p class="date-text">Ended <?php 
-					$sqldate = get_post_meta($fundraiser_id, 'fundraiser-end', true);
+					$sqldate = get_post_meta($fundraiser_id, 'fundraiserEnd', true);
 					$end = strtotime($sqldate);
 					echo date('n/j/y', $end) ?>
 				</p>
 			<?php }  ?>
 		</div>
-	</article><!-- #post-## --> 
+	</article><!-- #post-## -->
+	</a>
 	<?php
 }
 

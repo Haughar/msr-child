@@ -136,6 +136,10 @@ button.cancel {
 	text-align: center;
 }
 
+.page-template-browse a:visited, .page-template-browse a {
+	color: black;
+}
+
 .progress-bar {
 	background-color: #F8F8F8;
 	height: 20px;
