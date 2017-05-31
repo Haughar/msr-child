@@ -124,7 +124,7 @@ get_header(); ?>
 								$display = $contribution['metadata']['customer_name'];
 							} ?>
 
-							<p class="<?php if ($index > 3) { echo 'hide'; } ?>"><?php echo $display; ?><span>$<?php echo number_format($contribution['amount']/100, 0, '.', ','); ?></span><br><span class="date"><?php echo date('m/d/y', $contribution["created"] - 25200); ?></p>
+							<p class="<?php if ($index > 3) { echo 'hide'; } ?>"><?php echo $display; ?><span>$<?php echo number_format($contribution['amount']/100, 0, '.', ','); ?></span><br><span class="date"><?php echo date('m/d/y', $contribution["created"]); ?></p>
 						<?php $index++;
 						} ?>
 					</div>
