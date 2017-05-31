@@ -599,6 +599,7 @@ button.cancel {
 
 .single-fundraiser .comment .comment-content p {
 	margin-top: 0px;
+	max-width: 530px;
 }
 
 .single-fundraiser .comment .reply {
