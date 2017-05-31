@@ -1727,20 +1727,21 @@ button.cancel {
 	margin-left: 7.5em;
 }
 
-.general .btn-spot {
+.gen-svg {
 	margin-top: 40px;
 }
 
-.general .btn-spot svg {
-	margin-left: 2em;
+.gen-svg svg {
+	margin-left: 2.2em;
 }
 
-.general .btn-spot button {
+.gen-svg button {
 	margin-top: 1em;
 }
 
 .create-banner .btn-spot {
 	margin-top: 66px;
+	float: right;
 }
 
 .create-banner .btn-spot svg {
@@ -1854,4 +1855,29 @@ button.cancel {
 
 .post-grid {
 	margin-bottom: 2em;
+}
+
+/*** General Contribution Page ***/
+.general-contribute-info {
+	width: 100%;
+	max-width: 886px;
+	margin: auto;
+	padding-top: 3em;
+	padding-bottom: 3em;
+}
+
+.gen-contribute-img img {
+	width: 100% !important;
+}
+
+.gen-contribute-btn {
+	width: 257px;
+	height: 79px;
+    font-weight: 500;
+    font-size: 28px;
+    margin-bottom: 50px;
+}
+
+.gen-contribute-div {
+	text-align: center;
 }

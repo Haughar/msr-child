@@ -19,6 +19,20 @@ get_header(); ?>
 	<p class="intro-descr">All funds raised on this platform will help us with the manufacturing cost of our products that improve access to basic human needs for people living in low-resource communities of the developing world. Please support MSR Global Heatlh by contributing directly to MSR campaigns or our supporters’ fundraisers.</p>
 </div>
 
+<!-- Start Browsing banner -->
+<div class="browse">
+	<div class="browse-banner color-banner">
+		<div class="inline-top middle-btn-spot">
+			<?php echo water_drop(); ?>
+			<br>
+			<button class="banner-btn" onclick="window.location.href='/browse/'">Start Browsing</button>
+		</div>
+		<div class="browse-text inline-top">
+			<p class="no-margin white-text banner-title">Contribute to a Fundraiser</p>
+			<p class="no-margin white-text gen-descr">Explore fundraisers created by people just like you. If you stumble upon fundraisers that you connect with, you'll be able donate to those fundraisers and easily share them to your friends and family. </p>
+		</div>
+	</div>
+</div>
 <!-- Create a Fundraiser banner -->
 <div class="create">
 	<div class="create-banner color-banner">
@@ -54,46 +68,19 @@ get_header(); ?>
 		</div>
 	</div>
 </div>
-<!-- Start Browsing banner -->
-<div class="browse">
-	<div class="browse-banner color-banner">
-		<div class="inline-top middle-btn-spot">
-			<?php echo water_drop(); ?>
-			<br>
-			<button class="banner-btn" onclick="window.location.href='/browse/'">Start Browsing</button>
-		</div>
-		<div class="browse-text inline-top">
-			<p class="no-margin white-text banner-title">Contribute to a Fundraiser</p>
-			<p class="no-margin white-text gen-descr">Explore fundraisers created by people just like you. If you stumble upon fundraisers that you connect with, you'll be able donate to those fundraisers and easily share them to your friends and family. </p>
-		</div>
-	</div>
-</div>
 <!-- General Contribution Banner -->
 <div class="gen-contribute">
 	<div class="general fundraising">
-		<div class="gen-text inline-top">
-			<p class="no-margin white-text banner-title">Make a General Contribution</p>
-			<p class="no-margin white-text gen-descr">If you would like to donate directly to MSR Global Health, general contributions is the way to go. In just two clicks, you would have successfully completed your general contribution to us.</p>
-		</div>
-		<div class="inline-top btn-spot">
+		<div class="inline-top gen-svg">
 			<?php echo cups(); ?>
 			<br>
 			<div class="btn-wrapper">
-				<button class="banner-btn" data-toggle="modal" data-target="#contribute-modal">General Contribution</button>
+				<button class="banner-btn" onclick="window.location.href='/general-contribution/'">General Contribution</button>
 			</div>
 		</div>
-	</div>
-</div>
-
-<div class="modal fade" id="contribute-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="myModalLabel">Contribute</h5>
-			</div>
-			<div class="modal-body">
-				<?php echo do_shortcode('[payment]'); ?>
-			</div>
+		<div class="browse-text inline-top">
+			<p class="no-margin white-text banner-title">Make a General Contribution</p>
+			<p class="no-margin white-text gen-descr">If you would like to donate directly to MSR Global Health, general contributions is the way to go. In just two clicks, you would have successfully completed your general contribution to us.</p>
 		</div>
 	</div>
 </div>

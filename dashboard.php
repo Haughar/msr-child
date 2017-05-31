@@ -58,14 +58,14 @@ get_header();
 				<button onclick="window.location.href='/create-fundraiser/'">New Fundraiser</button>
 			</div>
 				<!-- User's Active Fundraisers -->
-			<?php $totalRaisedActive = get_fundraiser_list($user_id, "active"); ?>
+			<?php //$totalRaisedActive = get_fundraiser_list($user_id, "active"); ?>
 				<!-- User's Pending Fundraisers -->	
 			<?php 
-				$totalRaisedPending = get_fundraiser_list($user_id, "pending"); 
+				//$totalRaisedPending = get_fundraiser_list($user_id, "pending"); 
 			?>
 				<!-- User's Past Fundraisers -->
 			<?php 
-				$totalRaisedExpired = get_fundraiser_list($user_id, "expired"); 
+				//$totalRaisedExpired = get_fundraiser_list($user_id, "expired"); 
 			?>
 			<input id="totalRaised" type="hidden" value="<?php echo $totalRaisedActive + $totalRaisedPending + $totalRaisedExpired ?>">
  		</div>
@@ -133,7 +133,7 @@ get_header();
 			<div>
 				<span class="day-text"><?php 
 					if($json_object['charge-data']) {
-						create_contributions_list($user_id, $json_object); ?>
+						//create_contributions_list($user_id, $json_object); ?>
 						</span>
 					<?php } else {  ?>
 						</span>
