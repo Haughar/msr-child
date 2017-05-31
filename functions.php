@@ -320,12 +320,12 @@ function get_fundraiser_list($user_id, $type) {
 			$post_query->the_post();
 			$post = get_post();
 			$id = $post->ID;
-			$endDate = strtotime(get_post_meta($id, 'fundraiser-end', true));
+			$endDate = strtotime(get_post_meta($id, 'fundraiserEnd', true));
 			$difference = $endDate - time();
 			$totalDiff = floor($difference/60/60/24);
 			if($totalDiff >= 0 && $type == 'active') {
 				$count++;
-			} else if($type == 'expired') {
+			} else if($totalDiff < 0 && $type == 'expired') {
 				$count++;
 			} else if($post->post_status == "pending" && $type == "pending") {
 				$count++;
@@ -367,7 +367,7 @@ function get_fundraiser_list($user_id, $type) {
 			$post_query->the_post();
 			$post = get_post();
 			$id = $post->ID;
-			$endDate = strtotime(get_post_meta($id, 'fundraiser-end', true));
+			$endDate = strtotime(get_post_meta($id, 'fundraiserEnd', true));
 			$difference = $endDate - time();
 			$totalDiff = floor($difference/60/60/24);
 			$fundraiser_details = get_fundraiser_stripe_info($id);
@@ -382,7 +382,7 @@ function get_fundraiser_list($user_id, $type) {
 							?> <span class="normal-text"><a href="<?php echo get_permalink($id); ?>"><?php echo get_the_title($id); ?> </span></a><?php
 						}  ?>
 						<p class="date-text">Ended <?php 
-							$sqldate = get_post_meta($id, 'fundraiser-end', true);
+							$sqldate = get_post_meta($id, 'fundraiserEnd', true);
 							$end = strtotime($sqldate);
 							echo date('n/j/y', $end) ?> 
 						</p>
@@ -410,13 +410,17 @@ function get_fundraiser_list($user_id, $type) {
 					<div class="fundraise-info inline-top">
 						<?php
 						if (get_the_title($id)) {
-							?> <span class="normal-text"><a href="<?php echo get_permalink($id); ?>"><?php echo get_the_title($id); ?></a> </span> <?php
+							if ($type == 'active') {
+								?> <span class="normal-text"><a href="<?php echo get_permalink($id); ?>"><?php echo get_the_title($id); ?></a> </span> <?php
+							} else { ?>
+								<span class="normal-text"><?php echo get_the_title($id); ?></span>
+							<?php }	
 						}  ?>
 						<!-- Progress bar -->
 						<div>
 							<div class="myProgress inline-top">
 						  		<div class="myBar" style="width: <?php 
-						  			$pct = get_percentage_to_goal($fundraiser_details['total'],  get_post_meta($id, 'fundraiser-goal', true)); 
+						  			$pct = get_percentage_to_goal($fundraiser_details['total'],  get_post_meta($id, 'fundraiserGoal', true)); 
 						  			if ($pct > 100) {
 						  				$pct = 100;
 						  			}
@@ -424,15 +428,15 @@ function get_fundraiser_list($user_id, $type) {
 							</div>
 							<div class="pct inline-top"> 
 								<!-- Percentage of amount made -->
-								<span><?php echo get_percentage_to_goal($fundraiser_details['total'],  get_post_meta($id, 'fundraiser-goal', true)); ?>%</span>
+								<span><?php echo get_percentage_to_goal($fundraiser_details['total'],  get_post_meta($id, 'fundraiserGoal', true)); ?>%</span>
 							</div>
 						</div>
 						<!-- Amount of days remaining -->
 						<span class="day-text <?php 
-							if (get_fundraising_days_left(get_post_meta($id, 'fundraiser-end', true)) <= 10) {
+							if (get_fundraising_days_left(get_post_meta($id, 'fundraiserEnd', true)) <= 10) {
 								echo "red-text";
 							}
-						 	?>"><?php echo get_fundraising_days_left(get_post_meta($id, 'fundraiser-end', true)); ?> days left</span>
+						 	?>"><?php echo get_fundraising_days_left(get_post_meta($id, 'fundraiserEnd', true)); ?> days left</span>
 					</div>
 					<div class="inline-top dashb-amt">
 						<!-- Amount Raised -->
@@ -502,7 +506,7 @@ function create_contributions_list($user_id, $json_object) {
 							<div>
 								<div class="myProgress inline-top">
 							  		<div class="myBar" style="width: <?php 
-							  			$pct = get_percentage_to_goal($fundraiser_details['total'],  get_post_meta($post_id, 'fundraiser-goal', true)); 
+							  			$pct = get_percentage_to_goal(get_post_meta($post_id, 'amountRaised', true),  get_post_meta($post_id, 'fundraiserGoal', true)); 
 							  			if ($pct > 100) {
 							  				$pct = 100;
 							  			}
@@ -510,11 +514,17 @@ function create_contributions_list($user_id, $json_object) {
 								</div>
 				  				<div class="c-pct inline-top"> 
 									<!-- Percentage of amount made -->
-									<span><?php echo get_percentage_to_goal($fundraiser_details['total'],  get_post_meta($post_id, 'fundraiser-goal', true)); ?>%</span>
+									<span><?php echo get_percentage_to_goal(get_post_meta($post_id, 'amountRaised', true),  get_post_meta($post_id, 'fundraiserGoal', true)); ?>%</span>
 								</div>
 							</div>
 							<!-- Amount of days remaining -->
-							<span class="day-text"><?php echo get_fundraising_days_left(get_post_meta($post_id, 'fundraiser-end', true)); ?> days left</span>
+							<span class="day-text"><?php 
+								$days_left = get_fundraising_days_left(get_post_meta($post_id, 'fundraiserEnd', true));
+								if ($days_left < 0) {
+										echo "Ended";
+									} else {	
+										echo $days_left . " days left";
+									}; ?></span>
 						</div>
 					<?php } ?>
 					<div class="inline-top contrib-amt">
@@ -677,30 +687,30 @@ function get_active_fundraisers($fundraiser_id) {
 			</div><!-- .entry-content -->
 		</div>
 		<div class="entry-more">
-			<?php if(get_fundraising_days_left(get_post_meta($fundraiser_id, 'fundraiserEnd', true)) >= 0) { ?>
-				<!-- Active fundraisers -->
-				<div class="myProgress">
-		  		<div class="myBar" style="width: <?php 
-		  			$pct = get_percentage_to_goal(get_post_meta($fundraiser_id, 'amountRaised', true),  get_post_meta($fundraiser_id, 'fundraiserGoal', true)); 
-		  			if ($pct > 100) {
-		  				$pct = 100;
-		  			}
-		  			echo $pct ?>%"></div>
-				</div>
-				<!-- Percentage of amount made -->
-				<span class="profile-pct"><?php echo get_percentage_to_goal(get_post_meta($fundraiser_id, 'amountRaised', true),  get_post_meta($fundraiser_id, 'fundraiserGoal', true)); ?>%</span>
-				<span class="profile-days <?php 
-					if(get_fundraising_days_left(get_post_meta($fundraiser_id, 'fundraiserEnd', true)) <= 10) {
-						echo "red-text";
-					} ?>"><?php echo get_fundraising_days_left(get_post_meta($fundraiser_id, 'fundraiserEnd', true)); ?> days left</span>
-			<?php } else if (get_fundraising_days_left(get_post_meta($fundraiser_id, 'fundraiserEnd', true)) < 0) { ?> 
-				<!-- Past campaigns -->
-				<p class="date-text">Ended <?php 
-					$sqldate = get_post_meta($fundraiser_id, 'fundraiserEnd', true);
-					$end = strtotime($sqldate);
-					echo date('n/j/y', $end) ?>
-				</p>
-			<?php }  ?>
+			<div class="myProgress">
+	  		<div class="myBar" style="width: <?php 
+	  			$pct = get_percentage_to_goal(get_post_meta($fundraiser_id, 'amountRaised', true),  get_post_meta($fundraiser_id, 'fundraiserGoal', true)); 
+	  			if ($pct > 100) {
+	  				$pct = 100;
+	  			}
+	  			echo $pct ?>%"></div>
+			</div>
+			<!-- Percentage of amount made -->
+			<span class="profile-pct"><?php echo get_percentage_to_goal(get_post_meta($fundraiser_id, 'amountRaised', true),  get_post_meta($fundraiser_id, 'fundraiserGoal', true)); ?>%</span>
+			<span class="profile-days <?php 
+				if(get_fundraising_days_left(get_post_meta($fundraiser_id, 'fundraiserEnd', true)) <= 10) {
+					echo "red-text";
+				} ?>"><?php 
+					if(get_fundraising_days_left(get_post_meta($fundraiser_id, 'fundraiserEnd', true)) >= 0) { 
+						// Active fundraisers
+						echo get_fundraising_days_left(get_post_meta($fundraiser_id, 'fundraiserEnd', true)); ?> days left
+					<?php } else if (get_fundraising_days_left(get_post_meta($fundraiser_id, 'fundraiserEnd', true)) < 0) { ?> 
+						Ended <?php 
+							$sqldate = get_post_meta($fundraiser_id, 'fundraiserEnd', true);
+							$end = strtotime($sqldate);
+							echo date('n/j/y', $end); ?>
+					<?php } ?>
+			</span>
 		</div>
 	</article><!-- #post-## -->
 	</a>
@@ -729,7 +739,7 @@ function cancel_recurring_payment() {
 		\Stripe\Stripe::setApiKey($secret_key);
 		$sub = \Stripe\Subscription::retrieve($subID);
 		$sub->cancel();
-	    wp_redirect("/dashboard/#contributions");
+	    wp_redirect("/my-contributions");
 	    // Pop up a modal that says the cancellation was successful. 
 	}
 }
