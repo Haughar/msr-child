@@ -48,7 +48,7 @@ get_header(); ?>
 				$post_query->the_post();
 				$post = get_post();
 				$id = $post->ID;
-				$endDate = strtotime(get_post_meta($id, 'fundraiser-end', true));
+				$endDate = strtotime(get_post_meta($id, 'fundraiserEnd', true));
 				$difference = $endDate - time();
 				$totalDiff = floor($difference/60/60/24);
 				if($totalDiff >= 0) {
