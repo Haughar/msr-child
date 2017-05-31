@@ -1925,12 +1925,14 @@ button.cancel {
 	width: 100%;
 	max-width: 886px;
 	margin: auto;
-	padding-top: 3em;
+	padding-top: 14em;
 	padding-bottom: 3em;
 }
 
 .gen-contribute-img img {
 	width: 100% !important;
+    margin: -200px 0px;
+    max-height: 900px;
 }
 
 .gen-contribute-btn {
