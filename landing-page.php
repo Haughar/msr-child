@@ -22,24 +22,20 @@ get_header(); ?>
 <!-- Start Browsing banner -->
 <div class="browse">
 	<div class="browse-banner color-banner">
+		<div class="browse-text inline-top">
+			<p class="no-margin white-text banner-title">Contribute to a Fundraiser</p>
+			<p class="no-margin white-text gen-descr">Explore fundraisers created by people just like you. If you stumble upon fundraisers that you connect with, you'll be able donate to those fundraisers and easily share them to your friends and family. </p>
+		</div>
 		<div class="inline-top middle-btn-spot">
 			<?php echo water_drop(); ?>
 			<br>
 			<button class="banner-btn" onclick="window.location.href='/browse/'">Start Browsing</button>
-		</div>
-		<div class="browse-text inline-top">
-			<p class="no-margin white-text banner-title">Contribute to a Fundraiser</p>
-			<p class="no-margin white-text gen-descr">Explore fundraisers created by people just like you. If you stumble upon fundraisers that you connect with, you'll be able donate to those fundraisers and easily share them to your friends and family. </p>
 		</div>
 	</div>
 </div>
 <!-- Create a Fundraiser banner -->
 <div class="create">
 	<div class="create-banner color-banner">
-		<div class="gen-text inline-top">
-			<p class="no-margin white-text banner-title">Create a Fundraiser</p>
-			<p class="no-margin white-text gen-descr">Have your own outdoor adventure that you would like to share with others? Why not raise money at the same time, by creating a fundraiser. Share your outdoor adventure on our platform to help us achieve our global health initiatives.</p>
-		</div>	
 		<div class="inline-top new-fundraise-btn">
 			<?php echo hand_money(); ?>
 			<br>
@@ -66,21 +62,25 @@ get_header(); ?>
 					</div>
 				<?php } ?>
 		</div>
+		<div class="gen-text inline-top">
+			<p class="no-margin white-text banner-title">Create a Fundraiser</p>
+			<p class="no-margin white-text gen-descr">Have your own outdoor adventure that you would like to share with others? Why not raise money at the same time, by creating a fundraiser. Share your outdoor adventure on our platform to help us achieve our global health initiatives.</p>
+		</div>	
 	</div>
 </div>
 <!-- General Contribution Banner -->
 <div class="gen-contribute">
 	<div class="general fundraising">
+		<div class="browse-text inline-top">
+			<p class="no-margin white-text banner-title">Make a General Contribution</p>
+			<p class="no-margin white-text gen-descr">If you would like to donate directly to MSR Global Health, general contributions is the way to go. In just two clicks, you would have successfully completed your general contribution to us.</p>
+		</div>
 		<div class="inline-top gen-svg">
 			<?php echo cups(); ?>
 			<br>
 			<div class="btn-wrapper">
 				<button class="banner-btn" onclick="window.location.href='/general-contribution/'">General Contribution</button>
 			</div>
-		</div>
-		<div class="browse-text inline-top">
-			<p class="no-margin white-text banner-title">Make a General Contribution</p>
-			<p class="no-margin white-text gen-descr">If you would like to donate directly to MSR Global Health, general contributions is the way to go. In just two clicks, you would have successfully completed your general contribution to us.</p>
 		</div>
 	</div>
 </div>

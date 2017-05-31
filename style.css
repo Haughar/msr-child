@@ -1736,6 +1736,7 @@ button.cancel {
 .gen-text {
 	padding-top: 100px;
 	width: 652px;
+	float: right;
 }
 
 .gen-descr {
@@ -1745,13 +1746,11 @@ button.cancel {
 
 .browse-text {
 	padding-top: 100px;
-	margin-left: 120px;
 	width: 652px;
 }
 
 .new-fundraise-btn {
 	margin-top: 40px;
-	float: right;
 }
 
 .new-fundraise-btn svg {
@@ -1777,6 +1776,7 @@ button.cancel {
 
 .gen-svg {
 	margin-top: 20px;
+	float: right;
 }
 
 .gen-svg svg {
@@ -1789,6 +1789,7 @@ button.cancel {
 
 .middle-btn-spot {
 	margin-top: 40px;
+	float: right;
 }
 
 .middle-btn-spot svg {
