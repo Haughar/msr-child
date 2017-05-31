@@ -1624,6 +1624,12 @@ button.cancel {
 	padding-right: 30px;
 }
 
+.recurr-box input[type="checkbox"] {
+	right: 35px;
+	left: inherit !important;
+	margin-top: 0.6em;
+}
+
 .save-btn {
 	position: absolute;
 	right: 18px;
