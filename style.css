@@ -434,7 +434,7 @@ button.cancel {
 .single-fundraiser .main-content {
 	display: inline-block;
 	float: left;
-	margin-bottom: 30px;
+	margin-bottom: 100px;
 	margin-top: 50px;
 	padding-right: 20px;
 	width: 60%;
@@ -520,6 +520,7 @@ button.cancel {
 }
 
 .single-fundraiser .contributors {
+	margin-bottom: 100px;
 	margin-top: 50px;
 	width: 100%;
 }
