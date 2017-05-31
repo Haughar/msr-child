@@ -967,6 +967,15 @@ button.cancel {
 	text-transform: none;
 }
 
+#payment-form .comment-box h3 {
+	margin-bottom: 0;
+	text-transform: none;
+}
+
+#payment-form .comment-box label {
+	margin-bottom: 10px;
+}
+
 #payment-form textarea {
 	margin-bottom: 20px;
 }
