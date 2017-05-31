@@ -16,7 +16,7 @@ get_header(); ?>
 
 	<!-- General Contribution Information Section -->
 	<div class="general-contribute-info">
-		<h1>MSR Global Health General Contribution</h1>
+		<h1 class="gen-contribute-title">MSR Global Health General Contribution</h1>
 		<p>When you give directly to MSR Global Health, your contribution enables us to help low-resource communities gain access to food, water, and shelter. A general contribution will go directly to MSR Global Health without being linked to any campaigns or fundraisers that are currently running.</p>
 	</div>
 

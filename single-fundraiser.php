@@ -106,6 +106,7 @@ get_header(); ?>
 				</p>
 			<?php } ?>
 			<div class="btn-wrapper">
+				<!-- If user isn't signed in target will be login-modal otherwise contribute-modal -->
 				<button data-toggle="modal" data-target="#contribute-modal" <?php if (isset($days_left) && $days_left < 0) echo "disabled"; ?>>Contribute</button>
 			</div>
 		</div>
@@ -134,6 +135,26 @@ get_header(); ?>
 			<?php } else { ?>
 				<p>There have not been any contributions yet. Be the first!</p>
 			<?php } ?>
+		</div>
+	</div>
+
+	<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="myModalLabel">Contribute</h5>
+				</div>
+				<div class="modal-body">
+					<div class="login-left">
+						<p>Sign up or Log in. You'll be able to contribute faster and keep track of your contributions.</p>
+						<?php echo do_shortcode('[ultimatemember form_id=8951]'); ?>
+					</div>
+					<div class="login-right">
+						<p>Continue without Signing In. You don't need an account to contribute</p>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close" data-toggle="modal" data-target="#contribute-modal">Continue as Guest</button>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 
