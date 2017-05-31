@@ -414,6 +414,9 @@ button.cancel {
 }
 
 /** SINGLE FUNDRAISER PAGE **/
+.main-image {
+	padding-bottom: 2em;
+}
 .single-fundraiser .fundraising .main-image img {
 	display: block;
 	margin-left: auto;
@@ -436,7 +439,7 @@ button.cancel {
 	float: left;
 	margin-bottom: 100px;
 	margin-top: 50px;
-	padding-right: 20px;
+	padding-right: 80px;
 	width: 60%;
 }
 
@@ -460,6 +463,10 @@ button.cancel {
 
 .single-fundraiser .author .sharing {
 	text-align: right;
+}
+
+.single-fundraiser .author .sharing a {
+	margin-right: 1em;
 }
 
 .single-fundraiser .author .author-pic {
