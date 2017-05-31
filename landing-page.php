@@ -40,7 +40,7 @@ get_header(); ?>
 			<p class="no-margin white-text banner-title">Create a Fundraiser</p>
 			<p class="no-margin white-text gen-descr">Have your own outdoor adventure that you would like to share with others? Why not raise money at the same time, by creating a fundraiser. Share your outdoor adventure on our platform to help us achieve our global health initiatives.</p>
 		</div>	
-		<div class="inline-top btn-spot">
+		<div class="inline-top new-fundraise-btn">
 			<?php echo hand_money(); ?>
 			<br>
 			<?php 
