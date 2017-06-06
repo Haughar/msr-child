@@ -1,6 +1,6 @@
 # MSR Child Theme
 
-## Overview of your project
+## Overview of project
 **Problem Statement:**
 How might we create a fundraising platform so that MSR Global Health can increase awareness and support for their global health initiative from MSR’s outdoor customer audience?
 
