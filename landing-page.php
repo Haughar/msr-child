@@ -55,7 +55,7 @@ get_header(); ?>
 							    <h4 class="modal-title" id="myModalLabel">Log in</h4>
 							  </div>
 							  <div class="modal-body">
-							    <?php echo do_shortcode('[ultimatemember form_id=8849]'); ?>
+								<?php echo do_shortcode('<!-- REPLACE SHORTCODE HERE -->'); ?>
 							  </div>
 							</div>
 						</div>

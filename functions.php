@@ -105,7 +105,7 @@ function create_new_fundraiser() {
     }
     var_dump($_FILES);
 
-    wp_redirect( home_url() . '/edit-fundraiser/?post_id=' . $new_fundraiser . '&new=true' );
+    wp_redirect(home_url(). '/edit-fundraiser/?post_id=' . $new_fundraiser . '&new=true' );
 }
 
 function edit_fundraiser($id) {
