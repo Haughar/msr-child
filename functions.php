@@ -2,6 +2,7 @@
 
 include 'svg-icons.php';
 
+// enque style files for the child theme
 function msr_child_enqueue_styles() {
     $parent_style = 'msr-style'; 
  	
@@ -16,6 +17,7 @@ function msr_child_enqueue_styles() {
 
 add_action( 'wp_enqueue_scripts', 'msr_child_enqueue_styles' );
 
+// enque the javascript files for the child theme
 function msr_child_enqueue_js() {
 	global $wp_scripts;
 	wp_enqueue_script( 'bootstrap_js', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js');
@@ -25,10 +27,7 @@ add_action( 'wp_enqueue_scripts', 'msr_child_enqueue_js');
 
 remove_filter('get_the_content', 'wpautop');
 
-function display_generic_comments($comments_array) {
-	
-}
-
+// Given a current amount raised and goal, returns int value for percentage
 function get_percentage_to_goal($amount, $goal) {
 	if ($amount == 0) {
 		return 0;
@@ -38,6 +37,8 @@ function get_percentage_to_goal($amount, $goal) {
 	}
 }
 
+// Given end date, returns the number of days lef until midnight of end date
+// includes current day as a whole day
 function get_fundraising_days_left($end_date) {
 	$end = strtotime($end_date);
 	$today = time();
@@ -46,21 +47,7 @@ function get_fundraising_days_left($end_date) {
 	return floor($difference/60/60/24) + 2;
 }
 
-function new_share($post, $current_user) {
-	$commentdata = array(
-		'comment_post_ID' => $post->ID, // to which post the comment will show up
-		'comment_author' => $current_user->name, //fixed value - can be dynamic 
-		'comment_author_email' => 'someone@example.com', //fixed value - can be dynamic 
-		'comment_author_url' => 'http://example.com', //fixed value - can be dynamic 
-		'comment_content' => 'Facebook', //fixed value - can be dynamic 
-		'comment_type' => 'share', //empty for regular comments, 'pingback' for pingbacks, 'trackback' for trackbacks
-		'comment_parent' => 0, //0 if it's not a reply to another comment; if it's a reply, mention the parent comment ID here
-		'user_id' => $current_user->ID, //passing current user ID or any predefined as per the demand
-	);
-
-	wp_new_comment( $commentdata );
-}
-
+// called upon the successful submit of the create form
 function create_new_fundraiser() {
 	if ( empty($_POST) || !wp_verify_nonce($_POST['create_fundraiser_nonce'],'create_fundraiser_action') ){
 		echo 'Sorry, your nonce did not verify.';
@@ -108,6 +95,7 @@ function create_new_fundraiser() {
     wp_redirect(home_url(). '/edit-fundraiser/?post_id=' . $new_fundraiser . '&new=true' );
 }
 
+// Called upon the successful submittion of the edit form
 function edit_fundraiser($id) {
 	if ( empty($_POST) || !wp_verify_nonce($_POST['create_fundraiser_nonce'],'create_fundraiser_action') ){
 		print 'Sorry, your nonce did not verify.';
@@ -129,6 +117,7 @@ function edit_fundraiser($id) {
 	flush_rewrite_rules();
 }
 
+// Called when user leaves comment while contributing
 function leave_comment($post_id, $customer_name, $email, $content, $user_id) {
  	$commentdata = array(
  		'comment_post_ID' => $post_id, // to which post the comment will show up
@@ -142,8 +131,9 @@ function leave_comment($post_id, $customer_name, $email, $content, $user_id) {
  	);
  
  	wp_new_comment( $commentdata );
- }
+}
 
+// Gets all the contributions made by the current user
 function get_customer_contributions($user_id) {
 	global $stripe_options;
 
@@ -222,6 +212,7 @@ function get_customer_contributions($user_id) {
 	return $json_object;
 }
 
+// setup for call to stripe
 function get_fundraiser_stripe_info($post_id) {
 	global $stripe_options;
 
@@ -260,6 +251,7 @@ function get_fundraiser_stripe_info($post_id) {
 	return $json_object;
 }
 
+// contacts Stripe and calculates amount contributed to current fundraiser
 function get_fundraiser_amount_raised($post_id) {
 	global $stripe_options;
 
@@ -292,6 +284,7 @@ function get_fundraiser_amount_raised($post_id) {
 	return $total;
 }
 
+// Gets all the fundraisers for current user
 function get_fundraiser_list($user_id, $type) {
 	if($type == 'active') {
 		$args = array(
@@ -458,6 +451,7 @@ function get_fundraiser_list($user_id, $type) {
 	return $totalRaised;
 }
 
+// creates contribution list from data sent back from Stripe
 function create_contributions_list($user_id, $json_object) {
 	foreach ($json_object['charge-data'] as $charge) { 
 		if($charge['refunded'] == false) {
@@ -546,6 +540,7 @@ function create_contributions_list($user_id, $json_object) {
 	} 
 }
 
+// Gets the current fundraiser that MSR is running for the top of the browse page
 function get_msr_campaign() {
 	$args = array(
 		'post_type' => 'fundraiser',
@@ -572,7 +567,7 @@ function get_msr_campaign() {
 	}
 }
 
-
+// allows user to change profile picture
 function change_profile_picture() {
 	if ( empty($_POST) || !wp_verify_nonce($_POST['prof-pic-upload-nonce'],'prof-pic-upload-action') ){
 
@@ -641,6 +636,7 @@ function change_profile_picture() {
 
 add_action('wp_ajax_change_profile_picture', 'change_profile_picture');
 
+// Get list of active fundraisers
 function get_active_fundraisers($fundraiser_id) {
 	//$fundraiser_details = get_fundraiser_stripe_info($fundraiser_id); ?>
 	<a href="<?php echo the_permalink(); ?>">
@@ -717,6 +713,7 @@ function get_active_fundraisers($fundraiser_id) {
 	<?php
 }
 
+// allow user to cancel recurring paymnts
 function cancel_recurring_payment() {
 	if ( empty($_POST) || !wp_verify_nonce($_POST['cancel-recurring-nonce'],'cancel-recurring-action') ) {
 	    echo 'You targeted the right function, but sorry, your nonce did not verify.';
@@ -745,6 +742,7 @@ function cancel_recurring_payment() {
 }
 add_action('wp_ajax_cancel_recurring', 'cancel_recurring_payment');
 
+// for the create and edit pages, allows user to choose form pre-set images
 function default_image_modal() { ?>
 
 	<div class="modal fade" id="default-img-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -763,6 +761,7 @@ function default_image_modal() { ?>
 
 <?php }
 
+// help for debugging when vardump isn't good enough
 function console_log( $data ){
 	echo '<script>';
 	echo 'console.log("'. $data .'")';
